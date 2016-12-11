@@ -32,7 +32,6 @@ public class DefaultUserInitService {
             user2.setPassword("$2a$10$HOenmXvSwgDYdJLt5mvYoelgKWRem9UcFf.yTUOjal7aoOsvf2SWi");
             user2.setAuthorities(Arrays.asList("USER"));
             user2 = userDetailsRepository.save(user2);
-            System.out.println(user2.getPassword());
         }
     }
 }

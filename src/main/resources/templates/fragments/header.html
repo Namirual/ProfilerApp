@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Header template</title>
+</head>
+<body>
+
+<header th:fragment="header">
+    <a th:href="@{/index}">Home</a>
+    <form method="POST" th:action="@{/logout}" class="logout">
+        <input type="submit" value="Logout"/>
+    </form>
+
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/admin}">Show Users</a>
+    </div>
+
+</header>
+
+</body>
+</html>

@@ -26,12 +26,15 @@ public class DefaultSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // sallitaan h2-konsolin käyttö
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
-        
+
         http.authorizeRequests()
-                .antMatchers("/h2-console/*").permitAll()
+                .antMatchers("/index").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/admin").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
         http.formLogin()
-                .permitAll();
+                .permitAll()
+                .and()
+                .logout();
     }
 
     @Autowired
