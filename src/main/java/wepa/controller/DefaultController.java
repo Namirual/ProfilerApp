@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DefaultController {
     
     @RequestMapping("*")
-    @ResponseBody
     public String hello() {
-        return "Hello World!";
+        return "redirect:/index";
     }
 }
