@@ -8,13 +8,14 @@
 
 <header th:fragment="header">
     <a th:href="@{/index}">Home</a>
-    <form method="POST" th:action="@{/logout}" class="logout">
-        <input type="submit" value="Logout"/>
-    </form>
 
     <div sec:authorize="hasAuthority('ADMIN')">
         <a th:href="@{/admin}">Show Users</a>
     </div>
+
+    <form method="POST" th:action="@{/logout}" class="logout">
+        <input type="submit" value="Logout"/>
+    </form>
 
 </header>
 

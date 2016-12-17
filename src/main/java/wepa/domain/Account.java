@@ -1,25 +1,30 @@
 package wepa.domain;
 
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.validator.constraints.NotBlank;
+import wepa.repository.UUIDPersistable;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Account extends AbstractPersistable<Long> {
+public class Account extends UUIDPersistable {
 
     @NotNull
     @Column(unique=true)
     private String username;
-
+    @NotNull
+    @NotBlank
     private String password;
-
+    @OneToOne(fetch = FetchType.EAGER)
+    private Profile profile;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "reviewerAccount")
+    private List<Review> reviews;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities = new ArrayList<>();
 
@@ -47,7 +52,20 @@ public class Account extends AbstractPersistable<Long> {
         this.password = password;
     }
 
-    public String getAuthorityString() {
-        return authorities.toString();
+    public Profile getProfile() {
+        return profile;
     }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
 }

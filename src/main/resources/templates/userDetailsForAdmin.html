@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Profiler</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<header th:replace="fragments/header :: header">
+    <p>header with links etc</p>
+</header>
+<h1>Profile for user <span th:text="${account.username}"> Username </span> with authorities
+<span th:text="${account.authorities}">Authorities</span> </h1>
+<h2>Profile DBQuestions</h2>
+<table>
+    <tr>
+        <th>DBQuestion</th>
+        <th>Answer Options</th>
+        <th>Answer</th>
+    </tr>
+    <tr th:each="instance : ${DBQuestions}">
+        <td th:text="${instance.key.content}">Content</td>
+        <td th:text="${instance.key.answerOptionsAsString}">Answer Options</td>
+        <td th:text="${instance.value.answerText}">Answer</td>
+    </tr>
+</table>
+
+</body>
+</html>
