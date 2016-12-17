@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
     <meta charset="UTF-8"/>
-    <title>Tasks</title>
+    <title>Profiler</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
 </head>
 <body>
@@ -11,8 +11,9 @@
 </header>
 <h2>Registered users</h2>
 <ul>
-    <li th:each="account : ${accounts}"><span th:text="${account.username}">Username</span> --
-        <span th:text="${account.authorityString}">Authorities</span></li>
+    <li th:each="account : ${accounts}"><a th:href="@{/admin/users/{id}(id=${account.id})}">
+        <span th:text="${account.username}">Username</span></a>
+        -- <span th:text="${account.authorities}">Authorities</span></li>
 </ul>
 
 
