@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <title>Profiler</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    </head>
+
+    <body>
+        <h1>Profilointi tapahtuu tässä!</h1>
+
+        <h3 th:each="question, questNum : ${questions}">
+            <span th:text="${question.question}"/>
+            <select th:id="'question' + ${questNum.count}">
+                <option th:each="answer, ansNum : ${question.answers}" th:text="${answer}" th:value="${ansNum.count}">0</option>
+            </select>
+        </h3>
+        <b>
+            <input type="button" value="Send" onclick="sendAnswers();" />
+        </b>
+        <p>Hello <span sec:authentication="name">Bob</span>!</p>
+        <span th:text="'Vanhat vastaukset: ' + ${vastaukset}"/>
+
+        <script th:src="@{/javascript/javascript.js}"></script>
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+            <div>
+                <form th:if="${next}" method="GET" th:action="${next}">
+                    <input type="submit" value="Next" />
+                </form>
+
+                <form th:if="${previous}" method="GET" th:action="${previous}">
+                    <input type="submit" value="Previous" />
+                </form>
+            </div>
+
+    </body>
+</html>
