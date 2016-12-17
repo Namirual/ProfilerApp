@@ -31,8 +31,8 @@ public class DefaultInitService {
         Map<Integer, String> answeroptionMap = new HashMap<>();
         answeroptionMap.put(1, "Yes");
         answeroptionMap.put(2, "No");
-        Question question = questionService.createQuestion("Onko kivaa?", answeroptionMap);
-        System.out.println("Question's answeroptions: " + question.getAnswerOptions());
+        DBQuestion DBQuestion = questionService.createQuestion("Onko kivaa?", answeroptionMap);
+        System.out.println("DBQuestion's answeroptions: " + DBQuestion.getAnswerOptions());
         Account user = userService.createDefaultUserForTesting();
         Account admin = userService.createDefaultAdminForTesting();
         Profile profile = profileService.createProfileAndAssignToUser(user);
@@ -40,18 +40,18 @@ public class DefaultInitService {
         user = userService.findUser(user);
         System.out.println("Profile for user " + user + ": " + user.getProfile());
         System.out.println("Profile after creation: " + profile);
-        profile = profileService.assignQuestionToProfile(profile, question, question.getAnswerOptions().get(0));
+        profile = profileService.assignQuestionToProfile(profile, DBQuestion, DBQuestion.getAnswerOptions().get(0));
         System.out.println("ProfileQuestions for profile: " + profile.getProfileQuestions());
         System.out.println("Profilequestions.get(0)" + profile.getProfileQuestions().get(0));
-        System.out.println("First profileQuestion's Question for profile: " +
-                profile.getProfileQuestions().get(0).getQuestion());
-        System.out.println("First profileQuestion's Question's answeroptions for profile: " +
-                profile.getProfileQuestions().get(0).getQuestion().getAnswerOptions());
+        System.out.println("First profileQuestion's DBQuestion for profile: " +
+                profile.getProfileQuestions().get(0).getDBQuestion());
+        System.out.println("First profileQuestion's DBQuestion's answeroptions for profile: " +
+                profile.getProfileQuestions().get(0).getDBQuestion().getAnswerOptions());
         user = userService.findUser(user);
-        System.out.println("First profileQuestion's Question's answeroptions for profile of user " + user + ": " +
-                user.getProfile().getProfileQuestions().get(0).getQuestion().getAnswerOptions());
-        for (AnswerOption ao : user.getProfile().getProfileQuestions().get(0).getQuestion().getAnswerOptions()) {
-            System.out.println("First profileQuestion's Question's answeroption's answertext for profile of user " + user + ": " +
+        System.out.println("First profileQuestion's DBQuestion's answeroptions for profile of user " + user + ": " +
+                user.getProfile().getProfileQuestions().get(0).getDBQuestion().getAnswerOptions());
+        for (AnswerOption ao : user.getProfile().getProfileQuestions().get(0).getDBQuestion().getAnswerOptions()) {
+            System.out.println("First profileQuestion's DBQuestion's answeroption's answertext for profile of user " + user + ": " +
                     ao.getAnswerText());
         }
         System.out.println("First profileQuestion's answer's answertext for profile of user " + user + ": " +

@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wepa.domain.AnswerOption;
-import wepa.domain.ProfileQuestion;
-import wepa.domain.Question;
+import wepa.domain.DBQuestion;
 import wepa.repository.AnswerOptionRepository;
 import wepa.repository.QuestionRepository;
 
@@ -20,17 +19,17 @@ public class QuestionService {
     @Autowired
     private AnswerOptionRepository answerOptionRepository;
 
-//    public Question createQuestion(List<AnswerOption> answerOptions) {
-//        Question question = new Question();
+//    public DBQuestion createQuestion(List<AnswerOption> answerOptions) {
+//        DBQuestion question = new DBQuestion();
 //        question.setAnswerOptions(answerOptions);
 //        return questionRepository.save(question);
 //    }
     @Transactional
-    public Question createQuestion(String content, Map<Integer, String> answerOptionMap) {
+    public DBQuestion createQuestion(String content, Map<Integer, String> answerOptionMap) {
         List<AnswerOption> answerOptions = new ArrayList<>();
-        Question question = new Question();
-        question.setContent(content);
-        question = questionRepository.save(question);
+        DBQuestion DBQuestion = new DBQuestion();
+        DBQuestion.setContent(content);
+        DBQuestion = questionRepository.save(DBQuestion);
         for (Integer orderNumber : answerOptionMap.keySet()) {
             AnswerOption answerOption = new AnswerOption();
             answerOption = answerOptionRepository.save(answerOption);
@@ -38,14 +37,14 @@ public class QuestionService {
             System.out.println("AnswerText @ createQuestion(String content, Map<Integer, String> answerOptionMap): "
                     + answerOptionMap.get(orderNumber));
             answerOption.setAnswerText(answerOptionMap.get(orderNumber));
-            answerOption.setQuestion(question);
+            answerOption.setDBQuestion(DBQuestion);
             answerOption = answerOptionRepository.save(answerOption);
 
             answerOptions.add(answerOption);
         }
-        question.setAnswerOptions(answerOptions);
-        question = questionRepository.save(question);
-        System.out.println("Answer options for question @ QuestionService.createQuestion(Map<Integer, String> answerOptionMap) " + question.getAnswerOptions());
-        return question;
+        DBQuestion.setAnswerOptions(answerOptions);
+        DBQuestion = questionRepository.save(DBQuestion);
+        System.out.println("Answer options for DBQuestion @ QuestionService.createQuestion(Map<Integer, String> answerOptionMap) " + DBQuestion.getAnswerOptions());
+        return DBQuestion;
     }
 }

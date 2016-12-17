@@ -13,7 +13,7 @@ public class ProfileQuestion extends UUIDPersistable {
     private Profile profile;
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
-    private Question question;
+    private DBQuestion DBQuestion;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne
     private  AnswerOption answer;
@@ -34,11 +34,11 @@ public class ProfileQuestion extends UUIDPersistable {
         this.profile = profile;
     }
 
-    public Question getQuestion() {
-        return question;
+    public DBQuestion getDBQuestion() {
+        return DBQuestion;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setDBQuestion(DBQuestion DBQuestion) {
+        this.DBQuestion = DBQuestion;
     }
 }

@@ -11,14 +11,14 @@
 </header>
 <h1>Profile for user <span th:text="${account.username}"> Username </span> with authorities
 <span th:text="${account.authorities}">Authorities</span> </h1>
-<h2>Profile Questions</h2>
+<h2>Profile DBQuestions</h2>
 <table>
     <tr>
-        <th>Question</th>
+        <th>DBQuestion</th>
         <th>Answer Options</th>
         <th>Answer</th>
     </tr>
-    <tr th:each="instance : ${questions}">
+    <tr th:each="instance : ${DBQuestions}">
         <td th:text="${instance.key.content}">Content</td>
         <td th:text="${instance.key.answerOptionsAsString}">Answer Options</td>
         <td th:text="${instance.value.answerText}">Answer</td>

@@ -8,14 +8,14 @@ import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class Question extends UUIDPersistable {
+public class DBQuestion extends UUIDPersistable {
     private String content;
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "DBQuestion")
     private List<AnswerOption> answerOptions;
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "DBQuestion")
     private List<ProfileQuestion> profileQuestions;
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "DBQuestion")
     private List<ReviewQuestion> reviewQuestions;
 
     public List<AnswerOption> getAnswerOptions() {

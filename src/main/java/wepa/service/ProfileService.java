@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import wepa.domain.*;
 import wepa.repository.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -41,24 +40,24 @@ public class ProfileService {
         return profile;
     }
     @Transactional
-    public Profile assignQuestionToProfile(Profile profile, Question question, AnswerOption answer) {
-        System.out.println("Param Profile ID @ assignQuestionToProfile(Profile profile, Question question): " +
+    public Profile assignQuestionToProfile(Profile profile, DBQuestion DBQuestion, AnswerOption answer) {
+        System.out.println("Param Profile ID @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion): " +
         profile.getId());
         profile = profileRepository.findOne(profile.getId());
-        System.out.println("Param Answer @ assignQuestionToProfile(Profile profile, Question question, AnswerOption answer): " +
+        System.out.println("Param Answer @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion, AnswerOption answer): " +
         answer.getAnswerText());
         answer = answerOptionRepository.findOne(answer.getId());
-        System.out.println("Profile ID after repo find @ assignQuestionToProfile(Profile profile, Question question): "
+        System.out.println("Profile ID after repo find @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion): "
                 + profile.getId());
-        System.out.println("Param Question ID @ assignQuestionToProfile(Profile profile, Question question): "
-                + question.getId());
-        question = questionRepository.findOne(question.getId());
-        System.out.println("Question ID after repo save @ assignQuestionToProfile(Profile profile, Question question): "
-                + question.getId());
+        System.out.println("Param DBQuestion ID @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion): "
+                + DBQuestion.getId());
+        DBQuestion = questionRepository.findOne(DBQuestion.getId());
+        System.out.println("DBQuestion ID after repo save @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion): "
+                + DBQuestion.getId());
         ProfileQuestion profileQuestion = new ProfileQuestion();
         profileQuestion = profileQuestionRepository.save(profileQuestion);
         profileQuestion.setProfile(profile);
-        profileQuestion.setQuestion(question);
+        profileQuestion.setDBQuestion(DBQuestion);
         profileQuestion.setAnswer(answer);
         profileQuestion = profileQuestionRepository.save(profileQuestion);
         List<ProfileQuestion> profileQuestions = profile.getProfileQuestions();
@@ -67,14 +66,14 @@ public class ProfileService {
         return profileRepository.save(profile);
     }
     @Transactional
-    public Profile assignQuestionListToProfile(Profile profile, List<Question> questions) {
+    public Profile assignQuestionListToProfile(Profile profile, List<DBQuestion> DBQuestions) {
         profile = profileRepository.findOne(profile.getId());
         List<ProfileQuestion> profileQuestions = profile.getProfileQuestions();
-        for (Question question : questions) {
-            question = questionRepository.findOne(question.getId());
+        for (DBQuestion DBQuestion : DBQuestions) {
+            DBQuestion = questionRepository.findOne(DBQuestion.getId());
             ProfileQuestion profileQuestion = new ProfileQuestion();
             profileQuestion.setProfile(profile);
-            profileQuestion.setQuestion(question);
+            profileQuestion.setDBQuestion(DBQuestion);
             profileQuestion = profileQuestionRepository.save(profileQuestion);
             profileQuestions.add(profileQuestion);
         }

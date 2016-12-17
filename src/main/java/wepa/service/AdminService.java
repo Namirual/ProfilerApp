@@ -41,42 +41,42 @@ public class AdminService {
         return null;
     }
 
-    public List<Question> getQuestionsForProfileByUserId(String userId) {
-        List<Question> questions = new ArrayList<>();
+    public List<DBQuestion> getQuestionsForProfileByUserId(String userId) {
+        List<DBQuestion> DBQuestions = new ArrayList<>();
         Account user = accountRepository.findOne(userId);
         if(user.getProfile() != null) {
             List<ProfileQuestion> profileQuestions = user.getProfile().getProfileQuestions();
             for (ProfileQuestion profileQuestion : profileQuestions) {
-                questions.add(profileQuestion.getQuestion());
+                DBQuestions.add(profileQuestion.getDBQuestion());
             }
         }
-        System.out.println("Questions @ getQuestionsForProfileByUserId(String userId): " + questions);
-        for (Question q : questions) {
-            System.out.println("Question's content @ getQuestionsForProfileByUserId(String userId): " + q.getContent());
-            System.out.println("Question's answer options @ getQuestionsForProfileByUserId(String userId): "
+        System.out.println("DBQuestions @ getQuestionsForProfileByUserId(String userId): " + DBQuestions);
+        for (DBQuestion q : DBQuestions) {
+            System.out.println("DBQuestion's content @ getQuestionsForProfileByUserId(String userId): " + q.getContent());
+            System.out.println("DBQuestion's answer options @ getQuestionsForProfileByUserId(String userId): "
                     + q.getAnswerOptions());
         }
 
-        return questions;
+        return DBQuestions;
     }
 
-    public Map<Question, AnswerOption> getQuestionsAndAnswersForProfileByUserId(String userId) {
-        Map<Question, AnswerOption> questionsAndAnswers = new HashMap<>();
+    public Map<DBQuestion, AnswerOption> getQuestionsAndAnswersForProfileByUserId(String userId) {
+        Map<DBQuestion, AnswerOption> questionsAndAnswers = new HashMap<>();
         Account user = accountRepository.findOne(userId);
         if(user.getProfile() != null) {
             List<ProfileQuestion> profileQuestions = user.getProfile().getProfileQuestions();
             for (ProfileQuestion profileQuestion : profileQuestions) {
-                System.out.println("Profilequestion's question: " + profileQuestion.getQuestion().getContent());
+                System.out.println("Profilequestion's question: " + profileQuestion.getDBQuestion().getContent());
                 System.out.println("Profilequestion's Answer: " + profileQuestion.getAnswer().getAnswerText());
-                questionsAndAnswers.put(profileQuestion.getQuestion(), profileQuestion.getAnswer());
+                questionsAndAnswers.put(profileQuestion.getDBQuestion(), profileQuestion.getAnswer());
             }
         }
         System.out.println("Questions @ getQuestionsForProfileByUserId(String userId): " + questionsAndAnswers.keySet());
-        for (Question q : questionsAndAnswers.keySet()) {
-            System.out.println("Question's content @ getQuestionsForProfileByUserId(String userId): " + q.getContent());
-            System.out.println("Question's answer options @ getQuestionsForProfileByUserId(String userId): "
+        for (DBQuestion q : questionsAndAnswers.keySet()) {
+            System.out.println("DBQuestion's content @ getQuestionsForProfileByUserId(String userId): " + q.getContent());
+            System.out.println("DBQuestion's answer options @ getQuestionsForProfileByUserId(String userId): "
                     + q.getAnswerOptions());
-            System.out.println("Question's answer @ getQuestionsForProfileByUserId(String userId): "
+            System.out.println("DBQuestion's answer @ getQuestionsForProfileByUserId(String userId): "
                     + questionsAndAnswers.get(q));
         }
 
