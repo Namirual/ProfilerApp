@@ -1,4 +1,7 @@
 function sendAnswers() {
+    var header = $("meta[name='csrf_header']").attr("content");
+    var token = $("meta[name='csrf-token']").attr("content");
+
     var dataToSend = JSON.stringify({
         sender: "not implemented",
         answer: getAnswers()
@@ -9,6 +12,9 @@ function sendAnswers() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         type: 'post',
+
+        beforeSend: function(xhr){xhr.setRequestHeader(header, token);},
+
         data: dataToSend
     });
 
