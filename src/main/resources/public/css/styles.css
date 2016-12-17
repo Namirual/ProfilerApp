@@ -1,0 +1,6 @@
+header * {
+    display: inline;
+}
+.logout {
+    float: right;
+}
