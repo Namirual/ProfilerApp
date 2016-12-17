@@ -24,7 +24,7 @@ public class DefaultSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // sallitaan h2-konsolin käyttö
-        http.csrf().disable();
+        http.csrf();
         http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()

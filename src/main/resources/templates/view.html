@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head lang="en">
         <meta charset="UTF-8"/>
+	<meta th:content="${_csrf.headerName}" name="csrf_header" />
+        <meta th:content="${_csrf.token}" name="csrf-token" />
         <title>Profiler</title>
         <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     </head>
