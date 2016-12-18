@@ -32,7 +32,14 @@ public class ProfileService {
         }
         System.out.println("Account after repo find @ createProfileAndAssignToUser(Account account)" + account);
         System.out.println("Account ID after repo find @ createProfileAndAssignToUser(Account account)" + account.getId());
-        Profile profile = new Profile();
+        Profile profile = null;
+        while(profile == null) {
+            try {
+                profile = new Profile();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
         profile = profileRepository.save(profile);
         account.setProfile(profile);
         account = accountRepository.save(account);

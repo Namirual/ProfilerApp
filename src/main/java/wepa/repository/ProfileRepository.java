@@ -7,6 +7,6 @@ import wepa.domain.Profile;
 public interface ProfileRepository extends JpaRepository<Profile, String>{
     public Profile findByOwnerAccount(Account ownerAccount);
     public Profile findFirstByOrderByCreationTimeInMillisDesc();
-    Profile findFirstByCreationTimeInMillisGreaterThanEqual(Long creationTime);
-    Profile findFirstByCreationTimeInMillisLessThanEqual(Long creationTime);
+    Profile findFirstByCreationTimeInMillisGreaterThan(Long creationTime);
+    Profile findFirstByCreationTimeInMillisLessThan(Long creationTime);
 }
