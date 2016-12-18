@@ -27,9 +27,14 @@ public class QuestionService {
     @Transactional
     public DBQuestion createQuestion(String content, Map<Integer, String> answerOptionMap) {
         List<AnswerOption> answerOptions = new ArrayList<>();
-        DBQuestion DBQuestion = new DBQuestion();
-        DBQuestion.setContent(content);
-        DBQuestion = questionRepository.save(DBQuestion);
+        DBQuestion dbQuestion = null;
+        if(questionRepository.findByContent(content) != null) {
+            return questionRepository.findByContent(content);
+
+        }
+        dbQuestion = new DBQuestion();
+        dbQuestion.setContent(content);
+        dbQuestion = questionRepository.save(dbQuestion);
         for (Integer orderNumber : answerOptionMap.keySet()) {
             AnswerOption answerOption = new AnswerOption();
             answerOption = answerOptionRepository.save(answerOption);
@@ -37,14 +42,14 @@ public class QuestionService {
             System.out.println("AnswerText @ createQuestion(String content, Map<Integer, String> answerOptionMap): "
                     + answerOptionMap.get(orderNumber));
             answerOption.setAnswerText(answerOptionMap.get(orderNumber));
-            answerOption.setDBQuestion(DBQuestion);
+            answerOption.setDbQuestion(dbQuestion);
             answerOption = answerOptionRepository.save(answerOption);
 
             answerOptions.add(answerOption);
         }
-        DBQuestion.setAnswerOptions(answerOptions);
-        DBQuestion = questionRepository.save(DBQuestion);
-        System.out.println("Answer options for DBQuestion @ QuestionService.createQuestion(Map<Integer, String> answerOptionMap) " + DBQuestion.getAnswerOptions());
-        return DBQuestion;
+        dbQuestion.setAnswerOptions(answerOptions);
+        dbQuestion = questionRepository.save(dbQuestion);
+        System.out.println("Answer options for dbQuestion @ QuestionService.createQuestion(Map<Integer, String> answerOptionMap) " + dbQuestion.getAnswerOptions());
+        return dbQuestion;
     }
 }

@@ -47,7 +47,7 @@ public class AdminService {
         if(user.getProfile() != null) {
             List<ProfileQuestion> profileQuestions = user.getProfile().getProfileQuestions();
             for (ProfileQuestion profileQuestion : profileQuestions) {
-                DBQuestions.add(profileQuestion.getDBQuestion());
+                DBQuestions.add(profileQuestion.getDbQuestion());
             }
         }
         System.out.println("DBQuestions @ getQuestionsForProfileByUserId(String userId): " + DBQuestions);
@@ -66,9 +66,9 @@ public class AdminService {
         if(user.getProfile() != null) {
             List<ProfileQuestion> profileQuestions = user.getProfile().getProfileQuestions();
             for (ProfileQuestion profileQuestion : profileQuestions) {
-                System.out.println("Profilequestion's question: " + profileQuestion.getDBQuestion().getContent());
+                System.out.println("Profilequestion's question: " + profileQuestion.getDbQuestion().getContent());
                 System.out.println("Profilequestion's Answer: " + profileQuestion.getAnswer().getAnswerText());
-                questionsAndAnswers.put(profileQuestion.getDBQuestion(), profileQuestion.getAnswer());
+                questionsAndAnswers.put(profileQuestion.getDbQuestion(), profileQuestion.getAnswer());
             }
         }
         System.out.println("Questions @ getQuestionsForProfileByUserId(String userId): " + questionsAndAnswers.keySet());

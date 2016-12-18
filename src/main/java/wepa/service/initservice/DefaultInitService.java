@@ -44,13 +44,13 @@ public class DefaultInitService {
         System.out.println("ProfileQuestions for profile: " + profile.getProfileQuestions());
         System.out.println("Profilequestions.get(0)" + profile.getProfileQuestions().get(0));
         System.out.println("First profileQuestion's DBQuestion for profile: " +
-                profile.getProfileQuestions().get(0).getDBQuestion());
+                profile.getProfileQuestions().get(0).getDbQuestion());
         System.out.println("First profileQuestion's DBQuestion's answeroptions for profile: " +
-                profile.getProfileQuestions().get(0).getDBQuestion().getAnswerOptions());
+                profile.getProfileQuestions().get(0).getDbQuestion().getAnswerOptions());
         user = userService.findUser(user);
         System.out.println("First profileQuestion's DBQuestion's answeroptions for profile of user " + user + ": " +
-                user.getProfile().getProfileQuestions().get(0).getDBQuestion().getAnswerOptions());
-        for (AnswerOption ao : user.getProfile().getProfileQuestions().get(0).getDBQuestion().getAnswerOptions()) {
+                user.getProfile().getProfileQuestions().get(0).getDbQuestion().getAnswerOptions());
+        for (AnswerOption ao : user.getProfile().getProfileQuestions().get(0).getDbQuestion().getAnswerOptions()) {
             System.out.println("First profileQuestion's DBQuestion's answeroption's answertext for profile of user " + user + ": " +
                     ao.getAnswerText());
         }
