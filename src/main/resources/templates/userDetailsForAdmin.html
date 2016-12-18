@@ -14,11 +14,11 @@
 <h2>Profile DBQuestions</h2>
 <table>
     <tr>
-        <th>DBQuestion</th>
+        <th>dbQuestion</th>
         <th>Answer Options</th>
         <th>Answer</th>
     </tr>
-    <tr th:each="instance : ${DBQuestions}">
+    <tr th:each="instance : ${questions}">
         <td th:text="${instance.key.content}">Content</td>
         <td th:text="${instance.key.answerOptionsAsString}">Answer Options</td>
         <td th:text="${instance.value.answerText}">Answer</td>

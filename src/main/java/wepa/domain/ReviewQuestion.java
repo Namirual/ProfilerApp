@@ -11,7 +11,7 @@ public class ReviewQuestion extends UUIDPersistable {
     private Review review;
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
-    private DBQuestion DBQuestion;
+    private DBQuestion dbQuestion;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne
     private  AnswerOption reviewAnswer;
@@ -27,12 +27,12 @@ public class ReviewQuestion extends UUIDPersistable {
         this.review = review;
     }
 
-    public DBQuestion getDBQuestion() {
-        return DBQuestion;
+    public DBQuestion getDbQuestion() {
+        return dbQuestion;
     }
 
-    public void setDBQuestion(DBQuestion DBQuestion) {
-        this.DBQuestion = DBQuestion;
+    public void setDbQuestion(DBQuestion dbQuestion) {
+        this.dbQuestion = dbQuestion;
     }
 
     public AnswerOption getReviewAnswer() {

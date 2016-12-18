@@ -23,9 +23,13 @@ public class ProfileService {
     private AccountRepository accountRepository;
     @Autowired
     private AnswerOptionRepository answerOptionRepository;
+
     @Transactional
     public Profile createProfileAndAssignToUser(Account account) {
         account = accountRepository.findOne(account.getId());
+        if (account == null) {
+            return null;
+        }
         System.out.println("Account after repo find @ createProfileAndAssignToUser(Account account)" + account);
         System.out.println("Account ID after repo find @ createProfileAndAssignToUser(Account account)" + account.getId());
         Profile profile = new Profile();
@@ -39,25 +43,36 @@ public class ProfileService {
                 " after repo save @ createProfileAndAssignToUser(Account account): " + account.getProfile());
         return profile;
     }
+
     @Transactional
-    public Profile assignQuestionToProfile(Profile profile, DBQuestion DBQuestion, AnswerOption answer) {
-        System.out.println("Param Profile ID @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion): " +
-        profile.getId());
+    public Profile assignQuestionToProfile(Profile profile, DBQuestion dbQuestion, AnswerOption answer) {
+        System.out.println("Param Profile ID @ assignQuestionToProfile(Profile profile, dbQuestion dbQuestion): " +
+                profile.getId());
         profile = profileRepository.findOne(profile.getId());
-        System.out.println("Param Answer @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion, AnswerOption answer): " +
-        answer.getAnswerText());
+        if (profile == null) {
+            return null;
+        }
+        System.out.println("Param Answer @ assignQuestionToProfile(Profile profile, dbQuestion dbQuestion, AnswerOption answer): " +
+                answer.getAnswerText());
         answer = answerOptionRepository.findOne(answer.getId());
-        System.out.println("Profile ID after repo find @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion): "
+        if (answer == null) {
+            return null;
+        }
+        System.out.println("Profile ID after repo find @ assignQuestionToProfile(Profile profile, dbQuestion dbQuestion): "
                 + profile.getId());
-        System.out.println("Param DBQuestion ID @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion): "
-                + DBQuestion.getId());
-        DBQuestion = questionRepository.findOne(DBQuestion.getId());
-        System.out.println("DBQuestion ID after repo save @ assignQuestionToProfile(Profile profile, DBQuestion DBQuestion): "
-                + DBQuestion.getId());
+        System.out.println("Param dbQuestion ID @ assignQuestionToProfile(Profile profile, dbQuestion dbQuestion): "
+                + dbQuestion.getId());
+        dbQuestion = questionRepository.findOne(dbQuestion.getId());
+        if (dbQuestion == null) {
+            return null;
+        }
+
+        System.out.println("dbQuestion ID after repo save @ assignQuestionToProfile(Profile profile, dbQuestion dbQuestion): "
+                + dbQuestion.getId());
         ProfileQuestion profileQuestion = new ProfileQuestion();
         profileQuestion = profileQuestionRepository.save(profileQuestion);
         profileQuestion.setProfile(profile);
-        profileQuestion.setDBQuestion(DBQuestion);
+        profileQuestion.setDbQuestion(dbQuestion);
         profileQuestion.setAnswer(answer);
         profileQuestion = profileQuestionRepository.save(profileQuestion);
         List<ProfileQuestion> profileQuestions = profile.getProfileQuestions();
@@ -65,6 +80,7 @@ public class ProfileService {
         profile.setProfileQuestions(profileQuestions);
         return profileRepository.save(profile);
     }
+
     @Transactional
     public Profile assignQuestionListToProfile(Profile profile, List<DBQuestion> DBQuestions) {
         profile = profileRepository.findOne(profile.getId());
@@ -73,7 +89,7 @@ public class ProfileService {
             DBQuestion = questionRepository.findOne(DBQuestion.getId());
             ProfileQuestion profileQuestion = new ProfileQuestion();
             profileQuestion.setProfile(profile);
-            profileQuestion.setDBQuestion(DBQuestion);
+            profileQuestion.setDbQuestion(DBQuestion);
             profileQuestion = profileQuestionRepository.save(profileQuestion);
             profileQuestions.add(profileQuestion);
         }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class AnswerOption extends UUIDPersistable {
     @ManyToOne
-    private DBQuestion DBQuestion;
+    private DBQuestion dbQuestion;
     @OneToOne(mappedBy = "answer", fetch = FetchType.EAGER)
     private ProfileQuestion profileQuestion;
     private String answerText;
@@ -37,12 +37,12 @@ public class AnswerOption extends UUIDPersistable {
         this.orderNumber = orderNumber;
     }
 
-    public DBQuestion getDBQuestion() {
-        return DBQuestion;
+    public DBQuestion getDbQuestion() {
+        return dbQuestion;
     }
 
-    public void setDBQuestion(DBQuestion DBQuestion) {
-        this.DBQuestion = DBQuestion;
+    public void setDbQuestion(DBQuestion dbQuestion) {
+        this.dbQuestion = dbQuestion;
     }
 
 }

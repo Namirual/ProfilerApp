@@ -3,19 +3,22 @@ package wepa.domain;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import wepa.repository.UUIDPersistable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
 public class DBQuestion extends UUIDPersistable {
+    @Column(unique = true)
     private String content;
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "DBQuestion")
+    @OneToMany(mappedBy = "dbQuestion")
     private List<AnswerOption> answerOptions;
-    @OneToMany(mappedBy = "DBQuestion")
+    @OneToMany(mappedBy = "dbQuestion")
     private List<ProfileQuestion> profileQuestions;
-    @OneToMany(mappedBy = "DBQuestion")
+    @OneToMany(mappedBy = "dbQuestion")
     private List<ReviewQuestion> reviewQuestions;
 
     public List<AnswerOption> getAnswerOptions() {
