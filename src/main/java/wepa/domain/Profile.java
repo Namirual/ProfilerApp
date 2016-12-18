@@ -5,10 +5,12 @@ import org.hibernate.annotations.LazyCollectionOption;
 import wepa.repository.UUIDPersistable;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
 public class Profile extends UUIDPersistable {
+    private final Long creationTimeInMillis = Calendar.getInstance().getTimeInMillis();
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(mappedBy = "profile")
     private Account ownerAccount;
@@ -44,5 +46,9 @@ public class Profile extends UUIDPersistable {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Long getCreationTimeInMillis() {
+        return creationTimeInMillis;
     }
 }

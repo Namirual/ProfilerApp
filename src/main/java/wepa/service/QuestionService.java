@@ -29,12 +29,14 @@ public class QuestionService {
         List<AnswerOption> answerOptions = new ArrayList<>();
         DBQuestion dbQuestion = null;
         if(questionRepository.findByContent(content) != null) {
-            return questionRepository.findByContent(content);
+            dbQuestion = questionRepository.findByContent(content);
 
+        } else {
+            dbQuestion = new DBQuestion();
+            dbQuestion.setContent(content);
+            dbQuestion = questionRepository.save(dbQuestion);
         }
-        dbQuestion = new DBQuestion();
-        dbQuestion.setContent(content);
-        dbQuestion = questionRepository.save(dbQuestion);
+
         for (Integer orderNumber : answerOptionMap.keySet()) {
             AnswerOption answerOption = new AnswerOption();
             answerOption = answerOptionRepository.save(answerOption);

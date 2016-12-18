@@ -49,6 +49,7 @@ public class ProfileService {
         System.out.println("Param Profile ID @ assignQuestionToProfile(Profile profile, dbQuestion dbQuestion): " +
                 profile.getId());
         profile = profileRepository.findOne(profile.getId());
+
         if (profile == null) {
             return null;
         }
