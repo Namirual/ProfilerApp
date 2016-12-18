@@ -9,6 +9,7 @@ import wepa.repository.UUIDPersistable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,7 @@ public class Account extends UUIDPersistable {
     @NotNull
     @Column(unique=true)
     private String username;
+    private final Long creationTimeInMillis = Calendar.getInstance().getTimeInMillis();
     @NotNull
     @NotBlank
     private String password;
@@ -67,5 +69,10 @@ public class Account extends UUIDPersistable {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+    public Long getCreationTimeInMillis() {
+        return creationTimeInMillis;
+    }
+
 
 }

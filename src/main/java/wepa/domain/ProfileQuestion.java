@@ -4,6 +4,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import wepa.repository.UUIDPersistable;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -40,5 +42,15 @@ public class ProfileQuestion extends UUIDPersistable {
 
     public void setDbQuestion(DBQuestion dbQuestion) {
         this.dbQuestion = dbQuestion;
+    }
+    public String getQuestion() {
+        return dbQuestion.getContent();
+    }
+    public List<String> getAnswers() {
+        List<String> answers = new ArrayList<>();
+        for (AnswerOption a : dbQuestion.getAnswerOptions()) {
+            answers.add(a.getAnswerText());
+        }
+        return answers;
     }
 }
