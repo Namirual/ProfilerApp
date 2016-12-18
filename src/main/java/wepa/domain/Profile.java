@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 public class Profile extends UUIDPersistable {
+    @Column(unique = true)
     private final Long creationTimeInMillis = Calendar.getInstance().getTimeInMillis();
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(mappedBy = "profile")
@@ -51,4 +52,5 @@ public class Profile extends UUIDPersistable {
     public Long getCreationTimeInMillis() {
         return creationTimeInMillis;
     }
+
 }
