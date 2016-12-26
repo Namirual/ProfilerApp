@@ -3,6 +3,7 @@ package wepa.controller;
 import java.util.Arrays;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,9 @@ public class DefaultController {
 
     @Autowired
     private AccountRepository accountRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     @ModelAttribute
     private Account getAccount() {
@@ -42,6 +46,9 @@ public class DefaultController {
             return "signup";
         }
         account.setAuthorities(Arrays.asList("USER"));
+        // encode the user's password
+        String password = account.getPassword();
+        account.setPassword(passwordEncoder.encode(password));
         accountRepository.save(account);
         System.out.println("GG user added: " + account.getEmail());
         return "redirect:/";
