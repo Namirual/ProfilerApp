@@ -11,8 +11,9 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+//@Service
 public class DefaultInitService {
+    /*
     @Autowired
     private UserService userService;
     @Autowired
@@ -123,5 +124,5 @@ public class DefaultInitService {
         }
     }
 
-
+*/
 }

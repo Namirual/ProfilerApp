@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import wepa.repository.AccountRepository;
 import wepa.service.AdminService;
 
-@Controller
-@RequestMapping("/admin")
+//@Controller
+//@RequestMapping("/admin")
 public class AdminController {
-
+/*
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
@@ -31,5 +31,5 @@ public class AdminController {
         model.addAttribute("profile", adminService.getProfileByUserId(id));
         model.addAttribute("questions", adminService.getQuestionsAndAnswersForProfileByUserId(id));
         return "userDetailsForAdmin";
-    }
+    }*/
 }

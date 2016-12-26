@@ -28,6 +28,7 @@ public class DefaultSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
+                .antMatchers("/signup").permitAll()
                 .antMatchers("/index").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
@@ -40,8 +41,6 @@ public class DefaultSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        auth.inMemoryAuthentication()
-                .withUser("jack").password("bauer").roles("USER");
     }
 
     @Bean

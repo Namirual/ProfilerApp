@@ -1,42 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wepa.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
-/**
- *
- * @author lmantyla
- */
-public class Question {
+// This class holds all the questions that can be added to any profile.
+// It also contains all the possible answer options to the question.
+
+@Entity
+public class Question extends AbstractPersistable<Long> {
     
-    String question;
-    List<String> answers;
+    @OneToMany
+    private List<AnswerOption> answerOptions;
+    
+    private String content;
 
+    // Argumentless constructor is mandatory. 
+    // TODO: Should answerOption be initilized here as well?
+    public Question() {   
+    }
+    
     public Question(String question) {
-        this.question = question;
-        this.answers = new ArrayList<String>();
+        this.content = question;
+        this.answerOptions = new ArrayList<>();
     }
 
-    public List<String> getAnswers() {
-        return answers;
+    public List<AnswerOption> getAnswerOptions() {
+        return answerOptions;
     }
 
-    public void setAnswers(List<String> answers) {
-        this.answers = answers;
+    public void setAnswerOptions(List<AnswerOption> answerOptions) {
+        this.answerOptions = answerOptions;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getContent() {
+        return content;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setContent(String content) {
+        this.content = content;
     }
-    
     
 }

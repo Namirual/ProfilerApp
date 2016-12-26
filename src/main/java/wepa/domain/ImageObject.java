@@ -1,15 +1,15 @@
-//package wepa.domain;
-//
-//import javax.persistence.Basic;
-//import javax.persistence.Entity;
-//import javax.persistence.FetchType;
-//import javax.persistence.Lob;
-//
-//import org.springframework.data.jpa.domain.AbstractPersistable;
-//import wepa.repository.UUIDPersistable;
-//
+package wepa.domain;
+
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
+
+import org.springframework.data.jpa.domain.AbstractPersistable;
+import wepa.repository.UUIDPersistable;
+
 //@Entity
-//public class ImageObject extends AbstractPersistable<Long> {
+public class ImageObject extends AbstractPersistable<Long> {
 //
 //    private String name;
 //    private String contentType;
@@ -51,4 +51,4 @@
 //        this.content = content;
 //    }
 //
-//}
+}

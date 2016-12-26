@@ -1,26 +1,24 @@
 package wepa.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import wepa.repository.UUIDPersistable;
-import javax.persistence.*;
+// Each instance of this class holds one response option for a particular
+// question. It is used both as the type for the correct answer and as the
+// type of the answer that each user gives.
 
 @Entity
-public class AnswerOption extends UUIDPersistable {
-    @ManyToOne
-    private DBQuestion dbQuestion;
-    @OneToOne(mappedBy = "answer", fetch = FetchType.EAGER)
-    private ProfileQuestion profileQuestion;
+public class AnswerOption extends AbstractPersistable<Long> {
+    
+    @ManyToOne //needs mappedby and join-column notations
+    private Question question;
+//    @OneToOne(mappedBy = "answer", fetch = FetchType.EAGER)
+//    private ProfileQuestion profileQuestion;
     private String answerText;
     private Integer orderNumber;
 
-    public ProfileQuestion getProfileQuestion() {
-        return profileQuestion;
-    }
-
-    public void setProfileQuestion(ProfileQuestion profileQuestion) {
-        this.profileQuestion = profileQuestion;
-    }
-
+    
     public String getAnswerText() {
         return answerText;
     }
@@ -37,12 +35,12 @@ public class AnswerOption extends UUIDPersistable {
         this.orderNumber = orderNumber;
     }
 
-    public DBQuestion getDbQuestion() {
-        return dbQuestion;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setDbQuestion(DBQuestion dbQuestion) {
-        this.dbQuestion = dbQuestion;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
 }

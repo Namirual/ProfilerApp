@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <title>Profiler</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    </head>
+    <body>
+        <header th:replace="fragments/header :: header">
+            <p>header with links etc</p>
+        </header>
+        <nav>
+
+        </nav>
+        <form action="#" th:action="@{/signup}" th:object="${account}" method="POST">
+            <p>
+            <input type="text" th:field="*{name}" placeholder="Name" />
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Virheviesti</span>
+            </p>
+            <p>
+            <input type="text" th:field="*{email}" placeholder="name@example.com" />
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Virheviesti</span>
+            </p>
+            <p>
+            <input type="text" th:field="*{username}" placeholder="Username" />
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Virheviesti</span>
+            </p>
+            <p>
+            <input type="text" th:field="*{password}" placeholder="Password" />
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Virheviesti</span>
+            </p>
+            <input type="submit" value="sign up" />
+        </form>
+    </body>
+</html>
