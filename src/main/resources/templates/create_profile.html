@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <title>Profiler</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    </head>
+
+    <body>
+        <h1>Select the questions for the profile</h1>
+
+        <form th:action="@{/createprofile}" method="POST">
+            <ul>
+                <li th:each="question : ${questions}">
+                    <input type="checkbox" th:id="${question.id}" name="questions" th:value="${question.id}"/>
+                    <label th:text="${question.content}">Question</label>
+                    <select name="answerId">
+                        <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${i.index}">0</option>
+                    </select>
+                </li>
+            </ul>
+            <input type="submit" value="Create"/>
+        </form>
+    </body>
+</html>
