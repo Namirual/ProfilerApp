@@ -51,4 +51,16 @@ public class QuestionService {
         //System.out.println("Answer options for dbQuestion @ QuestionService.createQuestion(Map<Integer, String> answerOptionMap) " + question.getAnswerOptions());
         return question;
     }
+    
+    public List<Question> findAllQuestions() {
+        return questionRepository.findAll();
+    }
+    
+    public Question findOneQuestion(Long id) {
+        return questionRepository.findOne(id);
+    }
+    
+    public List<Question> findManyQuestions(List<Long> id) {
+        return questionRepository.findByIdIn(id);
+    }
 }
