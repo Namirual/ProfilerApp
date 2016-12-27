@@ -75,6 +75,14 @@ public class ProfileService {
     public Profile findOne(Profile profile) {
         return profileRepository.findOne(profile.getId());
     }
+    
+    public List<Profile> findProfilesByAccount(Account account) {
+        return profileRepository.findByOwnerAccount(account);
+    }
+    
+    public Profile findProfileById(String id) {
+        return profileRepository.findOne(id);
+    }
 
     /*@Transactional
      public Profile assignQuestionToProfile(Profile profile, Question question, AnswerOption answer) {
