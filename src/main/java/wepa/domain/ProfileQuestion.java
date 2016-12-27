@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 // This class holds all the representations of the user-selected questions,
@@ -22,6 +23,7 @@ public class ProfileQuestion extends AbstractPersistable<Long> {
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
     private Question question;
     
+    @ManyToOne
     private AnswerOption correctAnswer;
 
  

@@ -9,6 +9,12 @@
     <body>
         <h1>Hello <span sec:authentication="name"></span></h1>
         
+        <ul th:each="profile : ${profiles}">
+            <li th:text="${profile.active} + ', boo'">
+                
+            </li>
+        </ul>
+        
         <a href="/createprofile">Create a new profile</a>
 
         
