@@ -22,7 +22,7 @@ public class AnswerService {
     @Autowired
     private ProfileRepository profileRepository;
     
-    public List<Answer> getAnswersForProfile(String profileId) {
+    public List<Answer> getAnswersForProfile(Long profileId) {
         Profile profile = profileRepository.findOne(profileId);
         List<ProfileQuestion> questions = profile.getProfileQuestions();
         List<Answer> answers = answerRepository.findByProfileQuestion(questions);

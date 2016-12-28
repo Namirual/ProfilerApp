@@ -99,9 +99,9 @@ public class ProfileRepositoryTest {
     public void profilesHaveUniqueCreationTimes() throws Exception {
         List<Profile> profiles = profileRepository.findAll();
         assertNotEquals(profiles.get(0), profiles.get(1));
-        System.out.println("profile1 CT " + profile1.getCreationTimeInMillis());
-        System.out.println("profile2 CT " + profile2.getCreationTimeInMillis());
-        System.out.println("profile3 CT " + profile3.getCreationTimeInMillis());
+        System.out.println("profile1 CT " + profile1.getCreationTime());
+        System.out.println("profile2 CT " + profile2.getCreationTime());
+        System.out.println("profile3 CT " + profile3.getCreationTime());
         assertNotEquals(profiles.get(1), profiles.get(2));
         assertNotEquals(profiles.get(0), profiles.get(2));
 

@@ -2,14 +2,15 @@ package wepa.domain;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import wepa.repository.UUIDPersistable;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 // This is class holds all the questions associated with one profile.
 // It also holds information about the owner of the profile as well as of the
@@ -18,10 +19,10 @@ import javax.persistence.OneToMany;
 // the currently active one.
 
 @Entity
-public class Profile extends UUIDPersistable {
-    
-    @Column(unique = true)
-    private final Long creationTimeInMillis = Calendar.getInstance().getTimeInMillis();
+public class Profile extends AbstractPersistable<Long> {
+          
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationTime;
     
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
@@ -59,10 +60,6 @@ public class Profile extends UUIDPersistable {
         this.profileQuestions.add(question);
     }
 
-    public Long getCreationTimeInMillis() {
-        return creationTimeInMillis;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -78,5 +75,15 @@ public class Profile extends UUIDPersistable {
     public void setProfilePic(ImageObject profilePic) {
         this.profilePic = profilePic;
     }
+
+    public Date getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Date creationTime) {
+        this.creationTime = creationTime;
+    }
+    
+    
 
 }

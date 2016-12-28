@@ -5,14 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import wepa.domain.Account;
 import wepa.domain.Profile;
 
-public interface ProfileRepository extends JpaRepository<Profile, String>{
+public interface ProfileRepository extends JpaRepository<Profile, Long>{
     
     List<Profile> findByOwnerAccount(Account ownerAccount);
     
-    Profile findFirstByOrderByCreationTimeInMillisDesc();
+    Profile findFirstByIdGreaterThan(Long id);
     
-    Profile findFirstByCreationTimeInMillisGreaterThan(Long creationTime);
-    
-    Profile findFirstByCreationTimeInMillisLessThan(Long creationTime);
+    Profile findFirstByIdLessThan(Long id);
     
 }
