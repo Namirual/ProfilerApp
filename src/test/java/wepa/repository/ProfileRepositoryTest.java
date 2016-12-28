@@ -86,29 +86,29 @@ public class ProfileRepositoryTest {
     }
 
 
-    @Test
-    public void findFirstByOrderByCreationTimeInMillisDesc() throws Exception {
+//    @Test
+//    public void findFirstByOrderByCreationTimeInMillisDesc() throws Exception {
+//
+//    }
+//
+//    @Test
+//    public void findFirstByCreationTimeInMillisGreaterThan() throws Exception {
+//
+//    }
+//
+//    @Test
+//    public void findFirstByCreationTimeInMillisLessThan() throws Exception {
+//
+//    }
 
-    }
-
-    @Test
-    public void findFirstByCreationTimeInMillisGreaterThan() throws Exception {
-
-    }
-
-    @Test
-    public void findFirstByCreationTimeInMillisLessThan() throws Exception {
-
-    }
-
-    @Test
-    public void profilesHaveUniqueCreationTimes() throws Exception {
-        List<Profile> profiles = profileRepository.findAll();
-        assertNotEquals(profiles.get(0), profiles.get(1));
-        assertNotEquals(profiles.get(1), profiles.get(2));
-        assertNotEquals(profiles.get(0), profiles.get(2));
-
-    }
+//    @Test
+//    public void profilesHaveUniqueCreationTimes() throws Exception {
+//        List<Profile> profiles = profileRepository.findAll();
+//        assertNotEquals(profiles.get(0), profiles.get(1));
+//        assertNotEquals(profiles.get(1), profiles.get(2));
+//        assertNotEquals(profiles.get(0), profiles.get(2));
+//
+//    }
 
     private Profile safelyCreateAndSaveNewProfile() {
         Profile profile = new Profile();

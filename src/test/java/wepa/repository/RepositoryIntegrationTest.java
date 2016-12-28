@@ -9,10 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import wepa.domain.Account;
-import wepa.domain.Profile;
-import wepa.domain.ProfileQuestion;
-import wepa.domain.Question;
+import wepa.domain.*;
 import wepa.service.AnswerService;
 
 import static org.junit.Assert.*;
@@ -42,6 +39,11 @@ public class RepositoryIntegrationTest {
     private Question question1;
     private Question question2;
 
+    private AnswerOption answerOption1;
+    private AnswerOption answerOption2;
+    private AnswerOption answerOption3;
+    private AnswerOption answerOption4;
+
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
@@ -49,7 +51,9 @@ public class RepositoryIntegrationTest {
     @Autowired
     private ProfileQuestionRepository profileQuestionRepository;
     @Autowired
-    private AnswerService answerService;
+    private QuestionRepository questionRepository;
+    @Autowired
+    private AnswerOptionRepository answerOptionRepository;
 
 
     @Before
@@ -103,13 +107,56 @@ public class RepositoryIntegrationTest {
         profileQuestionRepository.save(profileQuestion3);
         profileQuestionRepository.save(profileQuestion4);
 
+        question1 = questionRepository.save(new Question("Onko kivaa?"));
+        question2 = questionRepository.save(new Question("Mitä kuuluu?"));
+
+        answerOption1 = answerOptionRepository.save(new AnswerOption());
+        answerOption2 = answerOptionRepository.save(new AnswerOption());
+        answerOption3 = answerOptionRepository.save(new AnswerOption());
+        answerOption4 = answerOptionRepository.save(new AnswerOption());
+
+        answerOption1.setAnswerText("Kyllä");
+        answerOption2.setAnswerText("Ei");
+        answerOption3.setAnswerText("Hyvää");
+        answerOption4.setAnswerText("Huonoa");
+
+        answerOption1.setQuestion(question1);
+        answerOption2.setQuestion(question1);
+        answerOption3.setQuestion(question2);
+        answerOption4.setQuestion(question2);
+
+        question1.setAnswerOptions(Arrays.asList(answerOption1, answerOption2));
+        question2.setAnswerOptions(Arrays.asList(answerOption3, answerOption4));
+
+        answerOption1 = answerOptionRepository.save(answerOption1);
+        answerOption2 = answerOptionRepository.save(answerOption2);
+        answerOption3 = answerOptionRepository.save(answerOption3);
+        answerOption4 = answerOptionRepository.save(answerOption4);
+
+        question1 = questionRepository.save(question1);
+        question2 = questionRepository.save(question2);
+
+        profileQuestion1.setQuestion(question1);
+        profileQuestion2.setQuestion(question2);
+        profileQuestion3.setQuestion(question1);
+        profileQuestion4.setQuestion(question2);
+
+        profileQuestionRepository.save(profileQuestion1);
+        profileQuestionRepository.save(profileQuestion2);
+        profileQuestionRepository.save(profileQuestion3);
+        profileQuestionRepository.save(profileQuestion4);
+
+
     }
 
     @After
     public void tearDown() throws Exception {
         profileQuestionRepository.deleteAll();
+        answerOptionRepository.deleteAll();
+        questionRepository.deleteAll();
         profileRepository.deleteAll();
         accountRepository.deleteAll();
+
     }
 
     @Test
@@ -138,5 +185,60 @@ public class RepositoryIntegrationTest {
         assertEquals(1, profileQuestions.size());
     }
 
+    @Test
+    public void profilesHaveCorrectProfileQuestionsAfterSave() throws Exception {
+        List<ProfileQuestion> profileQuestions = profile1.getProfileQuestions();
+        assertEquals(profileQuestion1.getId(), profileQuestions.get(0).getId());
 
+        profileQuestions = profile2.getProfileQuestions();
+        assertEquals(profileQuestion2.getId(), profileQuestions.get(0).getId());
+        assertEquals(profileQuestion3.getId(), profileQuestions.get(1).getId());
+
+        profileQuestions = profile3.getProfileQuestions();
+        assertEquals(profileQuestion4.getId(), profileQuestions.get(0).getId());
+    }
+
+    @Test
+    public void profileQuestionsHaveAQuestionAfterSave() throws Exception {
+        List<ProfileQuestion> profileQuestions = profileQuestionRepository.findAll();
+        for (ProfileQuestion pq : profileQuestions) {
+            assertNotNull(pq.getQuestion().getId());
+        }
+    }
+
+    @Test
+    public void profileQuestionsHaveCorrectQuestionsAfterSave() throws Exception {
+        ProfileQuestion pq = profileQuestionRepository.findOne(profileQuestion1.getId());
+        assertEquals(question1.getContent(), pq.getQuestion().getContent());
+
+        pq = profileQuestionRepository.findOne(profileQuestion2.getId());
+        assertEquals(question2.getContent(), pq.getQuestion().getContent());
+
+        pq = profileQuestionRepository.findOne(profileQuestion3.getId());
+        assertEquals(question1.getContent(), pq.getQuestion().getContent());
+
+        pq = profileQuestionRepository.findOne(profileQuestion4.getId());
+        assertEquals(question2.getContent(), pq.getQuestion().getContent());
+    }
+
+    @Test
+    public void accountsHaveQuestions() throws Exception {
+        Account account = accountRepository.findOne(pertti.getId());
+        assertNotNull(account.getProfiles().get(0).getProfileQuestions().get(0).getQuestion().getId());
+
+        account = accountRepository.findOne(martti.getId());
+        assertNotNull(account.getProfiles().get(0).getProfileQuestions().get(0).getQuestion().getId());
+    }
+
+    @Test
+    public void questionsHaveAnsweroptions() throws Exception {
+
+
+    }
+
+    @Test
+    public void answerOptionsHaveQuestions() throws Exception {
+
+
+    }
 }
