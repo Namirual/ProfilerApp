@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import wepa.domain.Answer;
 import wepa.domain.Question;
 
-@Controller
+//@Controller
 public class ViewController {
-
+/*
     List<String> vastaukset = new ArrayList<>();
 
     @RequestMapping(value = "/view/", method = RequestMethod.GET)
@@ -81,5 +81,5 @@ public class ViewController {
     public String postResult(@RequestBody Answer body, @PathVariable String id) {
         vastaukset.set(Integer.parseInt(id), body.getAnswer());
         return "";
-    }
+    }*/
 }

@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import wepa.domain.AnswerOption;
 
 
-public interface AnswerOptionRepository extends JpaRepository<AnswerOption, String> {
+public interface AnswerOptionRepository extends JpaRepository<AnswerOption, Long> {
 }

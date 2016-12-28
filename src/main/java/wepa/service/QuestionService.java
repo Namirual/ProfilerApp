@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wepa.domain.AnswerOption;
-import wepa.domain.DBQuestion;
 import wepa.repository.AnswerOptionRepository;
 import wepa.repository.QuestionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import wepa.domain.Question;
 
 @Service
 public class QuestionService {
+
     @Autowired
     private QuestionRepository questionRepository;
     @Autowired
@@ -25,31 +25,42 @@ public class QuestionService {
 //        return questionRepository.save(question);
 //    }
     @Transactional
-    public DBQuestion createQuestion(String content, Map<Integer, String> answerOptionMap) {
-        List<AnswerOption> answerOptions = new ArrayList<>();
-        DBQuestion dbQuestion = null;
-        if(questionRepository.findByContent(content) != null) {
+    public Question createQuestion(String content, List<String> optionTexts) {
+        // if the question already exists, don't create a duplicate.
+        if (questionRepository.findByContent(content) != null) {
             return questionRepository.findByContent(content);
-
         }
-        dbQuestion = new DBQuestion();
-        dbQuestion.setContent(content);
-        dbQuestion = questionRepository.save(dbQuestion);
-        for (Integer orderNumber : answerOptionMap.keySet()) {
+        Question question = new Question();
+        question.setContent(content);
+        
+        // create the array of answerOptions for this question
+        List<AnswerOption> answerOptions = new ArrayList<>();
+        for (String text : optionTexts) {
             AnswerOption answerOption = new AnswerOption();
+            answerOption.setOrderNumber(optionTexts.indexOf(text));
+            answerOption.setAnswerText(text);
+            answerOption.setQuestion(question);
+            
             answerOption = answerOptionRepository.save(answerOption);
-            answerOption.setOrderNumber(orderNumber);
-            System.out.println("AnswerText @ createQuestion(String content, Map<Integer, String> answerOptionMap): "
-                    + answerOptionMap.get(orderNumber));
-            answerOption.setAnswerText(answerOptionMap.get(orderNumber));
-            answerOption.setDbQuestion(dbQuestion);
-            answerOption = answerOptionRepository.save(answerOption);
-
             answerOptions.add(answerOption);
         }
-        dbQuestion.setAnswerOptions(answerOptions);
-        dbQuestion = questionRepository.save(dbQuestion);
-        System.out.println("Answer options for dbQuestion @ QuestionService.createQuestion(Map<Integer, String> answerOptionMap) " + dbQuestion.getAnswerOptions());
-        return dbQuestion;
+        
+        // add answerOptions and save the Question.
+        question.setAnswerOptions(answerOptions);
+        question = questionRepository.save(question);
+        //System.out.println("Answer options for dbQuestion @ QuestionService.createQuestion(Map<Integer, String> answerOptionMap) " + question.getAnswerOptions());
+        return question;
+    }
+    
+    public List<Question> findAllQuestions() {
+        return questionRepository.findAll();
+    }
+    
+    public Question findOneQuestion(Long id) {
+        return questionRepository.findOne(id);
+    }
+    
+    public List<Question> findManyQuestions(List<Long> id) {
+        return questionRepository.findByIdIn(id);
     }
 }

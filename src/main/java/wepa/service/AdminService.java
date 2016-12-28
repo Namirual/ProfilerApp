@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+//@Service
 public class AdminService {
-
+/*
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
@@ -81,5 +81,5 @@ public class AdminService {
         }
 
         return questionsAndAnswers;
-    }
+    }*/
 }

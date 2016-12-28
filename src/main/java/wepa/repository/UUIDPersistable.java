@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.data.domain.Persistable;
 
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -13,7 +12,6 @@ public abstract class UUIDPersistable implements Persistable<String> {
 
     @Id
     private String id;
-
     public UUIDPersistable() {
         this.id = UUID.randomUUID().toString();
     }

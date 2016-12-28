@@ -2,23 +2,41 @@ package wepa.domain;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import wepa.repository.UUIDPersistable;
-import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+// This is class holds all the questions associated with one profile.
+// It also holds information about the owner of the profile as well as of the
+// picture associated with this profile. Since one user can only have one active
+// profile at a time, it also has a boolean value to indicate if the profile is
+// the currently active one.
 
 @Entity
-public class Profile extends UUIDPersistable {
+public class Profile extends AbstractPersistable<Long> {
+          
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationTime;
+    
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToOne(mappedBy = "profile")
+    @ManyToOne
     private Account ownerAccount;
+    
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "profile")
     private List<ProfileQuestion> profileQuestions;
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "reviewedProfile")
-    private List<Review> reviews;
+    
+    private boolean active;
+    
+    private ImageObject profilePic;
 
+    
     public Account getOwnerAccount() {
         return ownerAccount;
     }
@@ -37,12 +55,35 @@ public class Profile extends UUIDPersistable {
     public void setProfileQuestions(List<ProfileQuestion> profileQuestions) {
         this.profileQuestions = profileQuestions;
     }
-
-    public List<Review> getReviews() {
-        return reviews;
+    
+    public void addProfileQuestion(ProfileQuestion question) {
+        this.profileQuestions.add(question);
     }
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
+    public boolean isActive() {
+        return active;
     }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public ImageObject getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(ImageObject profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public Date getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Date creationTime) {
+        this.creationTime = creationTime;
+    }
+    
+    
+
 }

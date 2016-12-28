@@ -1,35 +1,60 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wepa.domain;
 
-/**
- *
- * @author lmantyla
- */
-public class Answer {
-    String sender;
-    String answer;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.format.annotation.DateTimeFormat;
 
-    public Answer() {
+// This class holds the actual answers for each profile question. It tells to 
+// what question it answering and the person who posted this answer.
+
+@Entity
+public class Answer extends AbstractPersistable<Long> {
+    
+    @ManyToOne
+    private ProfileQuestion profileQuestion;
+    
+    private AnswerOption answer;
+    
+    @ManyToOne
+    private Account account;
+    
+    @DateTimeFormat
+    private Date postTime;
+
+    
+    public ProfileQuestion getProfileQuestion() {
+        return profileQuestion;
     }
 
-    public String getSender() {
-        return sender;
+    public void setProfileQuestion(ProfileQuestion profileQuestion) {
+        this.profileQuestion = profileQuestion;
     }
 
-    public String getAnswer() {
+    public AnswerOption getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(AnswerOption answer) {
         this.answer = answer;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public Account getAnswerer() {
+        return account;
     }
+
+    public void setAnswerer(Account answerer) {
+        this.account = answerer;
+    }
+
+    public Date getPostTime() {
+        return postTime;
+    }
+
+    public void setPostTime(Date postTime) {
+        this.postTime = postTime;
+    }
+    
 }
  

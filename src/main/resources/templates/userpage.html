@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <title>Profiler userpage</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    </head>
+
+    <body>
+        <h1>Hello <span sec:authentication="name"></span></h1>
+        
+        <ul th:each="profile : ${profiles}">
+            <li th:text="${profile.active} + ', boo'">
+                
+            </li>
+        </ul>
+        
+        <a href="/createprofile">Create a new profile</a>
+
+        
+    </body>
+</html>
