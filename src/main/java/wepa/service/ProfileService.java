@@ -54,7 +54,7 @@ public class ProfileService {
         return profile;
     }
 
-    public boolean setProfileActive(String profileId) {
+    public boolean setProfileActive(Long profileId) {
         Profile profile = profileRepository.findOne(profileId);
         if (profile == null) {
             return false;
@@ -80,7 +80,7 @@ public class ProfileService {
         return profileRepository.findByOwnerAccount(account);
     }
     
-    public Profile findProfileById(String id) {
+    public Profile findProfileById(Long id) {
         return profileRepository.findOne(id);
     }
 

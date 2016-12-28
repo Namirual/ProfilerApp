@@ -9,9 +9,9 @@ import wepa.repository.ProfileRepository;
 
 import java.util.List;
 
-@Service
+//@Service
 public class ViewService {
-    @Autowired
+    /*@Autowired
     private AccountRepository accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
@@ -37,5 +37,5 @@ public class ViewService {
         return profile.getProfileQuestions();
     }
 
-
+*/
 }

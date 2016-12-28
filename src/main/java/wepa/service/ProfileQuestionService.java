@@ -31,7 +31,7 @@ public class ProfileQuestionService {
     
     
     @Transactional
-    public ProfileQuestion assignQuestionToProfile(String profileId, Long questionId, Long answerId) {
+    public ProfileQuestion assignQuestionToProfile(Long profileId, Long questionId, Long answerId) {
         // Check that parameters are valid.
         if (!profileRepository.exists(profileId) || !questionRepository.exists(questionId) 
                 || !answerOptionRepository.exists(answerId)) {
