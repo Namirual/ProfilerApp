@@ -15,6 +15,7 @@ public class Answer extends AbstractPersistable<Long> {
     @ManyToOne
     private ProfileQuestion profileQuestion;
     
+    @ManyToOne
     private AnswerOption answer;
     
     @ManyToOne

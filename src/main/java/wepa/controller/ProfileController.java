@@ -69,6 +69,7 @@ public class ProfileController {
         if (userAnswered && user != profile.getOwnerAccount()) {
             List<Answer> userAns = answerService.getUserAnswersForProfile(id, user);
             for (Answer a : userAns) {
+                System.out.println(a.getAnswer().getAnswerText());
                 ownAns.add(a.getAnswer());
             }
         }
@@ -105,7 +106,29 @@ public class ProfileController {
     
     @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
     public String postAnswers(@PathVariable Long id, @RequestParam List<Integer> answerId) {
-        System.out.println(answerId);
+        // Get user authentication.
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        // Get the account
+        Account answerer = accountService.findAccountByUser(auth.getName());
+        // Get the profile
+        Profile profile = profileService.findProfileById(id);
+        // If there is no such profile, give some other page.
+        if (profile == null) {
+            return "redirect:/profiles/" + id;
+        }
+        // Get the ProfileQuestions
+        List<ProfileQuestion> profileQuestions = profile.getProfileQuestions();
+        // Get the AnswerOptions selected for each question
+        List<AnswerOption> answers = new ArrayList<>();
+        for (ProfileQuestion question : profileQuestions) {
+            List<AnswerOption> options = question.getQuestion().getAnswerOptions();
+            int questionInd = profileQuestions.indexOf(question);
+            int ansInd = answerId.get(questionInd);
+            AnswerOption ans = options.get(ansInd);
+            answers.add(ans);
+        }
+        // Save the actual answers to database
+        answerService.answerAllQuestions(answerer, profileQuestions, answers);
         return "redirect:/profiles/" + id;
     }
 }

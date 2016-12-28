@@ -27,7 +27,7 @@ public class AnswerService {
     public List<Answer> getAnswersForProfile(Long profileId) {
         Profile profile = profileRepository.findOne(profileId);
         List<ProfileQuestion> questions = profile.getProfileQuestions();
-        List<Answer> answers = answerRepository.findByProfileQuestion(questions);
+        List<Answer> answers = answerRepository.findByProfileQuestionIn(questions);
         return answers;
     }
     
@@ -43,7 +43,7 @@ public class AnswerService {
         Map<ProfileQuestion,Map<AnswerOption,Integer>> rateMap = new HashMap<>();
         Profile profile = profileRepository.findOne(profileId);
         List<ProfileQuestion> questions = profile.getProfileQuestions();
-        List<Answer> answers = answerRepository.findByProfileQuestion(questions);
+        List<Answer> answers = answerRepository.findByProfileQuestionIn(questions);
         // loop the questions
         for(ProfileQuestion question : questions) {
             // create a key for each question
@@ -58,7 +58,13 @@ public class AnswerService {
                     ansCount++;
                     // and map the question to an answerOption key, which
                     // maps to the number of answers with this option
-                    rateMap.get(question).put(answer.getAnswer(), rateMap.get(question).get(answer.getAnswer())+1);
+                    Map<AnswerOption,Integer> optionMap = rateMap.get(question);
+                    AnswerOption ans = answer.getAnswer();
+                    if(optionMap.get(ans)==null) {
+                        optionMap.put(ans, 1);
+                    } else {
+                        optionMap.put(ans, optionMap.get(ans)+1);
+                    }
                 }
             }
             // loop again trhough the answerOptions for this question
@@ -71,7 +77,8 @@ public class AnswerService {
     }
     
     public boolean hasUserAnswered(List<ProfileQuestion> questions, Account account) {
-        return answerRepository.findByProfileQuestionAndAccount(questions, account)!=null;
+        //System.out.println(answerRepository.findByProfileQuestionAndAccount(questions.get(0), account));
+        return answerRepository.findByProfileQuestionAndAccount(questions.get(0), account)!=null;
     }
     
     public Answer createAnswer(Account answerer, ProfileQuestion question, AnswerOption answer) {

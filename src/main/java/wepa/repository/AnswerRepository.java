@@ -8,7 +8,7 @@ import wepa.domain.ProfileQuestion;
 
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
     
-    List<Answer> findByProfileQuestion(List<ProfileQuestion> profileQuestion);
+    List<Answer> findByProfileQuestionIn(List<ProfileQuestion> profileQuestion);
     
     List<Answer> findByProfileQuestionAndAccount(List<ProfileQuestion> profileQuestion, Account account);
     
