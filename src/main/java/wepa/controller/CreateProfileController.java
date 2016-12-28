@@ -69,8 +69,8 @@ public class CreateProfileController {
             Long answer = options.get(answerId.get(qi)).getId();
             //Long answer = options.get(answerId.get(questionIndex.intValue()-1)).getId();
             profileQuestionService.assignQuestionToProfile(profile.getId(), questionIndex, answer);
-            System.out.println(question.getContent() + ", index: " + questionIndex);
-            System.out.println(options.get(answerId.get(qi)).getAnswerText());
+            //System.out.println(question.getContent() + ", index: " + questionIndex);
+            //System.out.println(options.get(answerId.get(qi)).getAnswerText());
         }
         return"redirect:/userpage";
     }

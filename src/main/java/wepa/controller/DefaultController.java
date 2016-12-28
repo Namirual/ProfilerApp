@@ -50,7 +50,7 @@ public class DefaultController {
         String password = account.getPassword();
         account.setPassword(passwordEncoder.encode(password));
         accountRepository.save(account);
-        System.out.println("GG user added: " + account.getEmail());
+        //System.out.println("GG user added: " + account.getEmail());
         return "redirect:/";
     }
 }
