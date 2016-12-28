@@ -1,5 +1,7 @@
 package wepa.domain;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotBlank;
 import wepa.repository.UUIDPersistable;
 import javax.validation.constraints.NotNull;
@@ -38,7 +40,7 @@ public class Account extends UUIDPersistable {
     private String password;
     
     private final Long creationTimeInMillis = Calendar.getInstance().getTimeInMillis();
-    
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "ownerAccount")
     private List<Profile> profiles;
     

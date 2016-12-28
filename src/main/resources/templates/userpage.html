@@ -10,8 +10,8 @@
         <h1>Hello <span sec:authentication="name"></span></h1>
         
         <ul th:each="profile : ${profiles}">
-            <li th:text="${profile.active} + ', boo'">
-                
+            <li>
+                <a th:href="@{/profiles/{id} (id=${profile.id})}">profile</a>
             </li>
         </ul>
         
