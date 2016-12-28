@@ -9,21 +9,37 @@
     <body>
         <h1>Profilointi tapahtuu tässä!</h1>
         <div th:unless="${ownans}">
-            <form th:action="@{/createprofile}" method="POST">
+            <form th:action="@{/profiles/{id}/answer (id=${id})}" method="POST">
                 <ul>
-                    <li th:each="question : ${questions}" th:id="${question.id}" th:text="${question.content}">
+                    <li th:each="question : ${questions}">
+                        <span th:id="${question.id}" th:text="${question.content}">Question</span>
                         <select name="answerId">
                             <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${i.index}">0</option>
                         </select>
                     </li>
                 </ul>
-                <input type="submit" value="Create"/>
+                <input type="submit" value="Submit answers"/>
             </form>
         </div>
         <div th:if="${ownans}">
-            <p>
-                Yo.
-            </p>
+                <ul>
+                    <li th:each="question, i : ${questions}">
+                        <span th:id="${question.id}" th:text="${question.content}">Question</span>
+                        <p>Your answer: <span th:text="${ownans[i.index].answerText}"> Answer</span></p>
+                    </li>
+                </ul>
+        </div>
+        <div th:unless="${options[0]==null}">
+                <ul>
+                    <li th:each="question, i : ${questions}">
+                        <span th:id="${question.id}" th:text="${question.content}">Question</span>
+                        <p><span th:text="${rates[i.index]}"></span>% said: 
+                            <span th:text="${options[i.index].answerText}"> Answer</span></p>
+                    </li>
+                </ul>
+        </div>
+        <div th:if="${options[0]==null}">
+            <p>This profile doesn't have reviews yet.</p>
         </div>
 
     </body>

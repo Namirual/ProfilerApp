@@ -1,7 +1,6 @@
 package wepa.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import wepa.domain.Account;
 import wepa.domain.Answer;
 import wepa.domain.AnswerOption;
@@ -99,7 +99,13 @@ public class ProfileController {
             model.addAttribute("ownans", ownAns);
         }
         // with the answer options.
-        model.addAttribute("profile", profile);
+        model.addAttribute("id", id);
         return "profile";
+    }
+    
+    @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
+    public String postAnswers(@PathVariable Long id, @RequestParam List<Integer> answerId) {
+        System.out.println(answerId);
+        return "redirect:/profiles/" + id;
     }
 }

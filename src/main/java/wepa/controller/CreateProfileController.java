@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wepa.domain.Account;
+import wepa.domain.AnswerOption;
 import wepa.domain.Profile;
 import wepa.domain.Question;
 import wepa.service.AccountService;
@@ -62,11 +63,14 @@ public class CreateProfileController {
         for (Question question : list) {
             // get index of the question
             Long questionIndex = question.getId();
+            int qi = list.indexOf(question);
             // get index of the answer
-            Long answer = question.getAnswerOptions().get(answerId.get(questionIndex.intValue()-1)).getId();
+            List<AnswerOption> options = question.getAnswerOptions();
+            Long answer = options.get(answerId.get(qi)).getId();
+            //Long answer = options.get(answerId.get(questionIndex.intValue()-1)).getId();
             profileQuestionService.assignQuestionToProfile(profile.getId(), questionIndex, answer);
             //System.out.println(question.getContent() + ", index: " + questionIndex);
-            //System.out.println(question.getAnswerOptions().get(answerId.get(questionIndex-1)).getAnswerText());
+            //System.out.println(options.get(answerId.get(qi)).getAnswerText());
         }
         return"redirect:/userpage";
     }
