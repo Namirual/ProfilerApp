@@ -3,6 +3,7 @@ package wepa.domain;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -12,7 +13,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Question extends AbstractPersistable<Long> {
     
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
     private List<AnswerOption> answerOptions;
     
     private String content;

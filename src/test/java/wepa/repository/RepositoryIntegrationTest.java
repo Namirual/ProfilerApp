@@ -102,10 +102,10 @@ public class RepositoryIntegrationTest {
         profile2.setProfileQuestions(Arrays.asList(profileQuestion2, profileQuestion3));
         profile3.setProfileQuestions(Arrays.asList(profileQuestion4));
 
-        profileQuestionRepository.save(profileQuestion1);
-        profileQuestionRepository.save(profileQuestion2);
-        profileQuestionRepository.save(profileQuestion3);
-        profileQuestionRepository.save(profileQuestion4);
+        profileQuestion1 = profileQuestionRepository.save(profileQuestion1);
+        profileQuestion2 = profileQuestionRepository.save(profileQuestion2);
+        profileQuestion3 = profileQuestionRepository.save(profileQuestion3);
+        profileQuestion4 = profileQuestionRepository.save(profileQuestion4);
 
         question1 = questionRepository.save(new Question("Onko kivaa?"));
         question2 = questionRepository.save(new Question("Mitä kuuluu?"));
@@ -140,6 +140,11 @@ public class RepositoryIntegrationTest {
         profileQuestion2.setQuestion(question2);
         profileQuestion3.setQuestion(question1);
         profileQuestion4.setQuestion(question2);
+
+        profileQuestion1.setCorrectAnswer(answerOption1);
+        profileQuestion2.setCorrectAnswer(answerOption3);
+        profileQuestion3.setCorrectAnswer(answerOption2);
+        profileQuestion4.setCorrectAnswer(answerOption4);
 
         profileQuestionRepository.save(profileQuestion1);
         profileQuestionRepository.save(profileQuestion2);
@@ -231,14 +236,46 @@ public class RepositoryIntegrationTest {
     }
 
     @Test
-    public void questionsHaveAnsweroptions() throws Exception {
+    public void questionsHaveAnswerOptions() throws Exception {
+        Question question = questionRepository.findOne(question1.getId());
+        assertNotNull(question.getAnswerOptions());
+        assertNotEquals(0, question.getAnswerOptions().size());
 
-
+        question = questionRepository.findOne(question2.getId());
+        assertNotNull(question.getAnswerOptions());
+        assertNotEquals(0, question.getAnswerOptions().size());
     }
 
     @Test
     public void answerOptionsHaveQuestions() throws Exception {
+        AnswerOption a = answerOptionRepository.findOne(answerOption1.getId());
+        assertNotNull(a.getQuestion().getId());
 
+        a = answerOptionRepository.findOne(answerOption2.getId());
+        assertNotNull(a.getQuestion().getId());
 
+        a = answerOptionRepository.findOne(answerOption3.getId());
+        assertNotNull(a.getQuestion().getId());
+
+        a = answerOptionRepository.findOne(answerOption4.getId());
+        assertNotNull(a.getQuestion().getId());
+
+    }
+
+    @Test
+    public void profileQuestionHasRightAnswer() throws Exception {
+//        profileQuestion1.setCorrectAnswer(answerOption1);
+//        profileQuestion2.setCorrectAnswer(answerOption3);
+//        profileQuestion3.setCorrectAnswer(answerOption2);
+//        profileQuestion4.setCorrectAnswer(answerOption4);
+
+        ProfileQuestion pq = profileQuestionRepository.findOne(profileQuestion1.getId());
+        assertEquals(pq.getCorrectAnswer().getId(), answerOption1.getId());
+        pq = profileQuestionRepository.findOne(profileQuestion2.getId());
+        assertEquals(pq.getCorrectAnswer().getId(), answerOption3.getId());
+        pq = profileQuestionRepository.findOne(profileQuestion3.getId());
+        assertEquals(pq.getCorrectAnswer().getId(), answerOption2.getId());
+        pq = profileQuestionRepository.findOne(profileQuestion4.getId());
+        assertEquals(pq.getCorrectAnswer().getId(), answerOption4.getId());
     }
 }
