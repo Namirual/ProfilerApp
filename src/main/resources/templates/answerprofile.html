@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <h1>Profilointi tapahtuu tässä!</h1>           
+        <h1>Profile this image!</h1>           
         <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
         <div th:unless="${ownans}">
             <form th:action="@{/profiles/{id}/answer (id=${id})}" method="POST">
@@ -22,26 +22,8 @@
                 <input type="submit" value="Submit answers"/>
             </form>
         </div>
-        <div th:if="${ownans}">
-                <ul>
-                    <li th:each="question, i : ${questions}">
-                        <span th:id="${question.id}" th:text="${question.content}">Question</span>
-                        <p>Your answer: <span th:text="${ownans[i.index].answerText}"> Answer</span></p>
-                    </li>
-                </ul>
-        </div>
-        <div th:unless="${options==null}">
-                <ul>
-                    <li th:each="question, i : ${questions}">
-                        <span th:id="${question.id}" th:text="${question.content}">Question</span>
-                        <p><span th:text="${rates[i.index]}"></span>% said: 
-                            <span th:text="${options[i.index].answerText}"> Answer</span></p>
-                    </li>
-                </ul>
-        </div>
-        <div th:if="${options==null}">
-            <p>This profile doesn't have reviews yet.</p>
-        </div>
-
+ 
+        <p>Submit answers to see how others have answered.</p>
+ 
     </body>
 </html>

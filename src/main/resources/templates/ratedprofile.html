@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <title>Profiler</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    </head>
+
+    <body>
+        <h1>Ratings for this profile!</h1>           
+        <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
+        <div>
+            <ul>
+                <li th:each="question, i : ${questions}">
+                    <span th:id="${question.id}" th:text="${question.content}">Question</span>
+                    <p>Your answer: <span th:text="${ownans[i.index].answerText}"> Answer</span></p>
+                    <p><span th:text="${rates[i.index]}"></span>% said: 
+                        <span th:text="${options[i.index].answerText}"> Answer</span></p>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

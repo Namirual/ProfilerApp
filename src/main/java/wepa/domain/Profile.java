@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -17,26 +18,24 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 // picture associated with this profile. Since one user can only have one active
 // profile at a time, it also has a boolean value to indicate if the profile is
 // the currently active one.
-
 @Entity
 public class Profile extends AbstractPersistable<Long> {
-          
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationTime;
-    
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
     private Account ownerAccount;
-    
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "profile")
     private List<ProfileQuestion> profileQuestions;
-    
-    private boolean active;
-    
-    private ImageObject profilePic;
 
-    
+    private boolean active;
+
+    private String profilePic;
+
     public Account getOwnerAccount() {
         return ownerAccount;
     }
@@ -55,7 +54,7 @@ public class Profile extends AbstractPersistable<Long> {
     public void setProfileQuestions(List<ProfileQuestion> profileQuestions) {
         this.profileQuestions = profileQuestions;
     }
-    
+
     public void addProfileQuestion(ProfileQuestion question) {
         this.profileQuestions.add(question);
     }
@@ -68,11 +67,11 @@ public class Profile extends AbstractPersistable<Long> {
         this.active = active;
     }
 
-    public ImageObject getProfilePic() {
+    public String getProfilePic() {
         return profilePic;
     }
 
-    public void setProfilePic(ImageObject profilePic) {
+    public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
 
@@ -83,7 +82,5 @@ public class Profile extends AbstractPersistable<Long> {
     public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
     }
-    
-    
 
 }
