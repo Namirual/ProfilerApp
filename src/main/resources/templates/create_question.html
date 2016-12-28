@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta th:content="${_csrf.headerName}" name="csrf_header" />
+        <meta th:content="${_csrf.token}" name="csrf-token" />
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Profiler - Add question</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    </head>
+    <body>
+        <div>Add question here: </div>
+
+        <b>
+            <input type="text" id="question" size="42" value="Question here" />
+        </b>    
+        <section id="answers">
+
+        </section>
+
+        <input type="button" value="Add answer" onclick="addAnswer();" />
+        <input type="button" value="Send" onclick="sendQuestion();" />
+
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <script th:src="@{/javascript/question.js}"></script>
+
+    </body>
+</html>
