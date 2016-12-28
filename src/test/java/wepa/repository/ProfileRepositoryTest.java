@@ -48,17 +48,23 @@ public class ProfileRepositoryTest {
         martti.setPassword("martinSalasana");
         accountRepository.save(martti);
 
-        profile1 = new Profile();
+        profile1 = safelyCreateAndSaveNewProfile();
+        profile2 = safelyCreateAndSaveNewProfile();
+        profile3 = safelyCreateAndSaveNewProfile();
+
+//        profile1 = new Profile();
+//        profile2 =  new Profile();
+//        profile3 =  new Profile();
+
         profile1.setActive(true);
         profile1.setOwnerAccount(pertti);
         profileRepository.save(profile1);
 
-        profile2 = new Profile();
+
         profile2.setActive(false);
         profile2.setOwnerAccount(pertti);
         profileRepository.save(profile2);
 
-        profile3 = new Profile();
         profile3.setActive(true);
         profile3.setOwnerAccount(martti);
         profileRepository.save(profile3);
@@ -99,11 +105,18 @@ public class ProfileRepositoryTest {
     public void profilesHaveUniqueCreationTimes() throws Exception {
         List<Profile> profiles = profileRepository.findAll();
         assertNotEquals(profiles.get(0), profiles.get(1));
-        System.out.println("profile1 CT " + profile1.getCreationTimeInMillis());
-        System.out.println("profile2 CT " + profile2.getCreationTimeInMillis());
-        System.out.println("profile3 CT " + profile3.getCreationTimeInMillis());
         assertNotEquals(profiles.get(1), profiles.get(2));
         assertNotEquals(profiles.get(0), profiles.get(2));
 
+    }
+
+    private Profile safelyCreateAndSaveNewProfile() {
+        Profile profile = new Profile();
+        try {
+            return profileRepository.save(profile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return safelyCreateAndSaveNewProfile();
+        }
     }
 }
