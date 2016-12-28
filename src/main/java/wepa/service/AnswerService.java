@@ -34,7 +34,7 @@ public class AnswerService {
     public List<Answer> getUserAnswersForProfile(Long profileId, Account account) {
         Profile profile = profileRepository.findOne(profileId);
         List<ProfileQuestion> questions = profile.getProfileQuestions();
-        List<Answer> answers = answerRepository.findByProfileQuestionAndAccount(questions, account);
+        List<Answer> answers = answerRepository.findByProfileQuestionInAndAccount(questions, account);
         return answers;
     }
     

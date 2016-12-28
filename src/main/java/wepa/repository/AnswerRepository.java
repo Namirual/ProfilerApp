@@ -10,7 +10,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     
     List<Answer> findByProfileQuestionIn(List<ProfileQuestion> profileQuestion);
     
-    List<Answer> findByProfileQuestionAndAccount(List<ProfileQuestion> profileQuestion, Account account);
+    List<Answer> findByProfileQuestionInAndAccount(List<ProfileQuestion> profileQuestion, Account account);
     
     List<Answer> findByProfileQuestion(ProfileQuestion profileQuestion);
     

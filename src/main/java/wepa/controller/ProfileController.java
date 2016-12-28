@@ -69,7 +69,6 @@ public class ProfileController {
         if (userAnswered && user != profile.getOwnerAccount()) {
             List<Answer> userAns = answerService.getUserAnswersForProfile(id, user);
             for (Answer a : userAns) {
-                System.out.println(a.getAnswer().getAnswerText());
                 ownAns.add(a.getAnswer());
             }
         }
