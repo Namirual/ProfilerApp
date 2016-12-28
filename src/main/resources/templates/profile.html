@@ -11,7 +11,8 @@
         <div th:unless="${ownans}">
             <form th:action="@{/createprofile}" method="POST">
                 <ul>
-                    <li th:each="question : ${questions}" th:id="${question.id}" th:text="${question.content}">
+                    <li th:each="question : ${questions}">
+                        <span th:id="${question.id}" th:text="${question.content}">Question</span>
                         <select name="answerId">
                             <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${i.index}">0</option>
                         </select>
