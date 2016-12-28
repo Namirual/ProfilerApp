@@ -16,11 +16,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class ProfileQuestion extends AbstractPersistable<Long> {
 
-    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+    @ManyToOne
     private Profile profile;
     
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+    @ManyToOne
     private Question question;
     
     @ManyToOne

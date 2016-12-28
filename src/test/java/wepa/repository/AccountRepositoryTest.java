@@ -77,22 +77,22 @@ public class AccountRepositoryTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    public void findFirstByOrderByCreationTimeInMillisDesc() throws Exception {
-        Account account = accountRepository.findFirstByOrderByCreationTimeInMillisDesc();
-        Long expected = martti.getCreationTimeInMillis();
-        Long actual = account.getCreationTimeInMillis();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void findFirstByCreationTimeInMillisGreaterThanEqual() throws Exception {
-
-    }
-
-    @Test
-    public void findFirstByCreationTimeInMillisLessThanEqual() throws Exception {
-
-    }
+//    @Test
+//    public void findFirstByOrderByCreationTimeInMillisDesc() throws Exception {
+//        Account account = accountRepository.findFirstByOrderByCreationTimeInMillisDesc();
+//        Long expected = martti.getCreationTimeInMillis();
+//        Long actual = account.getCreationTimeInMillis();
+//        assertEquals(expected, actual);
+//    }
+//
+//    @Test
+//    public void findFirstByCreationTimeInMillisGreaterThanEqual() throws Exception {
+//
+//    }
+//
+//    @Test
+//    public void findFirstByCreationTimeInMillisLessThanEqual() throws Exception {
+//
+//    }
 
 }

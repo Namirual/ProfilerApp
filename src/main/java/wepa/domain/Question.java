@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Question extends AbstractPersistable<Long> {
     
-    @OneToMany
+    @OneToMany(mappedBy = "question")
     private List<AnswerOption> answerOptions;
     
     private String content;
