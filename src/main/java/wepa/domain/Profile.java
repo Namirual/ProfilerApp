@@ -38,6 +38,7 @@ public class Profile extends AbstractPersistable<Long> {
     @OneToOne(fetch = FetchType.LAZY)
     private ImageObject profilePic;
 
+
     public Account getOwnerAccount() {
         return ownerAccount;
     }

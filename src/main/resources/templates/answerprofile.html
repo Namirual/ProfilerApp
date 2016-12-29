@@ -22,6 +22,11 @@
                 <input type="submit" value="Submit answers"/>
             </form>
         </div>
+        <div>
+            <a th:if="${previous!=null}" th:href="@{/profiles/{id} (id=${previous})}">PREVIOUS</a>
+            <a th:if="${next!=null}" th:href="@{/profiles/{id} (id=${next})}">NEXT</a>
+            <a th:if="${random!=null}" th:href="@{/profiles/{id} (id=${random})}">SKIP TO A RANDOM PROFILE</a>
+        </div>
  
         <p>Submit answers to see how others have answered.</p>
  

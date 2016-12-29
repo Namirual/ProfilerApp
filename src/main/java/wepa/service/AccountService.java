@@ -3,6 +3,7 @@ package wepa.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wepa.domain.Account;
+import wepa.domain.Profile;
 import wepa.repository.AccountRepository;
 
 // This class handles account creation
@@ -24,6 +25,12 @@ public class AccountService {
     
     public Account findAccountByUser(String username) {
         return accountRepository.findByUsername(username);
+    }
+    
+    public Account addAnswerToAccount(Account account, Profile profile) {
+        account.addAnsweredProfile(profile);
+        account = accountRepository.save(account);
+        return account;
     }
     
 }

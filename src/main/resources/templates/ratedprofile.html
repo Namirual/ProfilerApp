@@ -29,5 +29,10 @@
         <div th:if="${options==null}">
             <p>This profile doesn't have reviews yet.</p>
         </div>
+        <div>
+            <a th:if="${previous!=null}" th:href="@{/profiles/{id} (id=${previous})}">PREVIOUS</a>
+            <a th:if="${next!=null}" th:href="@{/profiles/{id} (id=${next})}">NEXT</a>
+            <a th:if="${random!=null}" th:href="@{/profiles/{id} (id=${random})}">RATE A RANDOM PROFILE</a>
+        </div>
     </body>
 </html>

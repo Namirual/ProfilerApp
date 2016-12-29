@@ -3,6 +3,7 @@ package wepa.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +40,6 @@ public class ProfileController {
     @Autowired
     private AnswerService answerService;
 
-    
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String viewProfile(Model model, @PathVariable Long id) {
         // Get user authentication.
@@ -111,8 +111,26 @@ public class ProfileController {
         // Add also the profile's id number.
         model.addAttribute("id", id);
 
-        // Finally, the id of the profile picture is added.
+        // The id of the profile picture is added.
         model.addAttribute("profilePic", profile.getProfilePic().getId());
+
+        // We also need links to next and previous profiles..
+        Profile previous = profileService.findPreviousProfile(id);
+        Profile next = profileService.findNextProfile(id);
+        if (previous != null) {
+            model.addAttribute("previous", previous.getId());
+        }
+        if (next != null) {
+            model.addAttribute("next", next.getId());
+        }
+        // ..and to some random profile that has not been answered yet.
+        List<Profile> notAnswered = profileService.findAllNotAnsweredProfiles(user);
+        if (!notAnswered.isEmpty()) {
+            // Get a random number from the list.
+            int randomProfile = new Random().nextInt(notAnswered.size());
+            // Then get the id of that profile from the not answered list.
+            model.addAttribute("random", notAnswered.get(randomProfile).getId());
+        }
 
         // We have three different pages to simplify the Thymeleaf needed.
         if (user == profile.getOwnerAccount()) {
@@ -149,6 +167,7 @@ public class ProfileController {
         }
         // Save the actual answers to database
         answerService.answerAllQuestions(answerer, profileQuestions, answers);
+        accountService.addAnswerToAccount(answerer, profile);
         return "redirect:/profiles/" + id;
     }
 }
