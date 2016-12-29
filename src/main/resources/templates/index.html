@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-    <meta charset="UTF-8"/>
-    <title>Profiler</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
-</head>
-<body>
-<header th:replace="fragments/header :: header">
-    <p>header with links etc</p>
-</header>
-<nav>
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <title>Profiler</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    </head>
+    <body>
+        <header th:replace="fragments/header :: header">
+            <p>header with links etc</p>
+        </header>
+        <nav>
 
-</nav>
-<h2>Profiler</h2>
-<p>Hello <span sec:authentication="name">Bob</span>!</p>
-<script th:src="@{/javascript/javascript.js}"></script>
+        </nav>
+        <h2>Newest profiles</h2>
+        <ul th:each="profile : ${profiles}">
+            <li>
+                <a th:href="@{/profiles/{id} (id=${profile.id})}">
+                    <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
+                </a>
+            </li>
+        </ul>
 
-</body>
+
+        <p>Hello <span sec:authentication="name">Bob</span>!</p>
+        <a href="/userpage">Userpage</a>
+
+        <script th:src="@{/javascript/javascript.js}"></script>
+
+    </body>
 </html>

@@ -35,9 +35,9 @@ public class Profile extends AbstractPersistable<Long> {
 
     private boolean active;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private ImageObject profilePic;
+    private String profilePicId;
 
+    private String thumbnailId;
 
     public Account getOwnerAccount() {
         return ownerAccount;
@@ -70,12 +70,20 @@ public class Profile extends AbstractPersistable<Long> {
         this.active = active;
     }
 
-    public ImageObject getProfilePic() {
-        return profilePic;
+    public String getProfilePicId() {
+        return profilePicId;
     }
 
-    public void setProfilePic(ImageObject profilePic) {
-        this.profilePic = profilePic;
+    public void setProfilePicId(String profilePicId) {
+        this.profilePicId = profilePicId;
+    }
+
+    public String getThumbnailId() {
+        return thumbnailId;
+    }
+
+    public void setThumbnailId(String thumbnailId) {
+        this.thumbnailId = thumbnailId;
     }
 
     public Date getCreationTime() {

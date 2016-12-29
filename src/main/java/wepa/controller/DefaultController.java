@@ -1,6 +1,7 @@
 package wepa.controller;
 
 import java.util.Arrays;
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,20 +15,31 @@ import wepa.domain.Account;
 import wepa.repository.AccountRepository;
 
 // Default controller handles logging in, out and creating new accounts.
-
 @Controller
 @RequestMapping("*")
 public class DefaultController {
 
     @Autowired
     private AccountRepository accountRepository;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
     @ModelAttribute
     private Account getAccount() {
         return new Account();
+    }
+
+    // Testausta varten, otetaan pois ennen kuin tämä valmistuu
+    @PostConstruct
+    private void initAccount() {
+        Account testausAcc = new Account();
+        testausAcc.setName("Lauri");
+        testausAcc.setUsername("user");
+        testausAcc.setPassword(passwordEncoder.encode("user"));
+        testausAcc.setEmail("la@ma");
+        testausAcc.setAuthorities(Arrays.asList("USER"));
+        accountRepository.save(testausAcc);
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -42,7 +54,7 @@ public class DefaultController {
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public String newAccount(@Valid @ModelAttribute Account account, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "signup";
         }
         account.setAuthorities(Arrays.asList("USER"));
@@ -53,4 +65,10 @@ public class DefaultController {
         //System.out.println("GG user added: " + account.getEmail());
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String goToIndex() {
+        return "redirect:/index";
+    }
+
 }

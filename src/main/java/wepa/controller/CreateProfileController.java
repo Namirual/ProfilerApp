@@ -65,18 +65,22 @@ public class CreateProfileController {
     public String postNewProfile(@RequestParam List<Long> questions, @RequestParam List<Integer> answerId,
             @RequestParam("file") MultipartFile file) {
 
-        ImageObject image = imageService.createImageObject(file);
+        List<String> images = imageService.createImageObject(file);
 
         //If the imageService rejects the file, profile creation is interrupted.
-        if (image == null) {
+        if (images == null) {
             return "redirect:/userpage";
         }
+
+        String imageId = images.get(0);
+        String thumbnailId = images.get(1);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account user = accountService.findAccountByUser(auth.getName());
         Profile profile = profileService.createProfileAndAssignToUser(user);
 
-        profile.setProfilePic(image);
+        profile.setProfilePicId(imageId);
+        profile.setThumbnailId(thumbnailId);
 
         List<Question> list = questionService.findManyQuestions(questions);
         for (Question question : list) {

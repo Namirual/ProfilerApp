@@ -112,7 +112,7 @@ public class ProfileController {
         model.addAttribute("id", id);
 
         // The id of the profile picture is added.
-        model.addAttribute("profilePic", profile.getProfilePic().getId());
+        model.addAttribute("profilePic", profile.getProfilePicId());
 
         // We also need links to next and previous profiles..
         Profile previous = profileService.findPreviousProfile(id);
