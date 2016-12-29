@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import wepa.domain.Account;
 import wepa.domain.Profile;
 import wepa.service.AccountService;
+import wepa.service.AnswerService;
 import wepa.service.ProfileService;
 
 @Controller
@@ -22,12 +23,25 @@ public class UserpageController {
     @Autowired
     private AccountService accountService;
     
+    @Autowired
+    private AnswerService answerService;
+    
     @RequestMapping
     public String viewUserpage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account user = accountService.findAccountByUser(auth.getName());
-        List<Profile> profiles = profileService.findProfilesByAccount(user);
+        
+        List<Profile> answeredProfiles = user.getAnsweredProfiles();
+        
+        int profilerScore = answerService.calculateUserProfilerScore(user);
+
+        List<Profile> profiles = user.getProfiles();
+        
+        model.addAttribute("answerNum", answeredProfiles.size());
+        model.addAttribute("score", profilerScore);
         model.addAttribute("profiles", profiles);
+        model.addAttribute("answered", answeredProfiles);
+        
         return "userpage";
     }
     
