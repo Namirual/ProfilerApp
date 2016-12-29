@@ -14,7 +14,7 @@
 
         </nav>
         
-        <h1>Hello <span sec:authentication="name"></span></h1>
+        <h1>Hello <span th:text="${name}"></span></h1>
         <div>
             <p th:text="'You have reviewed ' + ${answerNum} + ' profiles'">
                 You have reviewed x profiles

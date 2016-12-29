@@ -31,12 +31,15 @@ public class UserpageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account user = accountService.findAccountByUser(auth.getName());
         
+        String realName = user.getName();
+        
         List<Profile> answeredProfiles = user.getAnsweredProfiles();
         
         int profilerScore = answerService.calculateUserProfilerScore(user);
 
         List<Profile> profiles = user.getProfiles();
         
+        model.addAttribute("name", realName);
         model.addAttribute("answerNum", answeredProfiles.size());
         model.addAttribute("score", profilerScore);
         model.addAttribute("profiles", profiles);

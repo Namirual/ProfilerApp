@@ -22,7 +22,7 @@
                     <input type="checkbox" th:id="${question.id}" name="questions" th:value="${question.id}"/>
                     <label th:text="${question.content}">Question</label>
                     <select name="answerId">
-                        <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${i.index}">0</option>
+                        <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${question.id} + ',' + ${i.index}">0</option>
                     </select>
                 </li>
             </ul>
