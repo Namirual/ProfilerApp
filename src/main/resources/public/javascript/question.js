@@ -55,8 +55,8 @@ function sendQuestion() {
         //contentType: 'application/json; charset=utf-8',
         type: 'post',
         beforeSend: function (xhr) {
-         xhr.setRequestHeader(header, token);
-         },
+            xhr.setRequestHeader(header, token);
+        },
         data: params
     });
 
@@ -104,8 +104,8 @@ function checkAnswersAreFilled() {
             alert("Please fill empty fields.");
             return false;
         }
-        return true;
     }
+    return true;
 }
 
 $(document).ready(function () {

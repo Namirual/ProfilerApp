@@ -12,17 +12,26 @@
                 <p>header with links etc</p>
             </header>
         </div>
+        <h2>Please log in to use the Profiler</h2>
+
+        <div th:if="${error}" th:text="${error}">
+            Error.
+        </div>
+        <div th:if="${logout}" th:text="${logout}">
+            Logout.
+        </div>
 
         <form action="#" th:action="@{/authenticate}" method="POST">
-            <p>
+            <p>Username:
                 <input type="text" th:name="username" placeholder="Username" />
             </p>
-            <p>
+            <p>Password:
                 <input type="text" th:name="password" placeholder="Password" />
             </p>
             <input type="submit" value="Log in" />
         </form>
-        <a href="/signup">Sign up</a>
+        <br/>
+        <a href="/signup">Sign up!</a>
 
     </body>
 

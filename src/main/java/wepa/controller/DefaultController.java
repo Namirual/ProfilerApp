@@ -1,6 +1,7 @@
 package wepa.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import wepa.domain.Account;
 import wepa.repository.AccountRepository;
 
@@ -44,6 +46,23 @@ public class DefaultController {
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String viewLogin(Model model) {
+
+        return "login";
+    }
+
+    @RequestMapping(value = "login", method = RequestMethod.GET, params = "error")
+    public String viewLoginError(Model model) {
+        String errorMessage = "Incorrect username or password.";
+        model.addAttribute("error", errorMessage);
+
+        return "login";
+    }
+
+    @RequestMapping(value = "login", method = RequestMethod.GET, params = "logout")
+    public String viewLogoutMessage(Model model) {
+        String logoutMessage = "You have logged out.";
+        model.addAttribute("logout", logoutMessage);
+
         return "login";
     }
 
