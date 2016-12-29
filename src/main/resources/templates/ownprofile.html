@@ -7,6 +7,13 @@
     </head>
 
     <body>
+        <header th:replace="fragments/header :: header">
+            <p>header with links etc</p>
+        </header>
+        <nav>
+
+        </nav>
+        
         <h1>Your profile!</h1>           
         <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
         <div>
