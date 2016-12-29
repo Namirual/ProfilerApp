@@ -9,8 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import wepa.domain.Account;
 import wepa.domain.Profile;
+import wepa.domain.ProfileQuestion;
 import wepa.domain.Question;
 import wepa.service.AccountService;
+import wepa.service.ProfileQuestionService;
 import wepa.service.ProfileService;
 import wepa.service.QuestionService;
 
@@ -24,6 +26,16 @@ import java.util.UUID;
 @SpringBootTest
 @org.springframework.context.annotation.Profile("default")
 public class serviceIntegrationTest {
+
+    private Account pertti;
+    private Account martti;
+    private Profile perttiProfile1;
+    private Profile marttiProfile1;
+
+    private Question question1;
+    private Question question2;
+    private Question question3;
+    private Question question4;
 
     @Autowired
     private QuestionService questionService;
@@ -43,17 +55,8 @@ public class serviceIntegrationTest {
     private ProfileRepository profileRepository;
     @Autowired
     private AnswerRepository answerRepository;
-
-    private Account pertti;
-    private Account martti;
-    private Profile perttiProfile1;
-    private Profile marttiProfile1;
-
-    private Question question1;
-    private Question question2;
-    private Question question3;
-    private Question question4;
-
+    @Autowired
+    private ProfileQuestionService profileQuestionService;
 
 
     @Before
@@ -87,6 +90,10 @@ public class serviceIntegrationTest {
 
     @After
     public void tearDown() throws Exception {
+
+        profileQuestionRepository.deleteAll();
+        answerOptionRepository.deleteAll();
+        questionRepository.deleteAll();
         profileRepository.deleteAll();
         accountRepository.deleteAll();
     }
@@ -121,6 +128,17 @@ public class serviceIntegrationTest {
         questionService.findManyQuestions(questionIds);
         assertTrue(questionIds.contains(question1.getId()) && questionIds.contains(question2.getId())
                 && questionIds.contains(question3.getId()) && questionIds.contains(question4.getId()));
+    }
 
+    @Test
+    public void assignQuestionToProfileWorks() throws Exception {
+        question4 = questionRepository.findOne(question4.getId());
+        perttiProfile1 = profileRepository.findOne(perttiProfile1.getId());
+        ProfileQuestion pq = profileQuestionService.assignQuestionToProfile(perttiProfile1.getId(), question4.getId(), question4.getAnswerOptions().get(0).getId());
+        pq = profileQuestionRepository.findOne(pq.getId());
+        perttiProfile1 = profileRepository.findOne(perttiProfile1.getId());
+        question4 = questionRepository.findOne(question4.getId());
+        assertEquals(pq.getQuestion().getId(), perttiProfile1.getProfileQuestions().get(0).getQuestion().getId());
+        assertEquals(pq.getQuestion().getAnswerOptions().get(0).getId(), perttiProfile1.getProfileQuestions().get(0).getCorrectAnswer().getId());
     }
 }
