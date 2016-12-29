@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @Profile("default")
 @Configuration
 @EnableWebSecurity
@@ -30,13 +29,22 @@ public class DefaultSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/h2-console/*").permitAll()
                 .antMatchers("/signup").permitAll()
+                .antMatchers("/css/**", "/fonts/**", "/images/**", "/js/**").permitAll()
                 .antMatchers("/index").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
         http.formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/authenticate")
+                .defaultSuccessUrl("/index")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .permitAll();
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
                 .permitAll()
-                .and()
-                .logout();
+                .invalidateHttpSession(true);
     }
 
     @Autowired
