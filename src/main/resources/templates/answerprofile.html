@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <div class="container-fluid">
+        <div class="container">
             <header th:replace="fragments/header :: header">
                 <p>header with links etc</p>
             </header>
@@ -22,6 +22,7 @@
             </div>
 
             <div class="col-md-4" th:unless="${ownans}">
+                <h2>Rate here</h2>
                 <form th:action="@{/profiles/{id}/answer (id=${id})}" method="POST">
                     <ul class="list-group">
                         <li class="list-group-item" th:each="question : ${questions}">
