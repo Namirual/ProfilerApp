@@ -112,7 +112,7 @@ public class ProfileController {
         model.addAttribute("id", id);
 
         // Finally, the id of the profile picture is added.
-        model.addAttribute("profilePic", profile.getProfilePic());
+        model.addAttribute("profilePic", profile.getProfilePic().getId());
 
         // We have three different pages to simplify the Thymeleaf needed.
         if (user == profile.getOwnerAccount()) {
