@@ -64,7 +64,7 @@ public class CreateProfileController {
 
     
     @RequestMapping(method = RequestMethod.POST)
-    public String postNewProfile(@RequestParam List<Long> questions, @RequestParam List<String> answerId,
+    public String postNewProfile(@RequestParam List<String> answerId,
             @RequestParam("file") MultipartFile file) {
 
         List<String> images = imageService.createImageObject(file);
@@ -84,39 +84,25 @@ public class CreateProfileController {
         profile.setProfilePicId(imageId);
         profile.setThumbnailId(thumbnailId);
         // Since the answers are send in a string list of question-answer pairs,
-        // it has to be parsed first into a Long-Integer map.
-        Map<Long,Integer> answerMap = parseStringListIntoMap(answerId);
-        // We also need the actual questions.
-        List<Question> list = questionService.findManyQuestions(questions);
-        // Go through all the question id's that were sent.
-        for (Long key : answerMap.keySet()) {
-            // If the selected questions contain the key
-            if (questions.contains(key)) {
-                // then go through the questions to find the correct question.
-                for (Question question : list) {
-                    if (question.getId()==key) {
-                        // Extract the index of the correct answer.
-                        int ansIndex = answerMap.get(key);
-                        // Extract the answer options.
-                        List<AnswerOption> options = question.getAnswerOptions();
-                        // Get the correct answer option's id.
-                        Long ans = options.get(ansIndex).getId();
-                        // Add a new ProfileQuestion to the profile.
-                        profileQuestionService.assignQuestionToProfile(profile.getId(), key, ans);
-                    }
-                }
+        // it has to be parsed first into a Long-Long map.
+
+        Map<Long, Long> questionsAndAnswers = parseStringListIntoMap(answerId);
+        for (Long key :questionsAndAnswers.keySet()) {
+            if(questionsAndAnswers.get(key) != 0) {
+                profileQuestionService.assignQuestionToProfile(profile.getId(), key, questionsAndAnswers.get(key));
             }
         }
+
         return "redirect:/userpage";
     }
-    
-    
-    private Map<Long,Integer> parseStringListIntoMap(List<String> list) {
-        Map<Long,Integer> map = new HashMap<>();
+
+
+    private Map<Long, Long> parseStringListIntoMap(List<String> list) {
+        Map<Long, Long> map = new HashMap<>();
         for (String str : list) {
             String[] splitStr = str.split(",");
             Long key = Long.parseLong(splitStr[0]);
-            int value = Integer.parseInt(splitStr[1]);
+            Long value = Long.parseLong(splitStr[1]);
             map.put(key, value);
         }
         return map;
