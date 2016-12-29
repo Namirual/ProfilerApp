@@ -1,4 +1,4 @@
-package wepa.repository;
+package wepa.service;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +11,7 @@ import wepa.domain.Account;
 import wepa.domain.Profile;
 import wepa.domain.ProfileQuestion;
 import wepa.domain.Question;
+import wepa.repository.*;
 import wepa.service.AccountService;
 import wepa.service.ProfileQuestionService;
 import wepa.service.ProfileService;
@@ -25,7 +26,7 @@ import java.util.UUID;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @org.springframework.context.annotation.Profile("default")
-public class serviceIntegrationTest {
+public class ServiceIntegrationTest {
 
     private Account pertti;
     private Account martti;
