@@ -112,10 +112,11 @@ public class ProfileController {
         model.addAttribute("id", id);
 
         // The id of the profile picture is added.
-        model.addAttribute("profilePic", profile.getProfilePic());
+        model.addAttribute("profilePic", profile.getProfilePic().getId());
         
         // We also need links to next and previous profiles.
         System.out.println(profileService.findAllNotAnsweredProfiles(user));
+
 
         // We have three different pages to simplify the Thymeleaf needed.
         if (user == profile.getOwnerAccount()) {

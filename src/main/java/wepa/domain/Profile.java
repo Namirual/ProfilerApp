@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -34,8 +35,9 @@ public class Profile extends AbstractPersistable<Long> {
 
     private boolean active;
 
-    private String profilePic;
-    
+    @OneToOne(fetch = FetchType.LAZY)
+    private ImageObject profilePic;
+
 
     public Account getOwnerAccount() {
         return ownerAccount;
@@ -68,11 +70,11 @@ public class Profile extends AbstractPersistable<Long> {
         this.active = active;
     }
 
-    public String getProfilePic() {
+    public ImageObject getProfilePic() {
         return profilePic;
     }
 
-    public void setProfilePic(String profilePic) {
+    public void setProfilePic(ImageObject profilePic) {
         this.profilePic = profilePic;
     }
 

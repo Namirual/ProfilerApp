@@ -17,6 +17,7 @@ import wepa.domain.Account;
 import wepa.domain.AnswerOption;
 import wepa.domain.Profile;
 import wepa.domain.Question;
+import wepa.domain.ImageObject;
 import wepa.service.AccountService;
 import wepa.service.ImageObjectService;
 import wepa.service.ProfileQuestionService;
@@ -64,10 +65,10 @@ public class CreateProfileController {
     public String postNewProfile(@RequestParam List<Long> questions, @RequestParam List<Integer> answerId,
             @RequestParam("file") MultipartFile file) {
 
-        String imageId = imageService.createImageObject(file);
+        ImageObject image = imageService.createImageObject(file);
 
         //If the imageService rejects the file, profile creation is interrupted.
-        if (imageId.equals("")) {
+        if (image == null) {
             return "redirect:/userpage";
         }
 
@@ -75,7 +76,7 @@ public class CreateProfileController {
         Account user = accountService.findAccountByUser(auth.getName());
         Profile profile = profileService.createProfileAndAssignToUser(user);
 
-        profile.setProfilePic(imageId);
+        profile.setProfilePic(image);
 
         List<Question> list = questionService.findManyQuestions(questions);
         for (Question question : list) {
