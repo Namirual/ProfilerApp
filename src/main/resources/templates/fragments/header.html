@@ -1,23 +1,25 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Header template</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Header template</title>
+    </head>
+    <body>
 
-<header th:fragment="header">
-    <a th:href="@{/index}">Home</a>
+        <header th:fragment="header">
+            <a th:href="@{/index}">Home</a>
 
-    <div sec:authorize="hasAuthority('ADMIN')">
-        <a th:href="@{/admin}">Show Users</a>
-    </div>
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <a th:href="@{/admin}">Show Users</a>
+            </div>
+            Signed in as <a th:href="@{/userpage}"><span sec:authentication="name">Bob</span></a>
+            
 
-    <form method="POST" th:action="@{/logout}" class="logout">
-        <input type="submit" value="Logout"/>
-    </form>
+            <form method="POST" th:action="@{/logout}" class="logout">
+                <input type="submit" value="Logout"/>
+            </form>
 
-</header>
+        </header>
 
-</body>
+    </body>
 </html>
