@@ -19,10 +19,10 @@
         <form th:action="@{/createprofile}" method="POST" enctype="multipart/form-data">
             <ul>
                 <li th:each="question : ${questions}">
-                    <input type="checkbox" th:id="${question.id}" name="questions" th:value="${question.id}"/>
                     <label th:text="${question.content}">Question</label>
                     <select name="answerId">
-                        <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${question.id} + ',' + ${i.index}">0</option>
+                        <option th:value="${question.id} + ',0'">I don't want to answer this</option>
+                        <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${question.id} + ',' + ${answer.id}">0</option>
                     </select>
                 </li>
             </ul>

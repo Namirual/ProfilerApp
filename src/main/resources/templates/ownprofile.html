@@ -14,8 +14,8 @@
 
         </nav>
         
-        <h1>Your profile!</h1>           
-        <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
+        <h1>Your profile!</h1>
+        
         <div>
                 <ul>
                     <li th:each="question, i : ${questions}">
@@ -23,6 +23,9 @@
                         <p>Your answer: <span th:text="${ownans[i.index].answerText}"> Answer</span></p>
                     </li>
                 </ul>
+        </div>
+        <div>
+            <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
         </div>
         <div th:unless="${options==null}">
                 <ul>
