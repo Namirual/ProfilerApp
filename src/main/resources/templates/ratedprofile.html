@@ -7,17 +7,27 @@
     </head>
 
     <body>
-        <h1>Ratings for this profile!</h1>           
+        <h1>Your Answers</h1>           
+        <div th:if="${ownans}">
+                <ul>
+                    <li th:each="question, i : ${questions}">
+                        <span th:id="${question.id}" th:text="${question.content}">Question</span>
+                        <p>Your answer: <span th:text="${ownans[i.index].answerText}"> Answer</span></p>
+                    </li>
+                </ul>
+        </div>
         <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
-        <div>
-            <ul>
-                <li th:each="question, i : ${questions}">
-                    <span th:id="${question.id}" th:text="${question.content}">Question</span>
-                    <p>Your answer: <span th:text="${ownans[i.index].answerText}"> Answer</span></p>
-                    <p><span th:text="${rates[i.index]}"></span>% said: 
-                        <span th:text="${options[i.index].answerText}"> Answer</span></p>
-                </li>
-            </ul>
+        <div th:unless="${options==null}">
+                <ul>
+                    <li th:each="question, i : ${questions}">
+                        <span th:id="${question.id}" th:text="${question.content}">Question</span>
+                        <p><span th:text="${rates[i.index]}"></span>% said: 
+                            <span th:text="${options[i.index].answerText}"> Answer</span></p>
+                    </li>
+                </ul>
+        </div>
+        <div th:if="${options==null}">
+            <p>This profile doesn't have reviews yet.</p>
         </div>
     </body>
 </html>

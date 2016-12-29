@@ -39,6 +39,7 @@ public class ProfileController {
     @Autowired
     private AnswerService answerService;
 
+    
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String viewProfile(Model model, @PathVariable Long id) {
         // Get user authentication.
@@ -77,11 +78,15 @@ public class ProfileController {
             Map<ProfileQuestion, Map<AnswerOption, Integer>> ansRate = answerService.calculateAnswerRatesForProfileQuestions(id);
             List<AnswerOption> options = new ArrayList<>();
             List<Integer> rates = new ArrayList<>();
+            // here go through the questions
             for (ProfileQuestion question : profileQuestions) {
                 AnswerOption mostAnswered = null;
                 int highestRate = 0;
                 Map<AnswerOption, Integer> questionInfo = ansRate.get(question);
+                // and here go through all the answers to the questions
                 for (AnswerOption option : questionInfo.keySet()) {
+                    // if a given answer has more votes than the previous ones
+                    // then set it as the mostAnswered one
                     if (questionInfo.get(option) > highestRate) {
                         mostAnswered = option;
                         highestRate = questionInfo.get(option);
@@ -90,22 +95,26 @@ public class ProfileController {
                 options.add(mostAnswered);
                 rates.add(highestRate);
             }
-            model.addAttribute("options", options);
-            model.addAttribute("rates", rates);
+            // only add the most popular answers if there are any
+            if (!options.contains(null)) {
+                model.addAttribute("options", options);
+                model.addAttribute("rates", rates);
+            }
         }
         // If the user has not reviewed the profile, show only the questions
+        // with the answer options.
         model.addAttribute("questions", questions);
         if (!ownAns.isEmpty()) {
             model.addAttribute("ownans", ownAns);
         }
-        // with the answer options.
+
+        // Add also the profile's id number.
         model.addAttribute("id", id);
 
         // Finally, the id of the profile picture is added.
         model.addAttribute("profilePic", profile.getProfilePic());
 
         // We have three different pages to simplify the Thymeleaf needed.
-        
         if (user == profile.getOwnerAccount()) {
             return "ownprofile";
         } else if (ownAns.isEmpty()) {
@@ -113,7 +122,6 @@ public class ProfileController {
         } else {
             return "ratedprofile";
         }
-        //return "profile";
     }
 
     @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
