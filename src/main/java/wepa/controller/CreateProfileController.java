@@ -42,15 +42,6 @@ public class CreateProfileController {
 
     @Autowired
     private ImageObjectService imageService;
-
-    @PostConstruct
-    private void initQuestions() {
-        questionService.createQuestion("How old is this person?", Arrays.asList("Still a child", "20-25", "25-30", "30-35", "35-40", "old as fuck"));
-        questionService.createQuestion("How tall is this person?", Arrays.asList("Midget", "140-150", "150-160", "160-170", "170-180", "180-190", "190-200", "HUGE"));
-        questionService.createQuestion("Does this person look like a dog or a cat person?", Arrays.asList("Neither", "Dog", "Cat", "Both"));
-        questionService.createQuestion("Does this person look like Bitch?", Arrays.asList("No", "Yes", "What?"));
-    }
-
     
     @RequestMapping(method = RequestMethod.GET)
     public String viewCreateProfile(Model model) {
