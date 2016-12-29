@@ -20,7 +20,7 @@ public class ImageObjectService {
     private ImageObjectRepository imageObjectRepository;
 
     @Transactional
-    public String createImageObject(MultipartFile file) {
+    public ImageObject createImageObject(MultipartFile file) {
 
         if (file.getContentType().contains("image/gif")
                 || file.getContentType().contains("image/jpeg")
@@ -32,7 +32,7 @@ public class ImageObjectService {
                 newFile.setContent(file.getBytes());
             } catch (IOException ioe) {
                 System.out.println("Problem while reading from the file: " + ioe.getMessage());
-                return "";
+                return null;
             }
 
             newFile.setName(file.getOriginalFilename());
@@ -40,9 +40,9 @@ public class ImageObjectService {
             newFile.setContentType(file.getContentType());
             newFile = imageObjectRepository.save(newFile);
 
-            return newFile.getId();
+            return newFile;
         }
-        return "";
+        return null;
     }
 
 }
