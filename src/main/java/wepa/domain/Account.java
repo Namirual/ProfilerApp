@@ -15,7 +15,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.Email;
 
 // This class holds the users account information, personal information and 
-// also points to all the profiles created by this account. Note that the account
+// also points to all the profiles created by this account. It points also to
+// all the profiles that the user has answered. Note that the account
 // doesn't have direct knowledge of the profile pictures, only through the
 // profile class, since different profiles of one user can have different pictures.
 
@@ -40,9 +41,13 @@ public class Account extends UUIDPersistable {
     private String password;
     
     private final Long creationTimeInMillis = Calendar.getInstance().getTimeInMillis();
+    
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "ownerAccount")
     private List<Profile> profiles;
+    
+    @OneToMany
+    private List<Profile> answeredProfiles;
     
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
@@ -112,6 +117,18 @@ public class Account extends UUIDPersistable {
 
     public void setProfiles(List<Profile> profiles) {
         this.profiles = profiles;
+    }
+
+    public List<Profile> getAnsweredProfiles() {
+        return answeredProfiles;
+    }
+    
+    public void addAnsweredProfile(Profile profile) {
+        answeredProfiles.add(profile);
+    }
+
+    public void setAnsweredProfiles(List<Profile> answeredProfiles) {
+        this.answeredProfiles = answeredProfiles;
     }
 
 

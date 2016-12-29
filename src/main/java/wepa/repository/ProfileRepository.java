@@ -13,4 +13,8 @@ public interface ProfileRepository extends JpaRepository<Profile, Long>{
     
     Profile findFirstByIdLessThan(Long id);
     
+    List<Profile> findByIdIn(List<Long> id);
+    
+    List<Profile> findByIdNotIn(List<Long> id);
+    
 }

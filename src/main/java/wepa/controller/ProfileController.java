@@ -111,8 +111,11 @@ public class ProfileController {
         // Add also the profile's id number.
         model.addAttribute("id", id);
 
-        // Finally, the id of the profile picture is added.
+        // The id of the profile picture is added.
         model.addAttribute("profilePic", profile.getProfilePic());
+        
+        // We also need links to next and previous profiles.
+        System.out.println(profileService.findAllNotAnsweredProfiles(user));
 
         // We have three different pages to simplify the Thymeleaf needed.
         if (user == profile.getOwnerAccount()) {
@@ -124,6 +127,7 @@ public class ProfileController {
         }
     }
 
+    
     @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
     public String postAnswers(@PathVariable Long id, @RequestParam List<Integer> answerId) {
         // Get user authentication.
@@ -149,6 +153,7 @@ public class ProfileController {
         }
         // Save the actual answers to database
         answerService.answerAllQuestions(answerer, profileQuestions, answers);
+        accountService.addAnswerToAccount(answerer, profile);
         return "redirect:/profiles/" + id;
     }
 }

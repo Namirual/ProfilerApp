@@ -35,6 +35,7 @@ public class Profile extends AbstractPersistable<Long> {
     private boolean active;
 
     private String profilePic;
+    
 
     public Account getOwnerAccount() {
         return ownerAccount;

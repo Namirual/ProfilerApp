@@ -1,5 +1,6 @@
 package wepa.service;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,6 +84,36 @@ public class ProfileService {
     public Profile findProfileById(Long id) {
         return profileRepository.findOne(id);
     }
+    
+    public Profile findNextProfile(Long id) {
+        return profileRepository.findFirstByIdGreaterThan(id);
+    }
+    
+    public Profile findPreviousProfile(Long id) {
+        return profileRepository.findFirstByIdLessThan(id);
+    }
+    
+    public List<Profile> findAllNotAnsweredProfiles(Account account) {
+        // first get all answered profiles
+        List<Profile> profiles = account.getAnsweredProfiles();
+        // if there are no answers, just return all profiles.
+        if(profiles.isEmpty()) {
+            List<Profile> notAnswered = profileRepository.findAll();
+            notAnswered.removeAll(account.getProfiles());
+            return notAnswered;
+        }
+        // else get ids for all the profiles
+        List<Long> profileIds = new ArrayList<>();
+        for(Profile profile : profiles) {
+            profileIds.add(profile.getId());
+        }
+        // find all profiles, except those that are answered
+        List<Profile> notAnswered = profileRepository.findByIdNotIn(profileIds);
+        // also need to remove all the user's own profiles from the list
+        notAnswered.removeAll(account.getProfiles());
+        return notAnswered;
+    }
+    
 
     /*@Transactional
      public Profile assignQuestionToProfile(Profile profile, Question question, AnswerOption answer) {
