@@ -7,6 +7,13 @@
     </head>
 
     <body>
+        <header th:replace="fragments/header :: header">
+            <p>header with links etc</p>
+        </header>
+        <nav>
+
+        </nav>
+        
         <h1>Select the questions for the profile</h1>
 
         <form th:action="@{/createprofile}" method="POST" enctype="multipart/form-data">
