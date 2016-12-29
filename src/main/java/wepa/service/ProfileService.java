@@ -90,7 +90,7 @@ public class ProfileService {
     }
     
     public Profile findPreviousProfile(Long id) {
-        return profileRepository.findFirstByIdLessThan(id);
+        return profileRepository.findFirstByIdLessThanOrderByIdDesc(id);
     }
     
     public List<Profile> findAllNotAnsweredProfiles(Account account) {
