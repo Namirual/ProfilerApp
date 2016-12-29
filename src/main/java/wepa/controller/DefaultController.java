@@ -31,19 +31,7 @@ public class DefaultController {
     private Account getAccount() {
         return new Account();
     }
-
-    // Testausta varten, otetaan pois ennen kuin tämä valmistuu
-    @PostConstruct
-    private void initAccount() {
-        Account testausAcc = new Account();
-        testausAcc.setName("Lauri");
-        testausAcc.setUsername("user");
-        testausAcc.setPassword(passwordEncoder.encode("user"));
-        testausAcc.setEmail("la@ma");
-        testausAcc.setAuthorities(Arrays.asList("USER"));
-        accountRepository.save(testausAcc);
-    }
-
+    
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String viewLogin(Model model) {
 
