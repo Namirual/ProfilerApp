@@ -64,7 +64,7 @@ public class ProfileController {
                 ownAns.add(question.getCorrectAnswer());
             }
         }
-         // If it is another user, but who has reviewed the profile, show
+        // If it is another user, but who has reviewed the profile, show
         // his own responses.
         if (userAnswered && user != profile.getOwnerAccount()) {
             List<Answer> userAns = answerService.getUserAnswersForProfile(id, user);
@@ -77,12 +77,12 @@ public class ProfileController {
             Map<ProfileQuestion, Map<AnswerOption, Integer>> ansRate = answerService.calculateAnswerRatesForProfileQuestions(id);
             List<AnswerOption> options = new ArrayList<>();
             List<Integer> rates = new ArrayList<>();
-            for(ProfileQuestion question : profileQuestions) {
+            for (ProfileQuestion question : profileQuestions) {
                 AnswerOption mostAnswered = null;
                 int highestRate = 0;
-                Map<AnswerOption,Integer> questionInfo = ansRate.get(question);
-                for(AnswerOption option : questionInfo.keySet()) {
-                    if(questionInfo.get(option) > highestRate) {
+                Map<AnswerOption, Integer> questionInfo = ansRate.get(question);
+                for (AnswerOption option : questionInfo.keySet()) {
+                    if (questionInfo.get(option) > highestRate) {
                         mostAnswered = option;
                         highestRate = questionInfo.get(option);
                     }
@@ -95,14 +95,27 @@ public class ProfileController {
         }
         // If the user has not reviewed the profile, show only the questions
         model.addAttribute("questions", questions);
-        if(!ownAns.isEmpty()) {
+        if (!ownAns.isEmpty()) {
             model.addAttribute("ownans", ownAns);
         }
         // with the answer options.
         model.addAttribute("id", id);
-        return "profile";
+
+        // Finally, the id of the profile picture is added.
+        model.addAttribute("profilePic", profile.getProfilePic());
+
+        // We have three different pages to simplify the Thymeleaf needed.
+        
+        if (user == profile.getOwnerAccount()) {
+            return "ownprofile";
+        } else if (ownAns.isEmpty()) {
+            return "answerprofile";
+        } else {
+            return "ratedprofile";
+        }
+        //return "profile";
     }
-    
+
     @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
     public String postAnswers(@PathVariable Long id, @RequestParam List<Integer> answerId) {
         // Get user authentication.
