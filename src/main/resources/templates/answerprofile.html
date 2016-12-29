@@ -13,9 +13,9 @@
         <nav>
 
         </nav>
-        
+
         <h1>Profile this image!</h1>           
-        <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
+
         <div th:unless="${ownans}">
             <form th:action="@{/profiles/{id}/answer (id=${id})}" method="POST">
                 <ul>
@@ -30,12 +30,15 @@
             </form>
         </div>
         <div>
+            <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
+        </div>
+        <div>
             <a th:if="${previous!=null}" th:href="@{/profiles/{id} (id=${previous})}">PREVIOUS</a>
             <a th:if="${next!=null}" th:href="@{/profiles/{id} (id=${next})}">NEXT</a>
             <a th:if="${random!=null}" th:href="@{/profiles/{id} (id=${random})}">SKIP TO A RANDOM PROFILE</a>
         </div>
- 
+
         <p>Submit answers to see how others have answered.</p>
- 
+
     </body>
 </html>

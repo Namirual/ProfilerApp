@@ -23,7 +23,9 @@
                     </li>
                 </ul>
         </div>
-        <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
+        <div>
+            <img th:src="@{/images/{id}/content(id=${profilePic})}"/>
+        </div>
         <div th:unless="${options==null}">
                 <ul>
                     <li th:each="question, i : ${questions}">
