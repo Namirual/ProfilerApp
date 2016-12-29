@@ -25,7 +25,6 @@ public class ProfileService {
     @Autowired
     private AnswerOptionRepository answerOptionRepository;
 
-    
     @Transactional
     public Profile createProfileAndAssignToUser(Account account) {
         account = accountRepository.findOne(account.getId());
@@ -76,35 +75,35 @@ public class ProfileService {
     public Profile findOne(Profile profile) {
         return profileRepository.findOne(profile.getId());
     }
-    
+
     public List<Profile> findProfilesByAccount(Account account) {
         return profileRepository.findByOwnerAccount(account);
     }
-    
+
     public Profile findProfileById(Long id) {
         return profileRepository.findOne(id);
     }
-    
+
     public Profile findNextProfile(Long id) {
         return profileRepository.findFirstByIdGreaterThan(id);
     }
-    
+
     public Profile findPreviousProfile(Long id) {
         return profileRepository.findFirstByIdLessThanOrderByIdDesc(id);
     }
-    
+
     public List<Profile> findAllNotAnsweredProfiles(Account account) {
         // first get all answered profiles
         List<Profile> profiles = account.getAnsweredProfiles();
         // if there are no answers, just return all profiles.
-        if(profiles.isEmpty()) {
+        if (profiles.isEmpty()) {
             List<Profile> notAnswered = profileRepository.findAll();
             notAnswered.removeAll(account.getProfiles());
             return notAnswered;
         }
         // else get ids for all the profiles
         List<Long> profileIds = new ArrayList<>();
-        for(Profile profile : profiles) {
+        for (Profile profile : profiles) {
             profileIds.add(profile.getId());
         }
         // find all profiles, except those that are answered
@@ -113,7 +112,10 @@ public class ProfileService {
         notAnswered.removeAll(account.getProfiles());
         return notAnswered;
     }
-    
+
+    public List<Profile> findNewestProfiles() {
+        return profileRepository.findFirst10ByOrderByIdDesc();
+    }
 
     /*@Transactional
      public Profile assignQuestionToProfile(Profile profile, Question question, AnswerOption answer) {

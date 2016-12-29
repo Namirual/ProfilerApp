@@ -8,15 +8,17 @@
 
     <body>
         <h1>Hello <span sec:authentication="name"></span></h1>
-        
+
         <ul th:each="profile : ${profiles}">
             <li>
-                <a th:href="@{/profiles/{id} (id=${profile.id})}">profile</a>
+                <a th:href="@{/profiles/{id} (id=${profile.id})}">
+                    <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
+                </a>
             </li>
         </ul>
-        
+
         <a href="/createprofile">Create a new profile</a>
 
-        
+
     </body>
 </html>

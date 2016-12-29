@@ -17,4 +17,6 @@ public interface ProfileRepository extends JpaRepository<Profile, Long>{
     
     List<Profile> findByIdNotIn(List<Long> id);
     
+    List<Profile> findFirst10ByOrderByIdDesc();
+
 }
