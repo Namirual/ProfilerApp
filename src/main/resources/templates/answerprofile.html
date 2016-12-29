@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <header th:replace="fragments/header :: header">
                 <p>header with links etc</p>
             </header>
@@ -21,30 +21,30 @@
                 <h1 class="text-center">Profile this image!</h1>           
             </div>
 
-            <div th:unless="${ownans}" class="col-md-4">
+            <div class="col-md-4" th:unless="${ownans}">
                 <form th:action="@{/profiles/{id}/answer (id=${id})}" method="POST">
-                    <ul>
-                        <li th:each="question : ${questions}">
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="question : ${questions}">
                             <span th:id="${question.id}" th:text="${question.content}">Question</span>
                             <select name="answerId">
                                 <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${i.index}">0</option>
                             </select>
                         </li>
                     </ul>
-                    <input type="submit" value="Submit answers"/>
+                    <input type="submit" class="btn btn-info" value="Submit answers"/>
                 </form>
             </div>
             <div class="col-md-4">
                 <img class="img-responsive" th:src="@{/images/{id}/content(id=${profilePic})}"/>
             </div>
             <div class="col-md-4">
-                <p>Submit answers to see how others have answered.</p>
+                <h2>Submit answers to see how others have answered.</h2>
             </div>
             <div class="col-md-12">
                 <div class="text-center">
-                    <a th:if="${previous!=null}" th:href="@{/profiles/{id} (id=${previous})}">PREVIOUS</a>
-                    <a th:if="${next!=null}" th:href="@{/profiles/{id} (id=${next})}">NEXT</a>
-                    <a th:if="${random!=null}" th:href="@{/profiles/{id} (id=${random})}">SKIP TO A RANDOM PROFILE</a>
+                    <a th:if="${previous!=null}" th:href="@{/profiles/{id} (id=${previous})}" class="btn btn-primary" role="button">PREVIOUS</a>
+                    <a th:if="${next!=null}" th:href="@{/profiles/{id} (id=${next})}" class="btn btn-primary" role="button">NEXT</a>
+                    <a th:if="${random!=null}" th:href="@{/profiles/{id} (id=${random})}" class="btn btn-warning" role="button">SKIP TO A RANDOM PROFILE</a>
                 </div>
             </div>
         </div>
