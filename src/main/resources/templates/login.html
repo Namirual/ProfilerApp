@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <title>Profiler</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    </head>
+
+    <body>        
+        <div sec:authorize="isAuthenticated()">
+            <header th:replace="fragments/header :: header">
+                <p>header with links etc</p>
+            </header>
+        </div>
+
+        <form action="#" th:action="@{/authenticate}" method="POST">
+            <p>
+                <input type="text" th:name="username" placeholder="Username" />
+            </p>
+            <p>
+                <input type="text" th:name="password" placeholder="Password" />
+            </p>
+            <input type="submit" value="Log in" />
+        </form>
+        <a href="/signup">Sign up</a>
+
+    </body>
+
+</html>
