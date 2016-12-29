@@ -8,15 +8,35 @@
 
     <body>
         <h1>Hello <span sec:authentication="name"></span></h1>
-        
-        <ul th:each="profile : ${profiles}">
-            <li>
-                <a th:href="@{/profiles/{id} (id=${profile.id})}">profile</a>
-            </li>
-        </ul>
-        
-        <a href="/createprofile">Create a new profile</a>
+        <div>
+            <p th:text="'You have reviewed ' + ${answerNum} + ' profiles'">
+                You have reviewed x profiles
+            </p>
+            <p th:text="'Your current profiler rating is: ' + ${score} + '%'">
+                Your current profiler rating is: x%
+            </p>
+        </div>
+        <div>
+            Your profiles:
+            <ul th:each="profile : ${profiles}">
+                <li>
+                    <a th:href="@{/profiles/{id} (id=${profile.id})}" 
+                       th:text="'profile ' + ${profile.id} + ' (' + ${#dates.format(profile.creationTime,'yyyy-MM-dd')} + ')'">profile
+                    </a>
+                </li>
+            </ul>
+            <a href="/createprofile">Create a new profile</a>
+        </div>
+        <div>
+            Profiles you have reviewed:
+            <ul th:each="profile : ${answered}">
+                <li>
+                    <a th:href="@{/profiles/{id} (id=${profile.id})}" 
+                       th:text="'profile ' + ${profile.id}">profile
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-        
     </body>
 </html>

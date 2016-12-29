@@ -55,22 +55,4 @@ public class ProfileQuestionService {
         return profileQuestion;
     }
     
-    /*@Transactional
-    public boolean assignListOfProfileQuestions(String profileId, List<ProfileQuestion> questions) {
-        Profile profile = profileRepository.findOne(profileId);
-        if (profile == null) {
-            return false;
-        }
-        List<ProfileQuestion> profileQuestions = profile.getProfileQuestions();
-        for (ProfileQuestion question : profileQuestions) {
-            question = profileQuestionRepository.findOne(question.getId());
-            ProfileQuestion profileQuestion = new ProfileQuestion();
-            profileQuestion.setProfile(profile);
-            profileQuestion.setDbQuestion(DBQuestion);
-            profileQuestion = profileQuestionRepository.save(profileQuestion);
-            profileQuestions.add(profileQuestion);
-        }
-        profile.setProfileQuestions(profileQuestions);
-        return profileRepository.save(profile);
-    }*/
 }
