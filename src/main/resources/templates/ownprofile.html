@@ -17,7 +17,7 @@
                     </li>
                 </ul>
         </div>
-        <div th:if="${options[0]}">
+        <div th:unless="${options==null}">
                 <ul>
                     <li th:each="question, i : ${questions}">
                         <span th:id="${question.id}" th:text="${question.content}">Question</span>
@@ -26,7 +26,7 @@
                     </li>
                 </ul>
         </div>
-        <div th:unless="${options[0]}">
+        <div th:if="${options==null}">
             <p>Your profile doesn't have reviews yet.</p>
         </div>
 
