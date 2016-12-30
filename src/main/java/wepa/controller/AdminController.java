@@ -23,7 +23,6 @@ public class AdminController {
     @Autowired
     private ProfileService profileService;
 
-
     @RequestMapping(method = RequestMethod.GET)
     public String showUsers(Model model) {
         model.addAttribute("accounts", accountService.getAllUsers());
@@ -39,14 +38,14 @@ public class AdminController {
         return "userDetailsForAdmin";
     }
 
-    @RequestMapping(value = "/profile/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/profile/{id}", method = RequestMethod.POST)
     public String deleteProfile(@PathVariable Long id) {
         Profile profile = profileService.findOneById(id);
         profileService.deleteProfile(profile);
         return "redirect:/admin";
     }
 
-    @RequestMapping(value = "/account/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/account/{id}", method = RequestMethod.POST)
     public String deleteAccount(@PathVariable String id) {
         Account account = accountService.getUserById(id);
         accountService.adminDeleteAccount(account);

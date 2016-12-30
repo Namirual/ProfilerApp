@@ -24,6 +24,10 @@
                             <span th:text="${account.username}">Username</span>
                         </a>
                         -- <span th:text="${account.authorities}">Authorities</span>
+                        <form method="post" th:action="@{/admin/delete/account/{id} (id=${account.id})}">
+                            <button value = "Delete" type="submit" class="btn-danger">Delete</button>
+                        </form>
+
                     </li>
                 </ul>
             </div>
@@ -34,6 +38,10 @@
                         <a th:href="@{/profiles/{id} (id=${profile.id})}">
                             <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
                         </a>
+                        <form method="post" th:action="@{/admin/delete/profile/{id} (id=${profile.id})}">
+                            <br/>
+                            <button value = "Delete" type="submit" class="btn-danger">Delete</button>
+                        </form>
                     </li>
                 </ul>
             </div>

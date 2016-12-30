@@ -1,4 +1,3 @@
-
 package wepa.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,8 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .antMatchers("/index").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/admin").hasAnyAuthority("ADMIN")
+                .antMatchers("/createquestion/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/createquestion/").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginPage("/login")

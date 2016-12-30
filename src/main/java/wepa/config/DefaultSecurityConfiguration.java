@@ -33,6 +33,8 @@ public class DefaultSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/admin").hasAnyAuthority("ADMIN")
+                .antMatchers("/createquestion/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/createquestion/").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginPage("/login")
