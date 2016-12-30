@@ -3,48 +3,52 @@
     <head lang="en">
         <meta charset="UTF-8"/>
         <title>Profiler userpage</title>
-        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+        <!--<link rel="stylesheet" th:href="@{/css/styles.css}"/>-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 
     <body>
-        <header th:replace="fragments/header :: header">
-            <p>header with links etc</p>
-        </header>
-        <nav>
+        <div class="container">
+            <header th:replace="fragments/header :: header">
+                <p>header with links etc</p>
+            </header>
+            <nav>
 
-        </nav>
-        
-        <h1>Hello <span th:text="${name}"></span></h1>
-        <div>
-            <p th:text="'You have reviewed ' + ${answerNum} + ' profiles'">
-                You have reviewed x profiles
-            </p>
-            <p th:text="'Your current profiler rating is: ' + ${score} + '%'">
-                Your current profiler rating is: x%
-            </p>
+            </nav>
+            <div class="col-md-12">
+                <h1 class="text-center">Hello <span th:text="${name}"></span> </h1>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-center">You have reviewed <span th:text="${answerNum}"></span> profiles</h3>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-center">Your current profiler rating is: <span th:text="${score}"></span>%</h3>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-center">Your profiles:</h2>
+                <ul class="list-group" th:each="profile : ${profiles}">
+                    <li class="list-group-item">
+                        <a th:href="@{/profiles/{id} (id=${profile.id})}">
+                            <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
+                            <span th:text="'profile ' + ${profile.id} + ' (' + ${#dates.format(profile.creationTime,'yyyy-MM-dd')} + ')'">profile</span>
+                        </a>
+                    </li>
+                </ul>
+                <a href="/createprofile" class="btn btn-info">Create a new profile</a>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-center">Profiles you have reviewed: </h2>
+                <ul class="list-group" th:each="profile : ${answered}">
+                    <li class="list-group-item">
+                        <a th:href="@{/profiles/{id} (id=${profile.id})}">
+                            <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
+                            <span th:text="'profile ' + ${profile.id}">profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div>
-            Your profiles:
-            <ul th:each="profile : ${profiles}">
-                <li>
-                    <a th:href="@{/profiles/{id} (id=${profile.id})}" 
-                       th:text="'profile ' + ${profile.id} + ' (' + ${#dates.format(profile.creationTime,'yyyy-MM-dd')} + ')'">profile
-                    </a>
-                    <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
-                </li>
-            </ul>
-            <a href="/createprofile">Create a new profile</a>
-        </div>
-        <div>
-            Profiles you have reviewed:
-            <ul th:each="profile : ${answered}">
-                <li>
-                    <a th:href="@{/profiles/{id} (id=${profile.id})}" 
-                       th:text="'profile ' + ${profile.id}">profile
-                    </a>
-                </li>
-            </ul>
-        </div>
-
     </body>
 </html>

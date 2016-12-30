@@ -6,30 +6,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import wepa.repository.AccountRepository;
-import wepa.service.AdminService;
+import wepa.domain.Account;
+import wepa.service.AccountService;
+import wepa.service.ProfileService;
 
-//@Controller
-//@RequestMapping("/admin")
+@Controller
+@RequestMapping("/admin")
 public class AdminController {
-/*
-    @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private AdminService adminService;
 
+    @Autowired
+    private AccountService accountService;
+    
+    @Autowired
+    private ProfileService profileService;
+
+    
     @RequestMapping(method = RequestMethod.GET)
-
     public String showUsers(Model model) {
-        model.addAttribute("accounts", adminService.getAllUsers());
-
+        model.addAttribute("accounts", accountService.getAllUsers());
+        model.addAttribute("profiles", profileService.getAllProfiles());
         return "admin";
     }
+    
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public String showUserDetails(@PathVariable String id, Model model) {
-        model.addAttribute("account", adminService.getUserById(id));
-        model.addAttribute("profile", adminService.getProfileByUserId(id));
-        model.addAttribute("questions", adminService.getQuestionsAndAnswersForProfileByUserId(id));
+        Account account = accountService.getUserById(id);
+        model.addAttribute("account", account);
+        model.addAttribute("profiles", profileService.findProfilesByAccount(account));
         return "userDetailsForAdmin";
-    }*/
+    }
 }

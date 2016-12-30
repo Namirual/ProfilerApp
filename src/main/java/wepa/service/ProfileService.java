@@ -62,6 +62,10 @@ public class ProfileService {
         });
         return true;
     }
+    
+    public List<Profile> getAllProfiles() {
+        return profileRepository.findAll();
+    }
 
     public Profile findOne(Profile profile) {
         return profileRepository.findOne(profile.getId());
