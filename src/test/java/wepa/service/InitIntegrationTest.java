@@ -81,6 +81,14 @@ public class InitIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
+        profileRepository.deleteAll();
+        answerRepository.deleteAll();
+        profileQuestionRepository.deleteAll();
+        answerOptionRepository.deleteAll();
+        questionRepository.deleteAll();
+        accountRepository.deleteAll();
+        imageObjectRepository.deleteAll();
+
         question1 = questionService.createQuestion("How old is this person?", Arrays.asList("Still a child", "20-25", "25-30", "30-35", "35-40", "old as fuck"));
         question2 = questionService.createQuestion("How tall is this person?", Arrays.asList("Midget", "140-150", "150-160", "160-170", "170-180", "180-190", "190-200", "HUGE"));
         question3 = questionService.createQuestion("Does this person look like a dog or a cat person?", Arrays.asList("Neither", "Dog", "Cat", "Both"));
@@ -120,6 +128,7 @@ public class InitIntegrationTest {
 
     @Test
     public void canCreateProfileWithPic() {
+
         Profile profile = initService.createTestProfile(account1, Arrays.asList(question1, question2), "public/img/alabaster.jpg");
         ImageObject image1 = imageObjectRepository.findOne(profile.getProfilePicId());
         ImageObject image2 = imageObjectRepository.findOne(profile.getThumbnailId());

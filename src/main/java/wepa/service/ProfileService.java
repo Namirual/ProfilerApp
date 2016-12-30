@@ -30,7 +30,7 @@ public class ProfileService {
     @Autowired
     private ImageObjectRepository imageObjectRepository;
     
-//    @Transactional
+    @Transactional
     public Profile createProfileAndAssignToUser(Account account) {
         account = accountRepository.findOne(account.getId());
         if (account == null) {
