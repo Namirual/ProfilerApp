@@ -51,7 +51,7 @@ public class Account extends UUIDPersistable {
     private List<Profile> answeredProfiles;*/
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany
+    @ManyToMany(mappedBy = "answeringAccounts")
     private List<Profile> answeredProfiles;
     
     @ElementCollection(fetch = FetchType.EAGER)
