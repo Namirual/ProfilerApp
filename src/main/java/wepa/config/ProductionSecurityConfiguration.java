@@ -31,7 +31,8 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         http.formLogin()
                 .permitAll()
                 .and()
-                .logout();
+                .logout()
+                .invalidateHttpSession(true);
     }
 
     @Autowired

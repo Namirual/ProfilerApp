@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import wepa.domain.AnswerOption;
 import wepa.domain.Profile;
 import wepa.domain.ProfileQuestion;
 import wepa.repository.AnswerRepository;
+import wepa.repository.ProfileQuestionRepository;
 import wepa.repository.ProfileRepository;
 
 @Service
@@ -24,6 +26,8 @@ public class AnswerService {
 
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private ProfileQuestionRepository profileQuestionRepository;
 
     public List<Answer> getAnswersForProfile(Long profileId) {
         Profile profile = profileRepository.findOne(profileId);
@@ -126,12 +130,18 @@ public class AnswerService {
         //if (answerRepository.findByProfileQuestionAndAccount(question, answerer) != null) {
         //    return answerRepository.findByProfileQuestionAndAccount(question, answerer);
         //}
+        question = profileQuestionRepository.findOne(question.getId());
         Answer ans = new Answer();
+        ans = answerRepository.save(ans);
         ans.setAnswerer(answerer);
         ans.setProfileQuestion(question);
         ans.setAnswer(answer);
         ans.setPostTime(new Date());
         ans = answerRepository.save(ans);
+        List<Answer> answers = question.getAnswers();
+        answers.add(ans);
+        question.setAnswers(answers);
+        profileQuestionRepository.saveAndFlush(question);
         return ans;
     }
 

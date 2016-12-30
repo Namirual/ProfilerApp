@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wepa.domain.Account;
 import wepa.domain.Profile;
 import wepa.repository.AccountRepository;
+import wepa.repository.ProfileRepository;
 
 // This class handles account creation
 
@@ -14,6 +15,9 @@ public class AccountService {
     
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private ProfileRepository profileRepository;
     
     @Transactional
     public Account createAccount(Account account) {
@@ -31,9 +35,17 @@ public class AccountService {
     
     @Transactional
     public Account addAnswerToAccount(Account account, Profile profile) {
+        profile = profileRepository.findOne(profile.getId());
+        profile.addAnsweredAccount(account);
+        profileRepository.save(profile);
         account.addAnsweredProfile(profile);
         account = accountRepository.save(account);
         return account;
+    }
+
+    @Transactional
+    public void deleteAccount(){
+
     }
     
 }

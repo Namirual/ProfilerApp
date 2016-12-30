@@ -4,15 +4,13 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotBlank;
 import wepa.repository.UUIDPersistable;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+
 import org.hibernate.validator.constraints.Email;
 
 // This class holds the users account information, personal information and 
@@ -47,7 +45,7 @@ public class Account extends UUIDPersistable {
     private List<Profile> profiles;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany
+    @ManyToMany(mappedBy = "answeringAccounts")
     private List<Profile> answeredProfiles;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -86,7 +84,11 @@ public class Account extends UUIDPersistable {
     }
 
     public void addProfile(Profile profile) {
-        if (!this.profiles.contains(profile) && profile != null) {
+        if(this.profiles == null) {
+            this.profiles = new ArrayList<>();
+        }
+        if (profile != null && !this.profiles.contains(profile)) {
+
             this.profiles.add(profile);
         }
     }
@@ -124,6 +126,9 @@ public class Account extends UUIDPersistable {
     }
 
     public void addAnsweredProfile(Profile profile) {
+        if(answeredProfiles == null) {
+            answeredProfiles = new ArrayList<>();
+        }
         answeredProfiles.add(profile);
     }
 

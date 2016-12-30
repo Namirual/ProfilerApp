@@ -5,13 +5,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 // This is class holds all the questions associated with one profile.
@@ -30,8 +25,11 @@ public class Profile extends AbstractPersistable<Long> {
     private Account ownerAccount;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.REMOVE)
     private List<ProfileQuestion> profileQuestions;
+
+    @ManyToMany
+    private List<Account> answeringAccounts;
 
     private boolean active;
 
@@ -92,6 +90,23 @@ public class Profile extends AbstractPersistable<Long> {
 
     public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
+    }
+
+    public List<Account> getAnsweringAccounts() {
+        if(answeringAccounts == null) {
+            answeringAccounts = new ArrayList<>();
+        }
+        return answeringAccounts;
+    }
+
+    public void setAnsweringAccounts(List<Account> answeringAccounts) {
+        this.answeringAccounts = answeringAccounts;
+    }
+    public void addAnsweredAccount(Account answeringAccount) {
+        if(answeringAccounts == null) {
+            answeringAccounts = new ArrayList<>();
+        }
+        this.answeringAccounts.add(answeringAccount);
     }
 
 }

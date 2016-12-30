@@ -153,14 +153,17 @@ public class RepositoryIntegrationTest {
 
 
     }
-
+    @Transactional
     @After
     public void tearDown() throws Exception {
+
+        profileRepository.deleteAll();
         profileQuestionRepository.deleteAll();
         answerOptionRepository.deleteAll();
         questionRepository.deleteAll();
         profileRepository.deleteAll();
         accountRepository.deleteAll();
+
 
     }
 
