@@ -125,12 +125,12 @@ public class InitIntegrationTest {
 
 
     }
-    
-    @Test
-    public void nonsenseTest() {
-        assertEquals(1,1);
-    }
-/*
+//
+//    @Test
+//    public void nonsenseTest() {
+//        assertEquals(1,1);
+//    }
+
     @Test
     public void canCreateProfileWithPic() {
 
@@ -173,5 +173,5 @@ public class InitIntegrationTest {
         assertNotEquals(answer2.getAnswer(), profile2.getProfileQuestions().get(1).getCorrectAnswer());
 
     }
-*/
+
 }
