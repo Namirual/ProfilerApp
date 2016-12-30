@@ -34,6 +34,10 @@
                             <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
                             <span th:text="'profile ' + ${profile.id} + ' (' + ${#dates.format(profile.creationTime,'yyyy-MM-dd')} + ')'">profile</span>
                             <span class="badge" th:text="${#lists.size(profile.answeringAccounts)}">12</span>
+                            <form method="post" th:action="@{/profiles/delete/{id} (id=${profile.id})}">
+                                <br/>
+                                <button value = "Delete" type="submit" class="btn-danger">Delete</button>
+                            </form>
                         </a>
                     </li>
                 </ul>

@@ -1,26 +1,41 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>Header template</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Header template</title>
 
-        <header th:fragment="header">
-            <a th:href="@{/index}">Home</a>
+</head>
+<body>
 
-            <div sec:authorize="hasAuthority('ADMIN')">
-                <a th:href="@{/admin}">Show Users</a>
-                <a th:href="@{/createquestion}">Add questions</a>
-            </div>
-            Signed in as <a th:href="@{/userpage}"><span sec:authentication="name">Bob</span></a>
+<header th:fragment="header">
+    <a th:href="@{/index}">Home</a>
+
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/admin}">Show Users</a>
+        <a th:href="@{/createquestion}">Add questions</a>
+    </div>
+
+    Signed in as <a th:href="@{/userpage}"><span sec:authentication="name">Bob</span></a>
+    <section sec:authorize="hasAuthority('USER')">
+
+        <form method="post" th:action="@{/deleteaccount}">
 
 
-            <form method="POST" th:action="@{/logout}" class="logout">
-                <input type="submit" value="Logout"/>
-            </form>
+                <input name="password" type="password" placeholder="Password..."/>
+                <button value="Delete account" class="btn-danger" type="submit">Delete account</button>
 
-        </header>
+        </form>
+        <!--<input type="password" th:name="password" class="form-control" placeholder="Password"/>-->
+        <!--<button value="Delete account" type="submit" class="btn-danger">Delete account</button>-->
 
-    </body>
+
+    </section>
+
+    <form method="POST" th:action="@{/logout}" class="logout">
+        <input type="submit" value="Logout"/>
+    </form>
+
+</header>
+
+</body>
 </html>

@@ -19,4 +19,6 @@ public interface ProfileRepository extends JpaRepository<Profile, Long>{
     
     List<Profile> findFirst10ByOrderByIdDesc();
 
+
+
 }

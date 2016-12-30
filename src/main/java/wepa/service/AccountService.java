@@ -2,16 +2,20 @@ package wepa.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wepa.domain.Account;
+import wepa.domain.Answer;
 import wepa.domain.Profile;
 import wepa.repository.AccountRepository;
+import wepa.repository.AnswerRepository;
 import wepa.repository.ProfileRepository;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 // This class handles account creation
@@ -29,7 +33,25 @@ public class AccountService {
     private ProfileService profileService;
     @Autowired
     private HttpSession session;
+    @Autowired
+    private AnswerService answerService;
+    @Autowired
+    private AnswerRepository answerRepository;
+    @PostConstruct
+    public void initFooBar() {
+        Account fooBar;
+        if (accountRepository.findByUsername("FooBar") == null) {
+            Account fooAccount = new Account();
+            fooAccount.setUsername("FooBar");
+            fooAccount.setEmail("foobar@foomail.com");
+            fooAccount.setName("FooBar");
+            fooAccount.setPassword("$2a$10$HOenmXvSwgDYdJLt5mvYoelgKWRem9UcFf.yTUOjal7aoOsvf2SWi");
 
+            fooBar = accountRepository.save(fooAccount);
+        } else {
+            fooBar = accountRepository.findByUsername("FooBar");
+        }
+    }
     @Transactional
     public Account createAccount(Account account) {
         // Only if an account exists should it have an id, so check if the account
@@ -64,11 +86,41 @@ public class AccountService {
 
     @Transactional
     public void deleteAccount() {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account user = findAccountByUser(auth.getName());
         List<Profile> usersProfiles = user.getProfiles();
-        for (Profile profile:usersProfiles) {
+        Account fooBar = accountRepository.findByUsername("FooBar");
+        if (accountRepository.findByUsername("FooBar") == null) {
+            Account fooAccount = new Account();
+            fooAccount.setUsername("FooBar");
+            fooAccount.setEmail("foobar@foomail.com");
+            fooAccount.setName("FooBar");
+            fooAccount.setPassword("$2a$10$HOenmXvSwgDYdJLt5mvYoelgKWRem9UcFf.yTUOjal7aoOsvf2SWi");
+
+            fooBar = accountRepository.save(fooAccount);
+        } else {
+            fooBar = accountRepository.findByUsername("FooBar");
+        }
+
+        for (Profile profile : usersProfiles) {
+            System.out.println("Profile Id " + profile.getId());
             profileService.deleteProfile(profile);
+        }
+        List<Answer> usersAnswers = answerRepository.findByAccount(user);
+        for (Answer answer : usersAnswers) {
+            answer.setAnswerer(fooBar);
+            answerRepository.save(answer);
+        }
+        List<Profile> allProfiles = profileRepository.findAll();
+        for (Profile p:allProfiles) {
+            List<Account> answeringAccounts = p.getAnsweringAccounts();
+            for (int i = 0; i <answeringAccounts.size() ; i++) {
+                if(answeringAccounts.get(i).getId() == user.getId()) {
+                    answeringAccounts.set(i, fooBar);
+                    profileRepository.save(p);
+                }
+            }
         }
         accountRepository.delete(user);
         auth.setAuthenticated(false);
@@ -76,13 +128,42 @@ public class AccountService {
     }
 
     @Transactional
-    public void adminDeleteAccount(Account account) {
-        account = accountRepository.findOne(account.getId());
-        List<Profile> usersProfiles = account.getProfiles();
-        for (Profile profile:usersProfiles) {
+    public void adminDeleteAccount(Account user) {
+        user = accountRepository.findOne(user.getId());
+        List<Profile> usersProfiles = user.getProfiles();
+        Account fooBar = accountRepository.findByUsername("FooBar");
+        if (accountRepository.findByUsername("FooBar") == null) {
+            Account fooAccount = new Account();
+            fooAccount.setUsername("FooBar");
+            fooAccount.setEmail("foobar@foomail.com");
+            fooAccount.setName("FooBar");
+            fooAccount.setPassword("$2a$10$HOenmXvSwgDYdJLt5mvYoelgKWRem9UcFf.yTUOjal7aoOsvf2SWi");
+
+            fooBar = accountRepository.save(fooAccount);
+        } else {
+            fooBar = accountRepository.findByUsername("FooBar");
+        }
+
+        for (Profile profile : usersProfiles) {
+            System.out.println("Profile Id " + profile.getId());
             profileService.deleteProfile(profile);
         }
-        accountRepository.delete(account);
+        List<Answer> usersAnswers = answerRepository.findByAccount(user);
+        for (Answer answer : usersAnswers) {
+            answer.setAnswerer(fooBar);
+            answerRepository.save(answer);
+        }
+        List<Profile> allProfiles = profileRepository.findAll();
+        for (Profile p:allProfiles) {
+            List<Account> answeringAccounts = p.getAnsweringAccounts();
+            for (int i = 0; i <answeringAccounts.size() ; i++) {
+                if(answeringAccounts.get(i).getId() == user.getId()) {
+                    answeringAccounts.set(i, fooBar);
+                    profileRepository.save(p);
+                }
+            }
+        }
+        accountRepository.delete(user);
     }
 
 }

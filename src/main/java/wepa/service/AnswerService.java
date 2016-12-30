@@ -154,4 +154,12 @@ public class AnswerService {
         return ans;
     }
 
+    public void deleteAnswersForProfile(Profile profile) {
+        List<Answer> answers = getAnswersForProfile(profile.getId());
+        for (Answer answer:answers) {
+            answerRepository.delete(answer);
+        }
+
+    }
+
 }
