@@ -28,6 +28,7 @@ import wepa.domain.ProfileQuestion;
 
 import wepa.repository.AccountRepository;
 import wepa.repository.ProfileRepository;
+import wepa.repository.QuestionRepository;
 import wepa.service.AccountService;
 import wepa.service.AnswerService;
 import wepa.service.ImageObjectService;
@@ -75,10 +76,15 @@ public class InitService {
     @Autowired
     private AnswerService answerService;
 
+    @Autowired
+    private QuestionRepository questionRepository;
+
     // Testausta varten, otetaan pois ennen kuin tämä valmistuu
     @PostConstruct
     private void init() {
-
+        if(questionRepository.findByContent("How old is this person?") != null) {
+            return;
+        }
         Question question1 = questionService.createQuestion("How old is this person?", Arrays.asList("Still a child", "20-25", "25-30", "30-35", "35-40", "old as fuck"));
         Question question2 = questionService.createQuestion("How tall is this person?", Arrays.asList("Midget", "140-150", "150-160", "160-170", "170-180", "180-190", "190-200", "HUGE"));
         Question question3 = questionService.createQuestion("Does this person look like a dog or a cat person?", Arrays.asList("Neither", "Dog", "Cat", "Both"));

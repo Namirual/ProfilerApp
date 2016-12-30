@@ -63,7 +63,7 @@ public class AccountService {
     }
 
     @Transactional
-    public boolean deleteAccount() {
+    public void deleteAccount() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account user = findAccountByUser(auth.getName());
         List<Profile> usersProfiles = user.getProfiles();
@@ -73,7 +73,16 @@ public class AccountService {
         accountRepository.delete(user);
         auth.setAuthenticated(false);
         session.invalidate();
-        return true;
+    }
+
+    @Transactional
+    public void adminDeleteAccount(Account account) {
+        account = accountRepository.findOne(account.getId());
+        List<Profile> usersProfiles = account.getProfiles();
+        for (Profile profile:usersProfiles) {
+            profileService.deleteProfile(profile);
+        }
+        accountRepository.delete(account);
     }
 
 }

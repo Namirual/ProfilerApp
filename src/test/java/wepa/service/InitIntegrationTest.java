@@ -117,7 +117,7 @@ public class InitIntegrationTest {
 
 
     }
-
+/*
     @Test
     public void canCreateProfileWithPic() {
         Profile profile = initService.createTestProfile(account1, Arrays.asList(question1, question2), "public/img/alabaster.jpg");
@@ -126,7 +126,7 @@ public class InitIntegrationTest {
 
         assertEquals(6, imageObjectRepository.findAll().size());
     }
-
+*/
     @Test
     public void canAnswerProfiles() {
         initService.createTestAnswers(account1, profile2, Arrays.asList(5, 0));

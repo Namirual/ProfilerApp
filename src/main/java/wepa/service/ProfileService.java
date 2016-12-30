@@ -81,6 +81,9 @@ public class ProfileService {
     public Profile findOne(Profile profile) {
         return profileRepository.findOne(profile.getId());
     }
+    public Profile findOneById(Long profileID) {
+        return profileRepository.findOne(profileID);
+    }
 
     public List<Profile> findProfilesByAccount(Account account) {
         return profileRepository.findByOwnerAccount(account);
