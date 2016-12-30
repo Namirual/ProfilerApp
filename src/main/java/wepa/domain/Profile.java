@@ -35,7 +35,7 @@ public class Profile extends AbstractPersistable<Long> {
     private List<ProfileQuestion> profileQuestions;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany()
+    @ManyToMany(mappedBy = "answeredProfiles")
     private List<Account> answeringAccounts;
 
     private boolean active;
