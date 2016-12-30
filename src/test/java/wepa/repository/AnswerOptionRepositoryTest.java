@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Profile("default")
+@Profile("test")
 public class AnswerOptionRepositoryTest {
     @Before
     public void setUp() throws Exception {

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import wepa.domain.Account;
@@ -39,6 +40,7 @@ import wepa.service.QuestionService;
  * @author lmantyla
  */
 @Service
+@org.springframework.context.annotation.Profile({"default", "production"})
 public class InitService {
 
     @Autowired
@@ -96,17 +98,17 @@ public class InitService {
         Profile profile6 = createTestProfile(account5, Arrays.asList(question1, question2), "public/img/ishtar.jpg");
         Profile profile7 = createTestProfile(account5, Arrays.asList(question1, question2), "public/img/alabaster.jpg");
 
-        createTestAnswers(account1, profile2, Arrays.asList(5,2));
-        createTestAnswers(account2, profile3, Arrays.asList(2,1));
-        createTestAnswers(account3, profile2, Arrays.asList(5,1));
+        createTestAnswers(account1, profile2, Arrays.asList(5, 2));
+        createTestAnswers(account2, profile3, Arrays.asList(2, 1));
+        createTestAnswers(account3, profile2, Arrays.asList(5, 1));
 
-        createTestAnswers(account4, profile1, Arrays.asList(5,7));
-        createTestAnswers(account4, profile2, Arrays.asList(5,2));
-        createTestAnswers(account4, profile3, Arrays.asList(5,2));
+        createTestAnswers(account4, profile1, Arrays.asList(5, 7));
+        createTestAnswers(account4, profile2, Arrays.asList(5, 2));
+        createTestAnswers(account4, profile3, Arrays.asList(5, 2));
 
     }
 
-    private Account createAccount(String name, String username, String password, String email, boolean admin) {
+    public Account createAccount(String name, String username, String password, String email, boolean admin) {
         Account account = new Account();
         account.setName(name);
         account.setUsername(username);
@@ -122,7 +124,7 @@ public class InitService {
         return account;
     }
 
-    private Profile createTestProfile(Account account, List<Question> questions, String imagePath) {
+    public Profile createTestProfile(Account account, List<Question> questions, String imagePath) {
         Profile profile = profileService.createProfileAndAssignToUser(account);
         profile = profileRepository.save(profile);
 
@@ -140,7 +142,7 @@ public class InitService {
         return profileRepository.save(profile);
     }
 
-    private MultipartFile getImage(String imagePath) {
+    public MultipartFile getImage(String imagePath) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         InputStream is = classloader.getResourceAsStream(imagePath);
 
@@ -157,10 +159,10 @@ public class InitService {
         return multipartFile;
     }
 
-    private void createTestAnswers(Account account, Profile profile, List<Integer> answerNum) {
+    public void createTestAnswers(Account account, Profile profile, List<Integer> answerNum) {
         List<AnswerOption> answers = new ArrayList<>();
         int num = 0;
-        
+
         for (ProfileQuestion profQuestion : profile.getProfileQuestions()) {
             answers.add(profQuestion.getQuestion().getAnswerOptions().get(answerNum.get(num)));
             num++;

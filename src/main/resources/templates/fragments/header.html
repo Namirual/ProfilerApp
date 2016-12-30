@@ -11,9 +11,10 @@
 
             <div sec:authorize="hasAuthority('ADMIN')">
                 <a th:href="@{/admin}">Show Users</a>
+                <a th:href="@{/createquestion}">Add questions</a>
             </div>
             Signed in as <a th:href="@{/userpage}"><span sec:authentication="name">Bob</span></a>
-            
+
 
             <form method="POST" th:action="@{/logout}" class="logout">
                 <input type="submit" value="Logout"/>

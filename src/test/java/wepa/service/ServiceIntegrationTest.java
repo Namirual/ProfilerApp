@@ -25,7 +25,7 @@ import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@org.springframework.context.annotation.Profile("default")
+@org.springframework.context.annotation.Profile("test")
 public class ServiceIntegrationTest {
 
     private Account pertti;

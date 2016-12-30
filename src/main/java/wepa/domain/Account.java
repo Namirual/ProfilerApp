@@ -46,10 +46,14 @@ public class Account extends UUIDPersistable {
     @OneToMany(mappedBy = "ownerAccount")
     private List<Profile> profiles;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
+    /*@LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
-    private List<Profile> answeredProfiles;
+    private List<Profile> answeredProfiles;*/
 
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(mappedBy = "answeringAccounts")
+    private List<Profile> answeredProfiles;
+    
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
 

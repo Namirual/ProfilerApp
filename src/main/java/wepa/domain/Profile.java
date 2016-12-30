@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -32,6 +33,10 @@ public class Profile extends AbstractPersistable<Long> {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "profile")
     private List<ProfileQuestion> profileQuestions;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany()
+    private List<Account> answeringAccounts;
 
     private boolean active;
 

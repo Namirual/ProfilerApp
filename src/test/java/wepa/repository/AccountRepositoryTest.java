@@ -14,10 +14,12 @@ import wepa.domain.Account;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
+import org.springframework.test.context.ActiveProfiles;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Profile("default")
+@Profile("test")
+@ActiveProfiles("test")
 public class AccountRepositoryTest {
     @Autowired
     private AccountRepository accountRepository;
