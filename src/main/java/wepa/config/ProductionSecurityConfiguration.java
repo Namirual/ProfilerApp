@@ -30,9 +30,16 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .antMatchers("/admin").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
         http.formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/authenticate")
+                .defaultSuccessUrl("/index")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .permitAll();
+        http.logout()
+                .logoutUrl("/logout")
+                //.logoutSuccessUrl("/login")
                 .permitAll()
-                .and()
-                .logout()
                 .invalidateHttpSession(true);
     }
 

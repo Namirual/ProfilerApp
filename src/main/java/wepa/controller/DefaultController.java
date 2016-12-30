@@ -84,9 +84,16 @@ public class DefaultController {
         return "redirect:/index";
     }
 
-    @RequestMapping(value = "/account", method = RequestMethod.DELETE)
-    public String deleteAccount() {
-        accountService.deleteAccount();
+    @RequestMapping(value = "/deleteaccount", method = RequestMethod.POST)
+    public String deleteAccount(@RequestParam String password) {
+        System.out.println("Received param password for deleteAccount: " + password);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Account user = accountService.findAccountByUser(auth.getName());
+        System.out.println("Trying to delete account: " + user);
+        if(passwordEncoder.matches(password, user.getPassword())) {
+            accountService.deleteAccount();
+        }
+
         return "redirect:/";
     }
 
