@@ -134,6 +134,7 @@ public class ProfileController {
 
         // We have three different pages to simplify the Thymeleaf needed.
         if (user == profile.getOwnerAccount()) {
+            model.addAttribute("numberOfRatings", profile.getAnsweringAccounts().size());
             return "ownprofile";
         } else if (ownAns.isEmpty()) {
             return "answerprofile";

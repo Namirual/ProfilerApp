@@ -21,25 +21,26 @@
                 <h1 class="text-center">Hello <span th:text="${name}"></span> </h1>
             </div>
             <div class="col-md-6">
-                <h3 class="text-center">You have reviewed <span th:text="${answerNum}"></span> profiles</h3>
+                <h2 class="text-center">You have profiled <span th:text="${answerNum}"></span> image</h2>
             </div>
             <div class="col-md-6">
-                <h3 class="text-center">Your current profiler rating is: <span th:text="${score}"></span>%</h3>
+                <h2 class="text-center">Your current profiler rating is: <span th:text="${score}"></span>%</h2>
             </div>
             <div class="col-md-6">
-                <h2 class="text-center">Your profiles:</h2>
+                <h3 class="text-center">Your images and their number of reviews:</h3>
                 <ul class="list-group" th:each="profile : ${profiles}">
                     <li class="list-group-item">
                         <a th:href="@{/profiles/{id} (id=${profile.id})}">
                             <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
                             <span th:text="'profile ' + ${profile.id} + ' (' + ${#dates.format(profile.creationTime,'yyyy-MM-dd')} + ')'">profile</span>
+                            <span class="badge" th:text="${#lists.size(profile.answeringAccounts)}">12</span>
                         </a>
                     </li>
                 </ul>
                 <a href="/createprofile" class="btn btn-info">Create a new profile</a>
             </div>
             <div class="col-md-6">
-                <h2 class="text-center">Profiles you have reviewed: </h2>
+                <h3 class="text-center">Images you have profiled: </h3>
                 <ul class="list-group" th:each="profile : ${answered}">
                     <li class="list-group-item">
                         <a th:href="@{/profiles/{id} (id=${profile.id})}">
