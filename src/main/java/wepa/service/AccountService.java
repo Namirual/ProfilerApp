@@ -15,6 +15,7 @@ import wepa.repository.AccountRepository;
 import wepa.repository.AnswerRepository;
 import wepa.repository.ProfileRepository;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 // This class handles account creation
@@ -36,7 +37,21 @@ public class AccountService {
     private AnswerService answerService;
     @Autowired
     private AnswerRepository answerRepository;
+    @PostConstruct
+    public void initFooBar() {
+        Account fooBar;
+        if (accountRepository.findByUsername("FooBar") == null) {
+            Account fooAccount = new Account();
+            fooAccount.setUsername("FooBar");
+            fooAccount.setEmail("foobar@foomail.com");
+            fooAccount.setName("FooBar");
+            fooAccount.setPassword("$2a$10$HOenmXvSwgDYdJLt5mvYoelgKWRem9UcFf.yTUOjal7aoOsvf2SWi");
 
+            fooBar = accountRepository.save(fooAccount);
+        } else {
+            fooBar = accountRepository.findByUsername("FooBar");
+        }
+    }
     @Transactional
     public Account createAccount(Account account) {
         // Only if an account exists should it have an id, so check if the account
@@ -69,13 +84,13 @@ public class AccountService {
         return account;
     }
 
-//    @Transactional
+    @Transactional
     public void deleteAccount() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account user = findAccountByUser(auth.getName());
         List<Profile> usersProfiles = user.getProfiles();
-        Account fooBar;
+        Account fooBar = accountRepository.findByUsername("FooBar");
         if (accountRepository.findByUsername("FooBar") == null) {
             Account fooAccount = new Account();
             fooAccount.setUsername("FooBar");
@@ -116,7 +131,7 @@ public class AccountService {
     public void adminDeleteAccount(Account user) {
         user = accountRepository.findOne(user.getId());
         List<Profile> usersProfiles = user.getProfiles();
-        Account fooBar;
+        Account fooBar = accountRepository.findByUsername("FooBar");
         if (accountRepository.findByUsername("FooBar") == null) {
             Account fooAccount = new Account();
             fooAccount.setUsername("FooBar");
