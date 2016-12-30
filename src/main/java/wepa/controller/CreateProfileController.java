@@ -42,7 +42,7 @@ public class CreateProfileController {
 
     @Autowired
     private ImageObjectService imageService;
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public String viewCreateProfile(Model model) {
         // Get the user authentication
@@ -53,7 +53,6 @@ public class CreateProfileController {
         return "create_profile";
     }
 
-    
     @RequestMapping(method = RequestMethod.POST)
     public String postNewProfile(@RequestParam List<String> answerId,
             @RequestParam("file") MultipartFile file) {
@@ -65,21 +64,32 @@ public class CreateProfileController {
             return "redirect:/userpage";
         }
 
-        String imageId = images.get(0);
-        String thumbnailId = images.get(1);
+        //If there are less than minNumberOfAnswers, profile creation is interrupted.
+        // Since the answers are send in a string list of question-answer pairs,
+        // it has to be parsed first into a Long-Long map.int minNumberOfAnswers = 3;
+
+        Map<Long, Long> questionsAndAnswers = parseStringListIntoMap(answerId);
+        
+        int minNumberOfAnswers = 3;
+
+        if (questionsAndAnswers.values().size() < minNumberOfAnswers) {
+            return "redirect:/userpage";
+        }
+        
+        // Since the input is correct, the profile is now created here.
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account user = accountService.findAccountByUser(auth.getName());
         Profile profile = profileService.createProfileAndAssignToUser(user);
 
+        String imageId = images.get(0);
+        String thumbnailId = images.get(1);
+
         profile.setProfilePicId(imageId);
         profile.setThumbnailId(thumbnailId);
-        // Since the answers are send in a string list of question-answer pairs,
-        // it has to be parsed first into a Long-Long map.
 
-        Map<Long, Long> questionsAndAnswers = parseStringListIntoMap(answerId);
-        for (Long key :questionsAndAnswers.keySet()) {
-            if(questionsAndAnswers.get(key) != 0) {
+        for (Long key : questionsAndAnswers.keySet()) {
+            if (questionsAndAnswers.get(key) != 0) {
                 profileQuestionService.assignQuestionToProfile(profile.getId(), key, questionsAndAnswers.get(key));
             }
         }
@@ -87,16 +97,17 @@ public class CreateProfileController {
         return "redirect:/userpage";
     }
 
-
     private Map<Long, Long> parseStringListIntoMap(List<String> list) {
         Map<Long, Long> map = new HashMap<>();
         for (String str : list) {
             String[] splitStr = str.split(",");
             Long key = Long.parseLong(splitStr[0]);
             Long value = Long.parseLong(splitStr[1]);
-            map.put(key, value);
+            if (value != 0) {
+                map.put(key, value);
+            }
         }
         return map;
     }
-    
+
 }
