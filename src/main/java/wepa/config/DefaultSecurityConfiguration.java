@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Profile("default")
+@Profile(value = {"default", "test"})
 @Configuration
 @EnableWebSecurity
 public class DefaultSecurityConfiguration extends WebSecurityConfigurerAdapter {

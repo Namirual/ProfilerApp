@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@org.springframework.context.annotation.Profile("default")
+@org.springframework.context.annotation.Profile("test")
 public class ProfileRepositoryTest {
 
     @Autowired
