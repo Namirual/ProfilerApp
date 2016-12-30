@@ -38,6 +38,11 @@
                     </li>
                 </ul>
                 <a href="/createprofile" class="btn btn-info">Create a new profile</a>
+                <ul class="pagination pagination-lg">
+                    <li><a th:if="${previousOwn}" th:href="@{/userpage/{id}/own/{id2}/ (id=${current}, id2=${previousOwn})}" class="label label-info" role="button">PREVIOUS</a></li>
+                    <li><a th:if="${nextOwn}" th:href="@{/userpage/{id}/own/{id2}/(id=${current}, id2=${nextOwn})}" class="label label-info" role="button">NEXT</a></li>
+                </ul>
+
             </div>
             <div class="col-md-6">
                 <h3 class="text-center">Images you have profiled: </h3>
@@ -49,6 +54,11 @@
                         </a>
                     </li>
                 </ul>
+                <ul class="pagination pagination-lg">
+                    <li><a th:if="${previous}" th:href="@{/userpage/{id}/own/{id2}/ (id=${previous}, id2=${currentOwn})}" class="label label-info" role="button">PREVIOUS</a></li>
+                    <li><a th:if="${next}" th:href="@{/userpage/{id}/own/{id2}/(id=${next}, id2=${currentOwn})}" class="label label-info" role="button">NEXT</a></li>
+                </ul>
+
             </div>
         </div>
     </body>
