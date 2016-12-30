@@ -9,6 +9,8 @@ import wepa.domain.*;
 import wepa.repository.*;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class ProfileService {
@@ -70,6 +72,10 @@ public class ProfileService {
     
     public List<Profile> getAllProfiles() {
         return profileRepository.findAll();
+    }
+    
+    public Page<Profile> getAllProfiles(Pageable p) {
+        return profileRepository.findAll(p);
     }
 
     public Profile findOne(Profile profile) {

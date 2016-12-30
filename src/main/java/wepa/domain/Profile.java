@@ -29,6 +29,7 @@ public class Profile extends AbstractPersistable<Long> {
     private List<ProfileQuestion> profileQuestions;
 
     @LazyCollection(LazyCollectionOption.FALSE)
+
     @ManyToMany
     private List<Account> answeringAccounts;
 

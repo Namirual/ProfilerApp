@@ -20,14 +20,30 @@
                 <h1>Welcome to the Profiler, <span sec:authentication="name">Bob</span>!</h1>
                 <a href="/userpage" class="btn btn-primary">Your userpage</a>
             </div>
-            <h2>Newest profiles</h2>
-            <ul class="list-group" th:each="profile : ${profiles}">
-                <li class="list-group-item">
+            <h2>Newest profiles <small>Click on an image to start profiling, or go for a 
+                <a th:if="${random!=null}" th:href="@{/profiles/{id} (id=${random})}" class="btn btn-warning" role="button">random profile</a>
+                </small></h2>
+            <div class="row">
+                <div th:each="profile : ${profiles1}" class="col-md-2">
                     <a th:href="@{/profiles/{id} (id=${profile.id})}">
-                        <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
+                        <img th:src="@{/images/{id}/content(id=${profile.profilePicId})}" class="img-responsive center-block"/>
                     </a>
-                </li>
-            </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div th:each="profile : ${profiles2}" class="col-md-2">
+                    <a th:href="@{/profiles/{id} (id=${profile.id})}">
+                        <img th:src="@{/images/{id}/content(id=${profile.profilePicId})}" class="img-responsive center-block"/>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div th:each="profile : ${profiles3}" class="col-md-2">
+                    <a th:href="@{/profiles/{id} (id=${profile.id})}">
+                        <img th:src="@{/images/{id}/content(id=${profile.profilePicId})}" class="img-responsive center-block"/>
+                    </a>
+                </div>
+            </div>
             <script th:src="@{/javascript/javascript.js}"></script>
         </div>
     </body>
