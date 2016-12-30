@@ -37,7 +37,7 @@ import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@org.springframework.context.annotation.Profile("test")
+@org.springframework.context.annotation.Profile("default")
 
 // Class tests object creation using the methods of the InitService class.
 public class InitIntegrationTest {
