@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import wepa.domain.Account;
 import wepa.domain.Answer;
 import wepa.domain.ProfileQuestion;
@@ -51,6 +52,7 @@ public class AnswerRepositoryTest {
     @Autowired
     private AnswerOptionRepository answerOptionRepository;
 
+    @Transactional
     @Before
     public void setUp() throws Exception {
 
