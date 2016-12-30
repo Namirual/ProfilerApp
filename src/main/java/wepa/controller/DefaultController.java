@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wepa.domain.Account;
 import wepa.repository.AccountRepository;
+import wepa.service.AccountService;
 
 // Default controller handles logging in, out and creating new accounts.
 @Controller
@@ -26,6 +29,9 @@ public class DefaultController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AccountService accountService;
 
     @ModelAttribute
     private Account getAccount() {
@@ -76,6 +82,12 @@ public class DefaultController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String goToIndex() {
         return "redirect:/index";
+    }
+
+    @RequestMapping(value = "/account", method = RequestMethod.DELETE)
+    public String deleteAccount() {
+        accountService.deleteAccount();
+        return "redirect:/";
     }
 
 }

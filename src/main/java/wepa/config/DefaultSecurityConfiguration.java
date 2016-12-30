@@ -31,6 +31,7 @@ public class DefaultSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/css/**", "/fonts/**", "/images/**", "/js/**").permitAll()
                 .antMatchers("/index").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/admin").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
         http.formLogin()

@@ -171,4 +171,16 @@ public class ProfileController {
         accountService.addAnswerToAccount(answerer, profile);
         return "redirect:/profiles/" + id;
     }
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public String deleteProfile(@PathVariable Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Account user = accountService.findAccountByUser(auth.getName());
+        Profile profile = profileService.findOneById(id);
+        if(profile.getOwnerAccount().getId() == user.getId()) {
+            profileService.deleteProfile(profile);
+        }
+
+        return "redirect:/userpage";
+    }
+
 }

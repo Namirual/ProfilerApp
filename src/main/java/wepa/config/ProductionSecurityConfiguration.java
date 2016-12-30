@@ -26,6 +26,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         http.authorizeRequests()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/index").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/admin").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
         http.formLogin()
