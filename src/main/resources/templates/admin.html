@@ -3,23 +3,40 @@
     <head lang="en">
         <meta charset="UTF-8"/>
         <title>Profiler</title>
-        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+        <!--<link rel="stylesheet" th:href="@{/css/styles.css}"/>-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <header th:replace="fragments/header :: header">
-            <p>header with links etc</p>
-        </header>
-        <nav>
+        <div class="container">
+            <header th:replace="fragments/header :: header">
+                <p>header with links etc</p>
+            </header>
+            <nav>
 
-        </nav>
-        
-        <h2>Registered users</h2>
-        <ul>
-            <li th:each="account : ${accounts}"><a th:href="@{/admin/users/{id}(id=${account.id})}">
-                    <span th:text="${account.username}">Username</span></a>
-                -- <span th:text="${account.authorities}">Authorities</span></li>
-        </ul>
-
-
+            </nav>
+            <div class="col-md-6">
+                <h2>Registered users</h2>
+                <ul>
+                    <li th:each="account : ${accounts}">
+                        <a th:href="@{/admin/users/{id}(id=${account.id})}">
+                            <span th:text="${account.username}">Username</span>
+                        </a>
+                        -- <span th:text="${account.authorities}">Authorities</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>Existing profiles</h2>
+                <ul th:each="profile : ${profiles}">
+                    <li>
+                        <a th:href="@{/profiles/{id} (id=${profile.id})}">
+                            <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </body>
 </html>
