@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotBlank;
 import wepa.repository.UUIDPersistable;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
@@ -90,6 +91,9 @@ public class Account extends UUIDPersistable {
     }
 
     public void addProfile(Profile profile) {
+        if(this.profiles == null) {
+            this.profiles = new ArrayList<>();
+        }
         if (!this.profiles.contains(profile) && profile != null) {
             this.profiles.add(profile);
         }
