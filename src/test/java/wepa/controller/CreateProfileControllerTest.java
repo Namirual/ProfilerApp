@@ -1,4 +1,5 @@
 package wepa.controller;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +17,9 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@org.springframework.context.annotation.Profile("default")
+@org.springframework.context.annotation.Profile("test")
 public class CreateProfileControllerTest {
+
     @Autowired
     private WebApplicationContext webAppContext;
 

@@ -3,29 +3,32 @@
     <head lang="en">
         <meta charset="UTF-8"/>
         <title>Profiler</title>
-        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+        <!--<link rel="stylesheet" th:href="@{/css/styles.css}"/>-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <header th:replace="fragments/header :: header">
-            <p>header with links etc</p>
-        </header>
-        <nav>
+        <div class="container">
+            <header th:replace="fragments/header :: header">
+                <p>header with links etc</p>
+            </header>
+            <nav>
 
-        </nav>
-        <h2>Newest profiles</h2>
-        <ul th:each="profile : ${profiles}">
-            <li>
-                <a th:href="@{/profiles/{id} (id=${profile.id})}">
-                    <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
-                </a>
-            </li>
-        </ul>
-
-
-        <p>Welcome, <span sec:authentication="name">Bob</span>!</p>
-        <a href="/userpage">Userpage</a>
-
-        <script th:src="@{/javascript/javascript.js}"></script>
-
+            </nav>
+            <div class="col-md-12">
+                <h1>Welcome to the Profiler, <span sec:authentication="name">Bob</span>!</h1>
+                <a href="/userpage" class="btn btn-primary">Your userpage</a>
+            </div>
+            <h2>Newest profiles</h2>
+            <ul class="list-group" th:each="profile : ${profiles}">
+                <li class="list-group-item">
+                    <a th:href="@{/profiles/{id} (id=${profile.id})}">
+                        <img th:src="@{/images/{id}/content(id=${profile.thumbnailId})}"/>
+                    </a>
+                </li>
+            </ul>
+            <script th:src="@{/javascript/javascript.js}"></script>
+        </div>
     </body>
 </html>

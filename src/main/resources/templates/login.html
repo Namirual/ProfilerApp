@@ -3,36 +3,47 @@
     <head lang="en">
         <meta charset="UTF-8"/>
         <title>Profiler</title>
-        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+        <!--<link rel="stylesheet" th:href="@{/css/styles.css}"/>-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 
-    <body>        
-        <div sec:authorize="isAuthenticated()">
-            <header th:replace="fragments/header :: header">
-                <p>header with links etc</p>
-            </header>
-        </div>
-        <h2>Please log in to use the Profiler</h2>
+    <body>
+        <div class="container">
+            <div sec:authorize="isAuthenticated()">
+                <header th:replace="fragments/header :: header">
+                    <p>header with links etc</p>
+                </header>
+            </div>
+            <div class="col-md-6">
+                <h2>Please log in to use the Profiler</h2>
 
-        <div th:if="${error}" th:text="${error}">
-            Error.
-        </div>
-        <div th:if="${logout}" th:text="${logout}">
-            Logout.
-        </div>
+                <div th:if="${error}" th:text="${error}" class="text-danger">
+                    Error.
+                </div>
+                <div th:if="${logout}" th:text="${logout}" class="text-success">
+                    Logout.
+                </div>
 
-        <form action="#" th:action="@{/authenticate}" method="POST">
-            <p>Username:
-                <input type="text" th:name="username" placeholder="Username" />
-            </p>
-            <p>Password:
-                <input type="text" th:name="password" placeholder="Password" />
-            </p>
-            <input type="submit" value="Log in" />
-        </form>
-        <br/>
-        <a href="/signup">Sign up!</a>
-
+                <form action="#" th:action="@{/authenticate}" method="POST">
+                    <span>Username:</span>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" th:name="username" class="form-control" placeholder="Username" />
+                    </div>
+                    <span>Password:</span>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" th:name="password" class="form-control" placeholder="Password" />
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Log in" />
+                </form>
+                <br/>
+                <p> No account yet? Sign up now to start profiling!</p>
+                <a href="/signup" class="btn btn-info">Sign up!</a>
+            </div>
+        </div>
     </body>
 
 </html>

@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@org.springframework.context.annotation.Profile("default")
+@org.springframework.context.annotation.Profile("test")
 public class RepositoryIntegrationTest {
     private Account pertti;
     private Account martti;

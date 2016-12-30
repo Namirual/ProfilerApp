@@ -2,33 +2,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head lang="en">
         <meta charset="UTF-8"/>
-        <title>Profiler</title>
-        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+        <title>Create a profile</title>
+        <!--<link rel="stylesheet" th:href="@{/css/styles.css}"/>-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 
     <body>
-        <header th:replace="fragments/header :: header">
-            <p>header with links etc</p>
-        </header>
-        <nav>
+        <div class="container">
+            <header th:replace="fragments/header :: header">
+                <p>header with links etc</p>
+            </header>
+            <nav>
 
-        </nav>
-        
-        <h1>Select the questions for the profile</h1>
+            </nav>
+            <div class="col-md-12">
+                <h1 class="text-center">Select answers for the questions you want in the profile</h1>
+            </div>
 
-        <form th:action="@{/createprofile}" method="POST" enctype="multipart/form-data">
-            <ul>
-                <li th:each="question : ${questions}">
-                    <label th:text="${question.content}">Question</label>
-                    <select name="answerId">
-                        <option th:value="${question.id} + ',0'">I don't want to answer this</option>
-                        <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${question.id} + ',' + ${answer.id}">0</option>
-                    </select>
-                </li>
-            </ul>
-            <h1>Upload a photograph for the profile</h1>
-            <input type="file" name="file" id="file"/>
-            <input type="submit" value="Send"/>
-        </form>
+            <div class="col-md-4">
+                <form th:action="@{/createprofile}" method="POST" enctype="multipart/form-data">
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="question : ${questions}">
+                            <label th:text="${question.content}">Question</label>
+                            <select name="answerId">
+                                <option th:value="${question.id} + ',0'">Question not selected</option>
+                                <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${question.id} + ',' + ${answer.id}">0</option>
+                            </select>
+                        </li>
+                    </ul>
+                    <h2>Upload a photograph for the profile</h2>
+                    <input type="file" name="file" id="file"/>
+                    <input type="submit" class="btn btn-info" value="Send"/>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

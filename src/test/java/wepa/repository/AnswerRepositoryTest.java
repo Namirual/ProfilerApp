@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Profile("default")
+@Profile("test")
 public class AnswerRepositoryTest {
     private ProfileQuestion profileQuestion1;
     private ProfileQuestion profileQuestion2;
