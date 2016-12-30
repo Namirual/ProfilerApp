@@ -48,7 +48,11 @@ public class AdminController {
     @RequestMapping(value = "/delete/account/{id}", method = RequestMethod.POST)
     public String deleteAccount(@PathVariable String id) {
         Account account = accountService.getUserById(id);
+        if(account.getUsername().equals("FooBar")) {
+            return "redirect:/admin";
+        }
         accountService.adminDeleteAccount(account);
+        
         return "redirect:/admin";
     }
 }
