@@ -9,6 +9,8 @@ import wepa.domain.*;
 import wepa.repository.*;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class ProfileService {
@@ -25,9 +27,10 @@ public class ProfileService {
     private AccountRepository accountRepository;
     @Autowired
     private AnswerOptionRepository answerOptionRepository;
-
+    @Autowired
+    private ImageObjectRepository imageObjectRepository;
     
-    @Transactional
+//    @Transactional
     public Profile createProfileAndAssignToUser(Account account) {
         account = accountRepository.findOne(account.getId());
         if (account == null) {
@@ -35,6 +38,10 @@ public class ProfileService {
         }
         Profile profile = new Profile();
         profile = profileRepository.save(profile);
+        System.out.println(profile);
+        profile.setOwnerAccount(account);
+        profile = profileRepository.save(profile);
+        System.out.println(account);
         account.addProfile(profile);
         account = accountRepository.save(account);
         profile.setOwnerAccount(account);
@@ -65,6 +72,10 @@ public class ProfileService {
     
     public List<Profile> getAllProfiles() {
         return profileRepository.findAll();
+    }
+    
+    public Page<Profile> getAllProfiles(Pageable p) {
+        return profileRepository.findAll(p);
     }
 
     public Profile findOne(Profile profile) {
@@ -112,5 +123,15 @@ public class ProfileService {
     public List<Profile> findNewestProfiles() {
         return profileRepository.findFirst10ByOrderByIdDesc();
     }
+
+    @Transactional
+    public void deleteProfile(Profile profile) {
+        profile = profileRepository.findOne(profile.getId());
+        imageObjectRepository.delete(profile.getThumbnailId());
+        imageObjectRepository.delete(profile.getProfilePicId());
+        profileRepository.delete(profile);
+    }
+
+
 
 }

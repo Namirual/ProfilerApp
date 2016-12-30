@@ -100,13 +100,21 @@ public class InitIntegrationTest {
         accountRepository.save(account1);
         accountRepository.save(account2);*/
 
+//        answerRepository.deleteAll();
+//        profileQuestionRepository.deleteAll();
+//        answerOptionRepository.deleteAll();
+//        questionRepository.deleteAll();
+//        profileRepository.deleteAll();
+//        accountRepository.deleteAll();
+//        imageObjectRepository.deleteAll();
+        profileRepository.deleteAll();
         answerRepository.deleteAll();
         profileQuestionRepository.deleteAll();
         answerOptionRepository.deleteAll();
         questionRepository.deleteAll();
-        profileRepository.deleteAll();
         accountRepository.deleteAll();
         imageObjectRepository.deleteAll();
+
 
     }
 

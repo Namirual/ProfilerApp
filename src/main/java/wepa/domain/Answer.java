@@ -1,8 +1,9 @@
 package wepa.domain;
 
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import java.util.List;
+import javax.persistence.*;
+
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,6 +24,9 @@ public class Answer extends AbstractPersistable<Long> {
     
     @DateTimeFormat
     private Date postTime;
+
+    @ManyToMany
+    private List<ProfileQuestion> profileQuestions;
 
     
     public ProfileQuestion getProfileQuestion() {
@@ -56,6 +60,21 @@ public class Answer extends AbstractPersistable<Long> {
     public void setPostTime(Date postTime) {
         this.postTime = postTime;
     }
-    
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public List<ProfileQuestion> getProfileQuestions() {
+        return profileQuestions;
+    }
+
+    public void setProfileQuestions(List<ProfileQuestion> profileQuestions) {
+        this.profileQuestions = profileQuestions;
+    }
 }
  

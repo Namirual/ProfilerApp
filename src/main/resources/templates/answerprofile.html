@@ -17,37 +17,47 @@
             <nav>
 
             </nav>
-            <div class="col-md-12">
-                <h1 class="text-center">Profile this image!</h1>           
-            </div>
-
-            <div class="col-md-4" th:unless="${ownans}">
-                <h2>Rate here</h2>
-                <form th:action="@{/profiles/{id}/answer (id=${id})}" method="POST">
-                    <ul class="list-group">
-                        <li class="list-group-item" th:each="question : ${questions}">
-                            <span th:id="${question.id}" th:text="${question.content}">Question</span>
-                            <select name="answerId">
-                                <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${i.index}">0</option>
-                            </select>
-                        </li>
-                    </ul>
-                    <input type="submit" class="btn btn-info" value="Submit answers"/>
-                </form>
-            </div>
-            <div class="col-md-4">
-                <img class="img-responsive" th:src="@{/images/{id}/content(id=${profilePic})}"/>
-            </div>
-            <div class="col-md-4">
-                <h2>Submit answers to see how others have answered.</h2>
-            </div>
-            <div class="col-md-12">
-                <div class="text-center">
-                    <a th:if="${previous!=null}" th:href="@{/profiles/{id} (id=${previous})}" class="btn btn-primary" role="button">PREVIOUS</a>
-                    <a th:if="${next!=null}" th:href="@{/profiles/{id} (id=${next})}" class="btn btn-primary" role="button">NEXT</a>
-                    <a th:if="${random!=null}" th:href="@{/profiles/{id} (id=${random})}" class="btn btn-warning" role="button">SKIP TO A RANDOM PROFILE</a>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center">Profile this image!</h1>           
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-4" th:unless="${ownans}">
+                    <h2>Rate here</h2>
+                    <form th:action="@{/profiles/{id}/answer (id=${id})}" method="POST">
+                        <ul class="list-group">
+                            <li class="list-group-item" th:each="question : ${questions}">
+                                <span th:id="${question.id}" th:text="${question.content}">Question</span>
+                                <select name="answerId">
+                                    <option th:each="answer, i : ${question.answerOptions}" th:text="${answer.answerText}" th:value="${i.index}">0</option>
+                                </select>
+                            </li>
+                        </ul>
+                        <input type="submit" class="btn btn-info" value="Submit answers"/>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <img class="img-responsive" th:src="@{/images/{id}/content(id=${profilePic})}"/>
+                </div>
+                <div class="col-md-4">
+                    <h2>Submit answers to see how others have answered.</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <ul class="pagination pagination-lg">
+                            <li><a th:if="${previous!=null}" th:href="@{/profiles/{id} (id=${previous})}" class="label label-info" role="button">PREVIOUS</a></li>
+                            <li><a th:if="${next!=null}" th:href="@{/profiles/{id} (id=${next})}" class="label label-info" role="button">NEXT</a></li>
+                            <li><a th:if="${random!=null}" th:href="@{/profiles/{id} (id=${random})}" class="label label-warning" role="button">RANDOM</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </body>
 </html>

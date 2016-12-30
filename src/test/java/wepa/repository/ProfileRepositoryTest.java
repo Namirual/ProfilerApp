@@ -48,13 +48,10 @@ public class ProfileRepositoryTest {
         martti.setPassword("martinSalasana");
         accountRepository.save(martti);
 
-        profile1 = safelyCreateAndSaveNewProfile();
-        profile2 = safelyCreateAndSaveNewProfile();
-        profile3 = safelyCreateAndSaveNewProfile();
 
-//        profile1 = new Profile();
-//        profile2 =  new Profile();
-//        profile3 =  new Profile();
+        profile1 = new Profile();
+        profile2 = new Profile();
+        profile3 = new Profile();
 
         profile1.setActive(true);
         profile1.setOwnerAccount(pertti);
