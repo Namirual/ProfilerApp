@@ -1,5 +1,6 @@
 package wepa.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,25 +28,10 @@ public class UserpageController {
     @Autowired
     private AnswerService answerService;
 
+    private final int showPerPage = 3;
+
     @RequestMapping
-    public String viewUserpage(Model model) {
-        /*       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Account user = accountService.findAccountByUser(auth.getName());
-
-        String realName = user.getName();
-
-        List<Profile> answeredProfiles = user.getAnsweredProfiles();
-
-        int profilerScore = answerService.calculateUserProfilerScore(user);
-
-        List<Profile> profiles = user.getProfiles();
-
-        model.addAttribute("name", realName);
-        model.addAttribute("answerNum", answeredProfiles.size());
-        model.addAttribute("score", profilerScore);
-        model.addAttribute("profiles", profiles);
-        model.addAttribute("answered", answeredProfiles);*/
-
+    public String viewUserpage() {
         return "redirect:/userpage/1/own/1/";
     }
 
@@ -59,49 +45,18 @@ public class UserpageController {
         int profilerScore = answerService.calculateUserProfilerScore(user);
         List<Profile> profiles = user.getProfiles();
 
-        int showPerPage = 2;
-
-        // Links for passing to pages
-        int previous = 0;
-        int next = 0;
-        int previousOwn = 0;
-        int nextOwn = 0;
-
-        // Check if the parameters are valid and correct them if necessary
+        // Check if the parameter page numbers are valid and correct to a valid one if necessary
+        page = checkPage(page, answeredProfiles.size());
+        ownPage = checkPage(ownPage, profiles.size());
         
-        if (page < 1) {
-            page = 1;
-        }
+        // Insert the correct page numbers for the links
+        List<Integer> pages = getLinkPages(page, answeredProfiles.size());
+        int previous = pages.get(0);
+        int next = pages.get(1);
 
-        if (ownPage < 1) {
-            ownPage = 1;
-        }
-
-        if (profiles.size() <= showPerPage * (ownPage-1)) {
-            ownPage = 1;
-        }
-
-        if (answeredProfiles.size() <= showPerPage * (page-1)) {
-            page = 1;
-        }
-
-        // Insert the correct numbers for the links
-        
-        if (page > 1) {
-            previous = page - 1;
-        }
-
-        if (answeredProfiles.size() > showPerPage * page) {
-            next = page + 1;
-        }
-
-        if (ownPage > 1) {
-            previousOwn = ownPage - 1;
-        }
-
-        if (profiles.size() > showPerPage * ownPage) {
-            nextOwn = ownPage + 1;
-        }
+        List<Integer> ownPages = getLinkPages(ownPage, profiles.size());
+        int previousOwn = ownPages.get(0);
+        int nextOwn = ownPages.get(1);
 
         model.addAttribute("next", next);
         model.addAttribute("current", page);
@@ -114,20 +69,37 @@ public class UserpageController {
         model.addAttribute("answerNum", answeredProfiles.size());
         model.addAttribute("score", profilerScore);
 
-        model.addAttribute("profiles", profiles.subList(showPerPage * (ownPage - 1), profiles.size()));
-
-        if (profiles.size() > showPerPage * ownPage) {
-            model.addAttribute("profiles", profiles.subList(showPerPage * (ownPage - 1), showPerPage * (ownPage)));
-        } else {
-            model.addAttribute("profiles", profiles.subList(showPerPage * (ownPage - 1), profiles.size()));
-        }
-
-        if (answeredProfiles.size() > showPerPage * page) {
-            model.addAttribute("answered", answeredProfiles.subList(showPerPage * (page - 1), showPerPage * (page)));
-        } else {
-            model.addAttribute("answered", answeredProfiles.subList(showPerPage * (page - 1), answeredProfiles.size()));
-        }
+        // Pass a sublist of the profile list into the model.
+        // The list is either the length of showPerPage or capped by the end of the list.
+        model.addAttribute("profiles", profiles.subList(showPerPage * (ownPage - 1), Math.min(profiles.size(), showPerPage * ownPage)));
+        model.addAttribute("answered", answeredProfiles.subList(showPerPage * (page - 1), Math.min(answeredProfiles.size(), showPerPage * page)));
 
         return "userpage";
+    }
+
+    private Integer checkPage(int currentPage, int profileSize) {
+        if (currentPage < 1) {
+            return 1;
+        }
+
+        if (profileSize <= showPerPage * (currentPage - 1)) {
+            return 1;
+        }
+        return currentPage;
+    }
+
+    private List<Integer> getLinkPages(int currentPage, int profileSize) {
+        int previousPage = 0;
+        int nextPage = 0;
+
+        if (currentPage > 1) {
+            previousPage = currentPage - 1;
+        }
+
+        if (profileSize > showPerPage * currentPage) {
+            nextPage = currentPage + 1;
+        }
+
+        return Arrays.asList(previousPage, nextPage);
     }
 }
