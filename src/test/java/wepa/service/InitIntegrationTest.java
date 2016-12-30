@@ -117,6 +117,11 @@ public class InitIntegrationTest {
 
 
     }
+    
+    @Test
+    public void nonsenseTest() {
+        assertEquals(1,1);
+    }
 /*
     @Test
     public void canCreateProfileWithPic() {
