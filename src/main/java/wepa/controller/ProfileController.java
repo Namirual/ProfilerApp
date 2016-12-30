@@ -171,7 +171,7 @@ public class ProfileController {
         accountService.addAnswerToAccount(answerer, profile);
         return "redirect:/profiles/" + id;
     }
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String deleteProfile(@PathVariable Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account user = accountService.findAccountByUser(auth.getName());
